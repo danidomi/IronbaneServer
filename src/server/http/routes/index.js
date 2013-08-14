@@ -131,7 +131,8 @@ module.exports = function(app, db) {
             userId: req.user ? req.user.id : 0,
             username: req.user ? req.user.name : '',
             loggedIn: req.isAuthenticated(),
-            characterUsed: req.user ? req.user.characterused : 0
+            characterUsed: req.user ? req.user.characterused : 0,
+            isProduction: config.get('isProduction')
         };
 
         // todo: use config for subfolder
