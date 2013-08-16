@@ -21,7 +21,7 @@
 var gravity = new THREE.Vector3(0, -9.81, 0);
 
 var PhysicsObject = Class.extend({
-    Init: function(position, rotation, scale, velocity) {
+    init: function(position, rotation, scale, velocity) {
 
        this.enableGravity = true;
 
@@ -99,7 +99,7 @@ var PhysicsObject = Class.extend({
 
 
     },
-    Destroy: function() {
+    destroy: function() {
         if ( !this.unitStandingOn ) {
             ironbane.scene.remove(this.object3D);
         }
@@ -108,7 +108,7 @@ var PhysicsObject = Class.extend({
 
         ironbane.renderer.deallocateObject( this.object3D );
     },
-    Tick: function(dTime) {
+    tick: function(dTime) {
 
 
         this.oldPosition = this.localPosition.clone();
@@ -294,7 +294,7 @@ var PhysicsObject = Class.extend({
 
 
     },
-    GetCellStandingOn: function() {
+    getCellStandingOn: function() {
       var cp = WorldToCellCoordinates(this.position.x, this.position.z, cellSize);
 
       var cellStandingOn = ISDEF(terrainHandler.cells[cp.x+"-"+cp.z]) ? terrainHandler.cells[cp.x+"-"+cp.z] : null;

@@ -17,7 +17,7 @@
 
 
 var MovingUnit = Unit.extend({
-    Init: function(data) {
+    init: function(data) {
 
 
         this._super(data);
@@ -33,7 +33,7 @@ var MovingUnit = Unit.extend({
 
 
     },
-    Tick: function(dTime) {
+    tick: function(dTime) {
 
         var acceleration = this.steeringForce.multiplyScalar(this.mass);
 

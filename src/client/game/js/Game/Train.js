@@ -19,7 +19,7 @@
 
 
 var Train = DynamicMesh.extend({
-    Init: function(position, rotation, id, param, metadata) {
+    init: function(position, rotation, id, param, metadata) {
 
 
         this._super(position, rotation, id, param, metadata);
@@ -28,7 +28,7 @@ var Train = DynamicMesh.extend({
 
 
     },
-    Tick: function(dTime) {
+    tick: function(dTime) {
 
         //var newvel = this.targetPosition.clone().subSelf(this.position);
 

@@ -20,7 +20,7 @@
 
 
 var TeleportEntrance = Unit.extend({
-    Init: function(position, id, metadata) {
+    init: function(position, id, metadata) {
 
         if ( showEditor && levelEditor.editorGUI.opShowDebug ) {
             this.drawNameMesh = true;
@@ -34,7 +34,7 @@ var TeleportEntrance = Unit.extend({
         this.dynamic = false;
 
     },
-    Add: function() {
+    add: function() {
         this._super();
 
         if ( this.metadata && this.metadata.invisible ) return;
@@ -47,7 +47,7 @@ var TeleportEntrance = Unit.extend({
         })(this);
 
     },
-    Tick: function(dTime) {
+    tick: function(dTime) {
 
         this._super(dTime);
 

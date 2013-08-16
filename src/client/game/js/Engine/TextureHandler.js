@@ -17,10 +17,10 @@
 
 
 var TextureHandler = Class.extend({
-    Init: function() {
+    init: function() {
         this.textures = [];
     },
-    GetTexture: function (path, textureOnly, options) {
+    getTexture: function (path, textureOnly, options) {
 
         var key = path;
         key += ","+textureOnly;
@@ -32,7 +32,7 @@ var TextureHandler = Class.extend({
 
         return this.textures[key];
     },
-    GetFreshTexture: function (path, textureOnly, options) {
+    getFreshTexture: function (path, textureOnly, options) {
         return loadTexture(path, textureOnly, options);
     }
 });

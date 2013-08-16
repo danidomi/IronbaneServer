@@ -111,7 +111,7 @@ var ProjectileTypeEnum = {
 
 
 var Projectile = Unit.extend({
-    Init: function(position, targetPosition, owner, weaponID) {
+    init: function(position, targetPosition, owner, weaponID) {
 
         this.owner = owner;
 
@@ -252,7 +252,7 @@ var Projectile = Unit.extend({
 
         this.lifeTime = this.type.lifeTime;
     },
-    Add: function () {
+    add: function () {
 
         //console.warn(this.position.x);
 
@@ -269,7 +269,7 @@ var Projectile = Unit.extend({
 
         this._super();
 //    },
-//    TryToBuildMesh: function() {
+//    tryToBuildMesh: function() {
 //        if ( this.texture.image.width == 0 ) {
 //            (function(unit){
 //                setTimeout(function(){
@@ -281,7 +281,7 @@ var Projectile = Unit.extend({
 //            this.BuildMesh();
 //        }
 //    },
-//    BuildMesh: function() {
+//    buildMesh: function() {
 
 
         this.mesh = new THREE.Object3D();
@@ -422,7 +422,7 @@ var Projectile = Unit.extend({
 
 
     },
-    Tick: function(dTime) {
+    tick: function(dTime) {
 
 
 
@@ -625,7 +625,7 @@ var Projectile = Unit.extend({
             }
         }
     },
-    Impact: function(hasHitTerrain) {
+    impact: function(hasHitTerrain) {
 
         if ( this.impactDone ) return;
 
@@ -655,7 +655,7 @@ var Projectile = Unit.extend({
         }
 
     },
-    CalculateFiringAngle: function(target, throwHigh) {
+    calculateFiringAngle: function(target, throwHigh) {
 
         throwHigh = throwHigh || false;
 

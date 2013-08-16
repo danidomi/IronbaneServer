@@ -18,7 +18,7 @@
 
 
 var StateMachine = Class.extend({
-	Init: function(owner, currentState, globalState) {
+	init: function(owner, currentState, globalState) {
 
 		this.owner = owner;
 
@@ -31,19 +31,19 @@ var StateMachine = Class.extend({
 		this.previousState = null;
 
 	},
-	Update: function(dTime) {
+	update: function(dTime) {
 		if ( this.globalState ) this.globalState.Execute(this.owner, dTime);
 
 		if ( this.currentState ) this.currentState.Execute(this.owner, dTime);
 	},
-	SetGlobalState: function(globalState) {
+	setGlobalState: function(globalState) {
 
 		this.globalState.Exit(this.owner);
 		this.globalState = globalState;
     	this.globalState.Enter(this.owner);
 
 	},
-	ChangeState: function(newState) {
+	changeState: function(newState) {
 
 		this.previousState = this.currentState;
 
@@ -54,13 +54,13 @@ var StateMachine = Class.extend({
 		this.currentState.Enter(this.owner);
 
 	},
-	RevertToPreviousState: function() {
+	revertToPreviousState: function() {
 		this.ChangeState(this.previousState);
 	},
-	IsInState: function(state) {
+	isInState: function(state) {
 		return this.currentState instanceof state;
     },
-    HandleMessage: function(message, data) {
+    handleMessage: function(message, data) {
 
         this.currentState.HandleMessage(this.owner, message, data);
         this.globalState.HandleMessage(this.owner, message, data);

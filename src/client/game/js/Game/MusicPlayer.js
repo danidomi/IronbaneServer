@@ -22,7 +22,7 @@
 var billboardSpritePath = 'plugins/game/images/billboards/';
 
 var MusicPlayer = Billboard.extend({
-    Init: function(position, id, metadata) {
+    init: function(position, id, metadata) {
 
 
         this.metadata = metadata;

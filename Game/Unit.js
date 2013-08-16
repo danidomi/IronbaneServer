@@ -17,7 +17,7 @@
 
 
 var Unit = Class.extend({
-  Init: function(data) {
+  init: function(data) {
 
     SetDataAll(this, data);
 
@@ -113,13 +113,13 @@ var Unit = Class.extend({
 
 
   },
-  Awake: function() {
+  awake: function() {
     //log(this.id+" is awake!");
   },
-  TeleportToUnit: function(unit, noEmit) {
+  teleportToUnit: function(unit, noEmit) {
     this.Teleport(unit.zone, unit.position, noEmit);
   },
-  Teleport: function(zone, position, noEmit) {
+  teleport: function(zone, position, noEmit) {
 
 
     noEmit = noEmit || false;
@@ -160,10 +160,10 @@ var Unit = Class.extend({
       });
     }
   },
-  UpdateNearbyUnitsOtherUnitsLists: function() {
+  updateNearbyUnitsOtherUnitsLists: function() {
     worldHandler.UpdateNearbyUnitsOtherUnitsLists(this.zone, this.cellX, this.cellZ);
   },
-  UpdateCellPosition: function() {
+  updateCellPosition: function() {
 
     var cellPos = WorldToCellCoordinates(this.position.x, this.position.z, cellSize);
 
@@ -172,7 +172,7 @@ var Unit = Class.extend({
     this.cellZ = cellPos.z;
 
   },
-  AddOtherUnit: function(unit) {
+  addOtherUnit: function(unit) {
     // Auto send AddUnit if we're a player
     this.otherUnits.push(unit);
 
@@ -262,7 +262,7 @@ var Unit = Class.extend({
 
 
   },
-  RemoveOtherUnit: function(unit) {
+  removeOtherUnit: function(unit) {
     // Auto send AddUnit if we're a player
 
     this.otherUnits = _.without(this.otherUnits, unit);
@@ -277,7 +277,7 @@ var Unit = Class.extend({
 
 
   },
-  UpdateOtherUnitsList: function() {
+  updateOtherUnitsList: function() {
 
     // If we are a player, only do so if we're ready to receive data
     if ( this.id > 0 && !this.readyToReceiveUnits ) return;
@@ -320,7 +320,7 @@ var Unit = Class.extend({
     }
 
   },
-  FindNearestUnit: function(maxDistance) {
+  findNearestUnit: function(maxDistance) {
     maxDistance = maxDistance || 0;
     var cx = this.cellX;
     var cz = this.cellZ;
@@ -348,7 +348,7 @@ var Unit = Class.extend({
     }
     return null;
   },
-  ChangeCell: function(newCellX, newCellZ) {
+  changeCell: function(newCellX, newCellZ) {
 
 
 
@@ -457,17 +457,17 @@ var Unit = Class.extend({
     }
 
   },
-  Tick: function(dTime) {
+  tick: function(dTime) {
 
 
   },
-  InRangeOfUnit: function(unit, range) {
+  inRangeOfUnit: function(unit, range) {
     return this.InRangeOfPosition(unit.position, range);
   },
-  InRangeOfPosition: function(position, range) {
+  inRangeOfPosition: function(position, range) {
     return position.clone().subSelf(this.position).lengthSq() < range*range;
   },
-  Remove: function() {
+  remove: function() {
 
     var zone = this.zone;
     var cx = this.cellX;
@@ -487,7 +487,7 @@ var Unit = Class.extend({
     }
 
   },
-  EmitNearby: function(event, data, maxDistance, allowSelf) {
+  emitNearby: function(event, data, maxDistance, allowSelf) {
 
     allowSelf = allowSelf || false;
     maxDistance = maxDistance || 0;
@@ -526,7 +526,7 @@ var Unit = Class.extend({
 
 
   },
-  CalculatePath: function(targetPosition) {
+  calculatePath: function(targetPosition) {
 
 
     var allNodes = this.connectedNodeList;
@@ -581,13 +581,13 @@ var Unit = Class.extend({
     }
 
   },
-  Say: function(text) {
+  say: function(text) {
     this.EmitNearby("say", {
       id:this.id,
       message:text
     }, 0, true);
   },
-  DebugLocationString: function() {
+  debugLocationString: function() {
     return "zone "+this.zone+", pos "+this.position.Round().ToString();
   }
 });

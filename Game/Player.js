@@ -20,7 +20,7 @@ var KickReason = {
 };
 
 var Player = Fighter.extend({
-  Init: function(data) {
+  init: function(data) {
 
     // Params for players are still unused
     data.param = 0;
@@ -40,7 +40,7 @@ var Player = Fighter.extend({
     this.lastChatTime = 0;
 
   },
-  Tick: function(dTime) {
+  tick: function(dTime) {
 
     // console.log("this.zone: "+this.zone);
     // console.log("this.position: "+this.position.ToString());
@@ -72,7 +72,7 @@ var Player = Fighter.extend({
     this._super(dTime);
 
   },
-  Attack: function(victim, weapon) {
+  attack: function(victim, weapon) {
 
     // Players can only attack monsters and eachother (for now)
     if (victim.id < 0) {
@@ -86,7 +86,7 @@ var Player = Fighter.extend({
     this._super(victim, weapon);
 
   },
-  Delete: function() {
+  delete: function() {
 
 
     // Remove the character from the DB
@@ -100,23 +100,23 @@ var Player = Fighter.extend({
     mysql.query('DELETE FROM ib_items WHERE owner = ?', [this.id]);
 
   },
-  BigMessage: function(message) {
+  bigMessage: function(message) {
     this.socket.emit("bigMessage", {
       message: message
     });
   },
-  Cutscene: function(id) {
+  cutscene: function(id) {
     this.socket.emit("cutscene", id);
   },
-  LightWarn: function() {
+  lightWarn: function() {
     var message = this.name + ': Your behaviour is not tolerated. Stop it.';
     chatHandler.Announce('' + message + '', "yellow");
   },
-  SeriousWarn: function() {
+  seriousWarn: function() {
     var message = this.name + ': Continue like this and you will get banned.<br>You have been warned.';
     chatHandler.Announce('' + message + '', "red");
   },
-  Kick: function(reason) {
+  kick: function(reason) {
     // Immunity
     if (this.editor) {
       chatHandler.Announce(this.name + ' has immunity.', "yellow");
@@ -135,7 +135,7 @@ var Player = Fighter.extend({
     }, 1000);
 
   },
-  Ban: function(hours, reason) {
+  ban: function(hours, reason) {
     // Immunity
     if (this.editor) {
       chatHandler.Announce(this.name + ' has immunity.', "red");
@@ -172,7 +172,7 @@ var Player = Fighter.extend({
       me.socket.disconnect();
     }, 1000);
   },
-    Save: function() {
+    save: function() {
         // No updating for guests
         // Update MYSQL and set the character data
         mysql.query('UPDATE ib_characters SET ' +
@@ -212,7 +212,7 @@ var Player = Fighter.extend({
             });
         })(this);
     },
-  LeaveGame: function() {
+  leaveGame: function() {
 
     this.Save();
 

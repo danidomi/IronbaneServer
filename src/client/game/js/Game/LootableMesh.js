@@ -18,7 +18,7 @@
 
 
 var LootableMesh = Mesh.extend({
-  Init: function(position, rotation, id, param, metadata) {
+  init: function(position, rotation, id, param, metadata) {
 
 //    this.lootableType = param;
 //
@@ -35,7 +35,7 @@ var LootableMesh = Mesh.extend({
     this._super(position, rotation, id, param, metadata);
 
   },
-  BuildMesh: function(geometry) {
+  buildMesh: function(geometry) {
 
     this._super(geometry);
 
@@ -44,7 +44,7 @@ var LootableMesh = Mesh.extend({
     // this.UpdateRotation();
 
 	},
-  Tick: function(dTime) {
+  tick: function(dTime) {
     this._super(dTime);
   }
 });

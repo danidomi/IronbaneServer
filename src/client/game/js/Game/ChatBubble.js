@@ -22,7 +22,7 @@
 var billboardSpritePath = 'plugins/game/images/billboards/';
 
 var ChatBubble = PhysicsObject.extend({
-    Init: function(unit, text) {
+    init: function(unit, text) {
 
         this.unit = unit;
         this.lifeTime = 10.0;
@@ -52,7 +52,7 @@ var ChatBubble = PhysicsObject.extend({
 //        }
 
     },
-    MakeTextMesh: function(text) {
+    makeTextMesh: function(text) {
 
             var c = document.createElement('canvas');
             var ctx = c.getContext('2d');
@@ -116,7 +116,7 @@ var ChatBubble = PhysicsObject.extend({
             ironbane.scene.add(this.textMesh);
 
     },
-    Destroy: function() {
+    destroy: function() {
 
         ironbane.unitList = _.without(ironbane.unitList, this);
 
@@ -125,7 +125,7 @@ var ChatBubble = PhysicsObject.extend({
         }
 
     },
-    Tick: function(dTime) {
+    tick: function(dTime) {
 
 
         // Count the amount of bubbles that are on top of the player

@@ -18,14 +18,14 @@
 
 
 var Cinema = Class.extend({
-    Init: function() {
+    init: function() {
 
 
         this.queue = [];
 
 
     },
-    PlayCutscene: function(id) {
+    playCutscene: function(id) {
         $("#chatBox").css("opacity", 0);
         hudHandler.HideHUD();
     $('#black-bar-top,#black-bar-bottom').animate({
@@ -40,7 +40,7 @@ var Cinema = Class.extend({
         });
 
     },
-    EndCutscene: function() {
+    endCutscene: function() {
 
     $('#black-bar-top,#black-bar-bottom').animate({
         height: 0
@@ -52,7 +52,7 @@ var Cinema = Class.extend({
         this.queue.shift();
 
     },
-    Clear: function() {
+    clear: function() {
 
         $('#black-bar-top,#black-bar-bottom').animate({
             height: 0
@@ -65,10 +65,10 @@ var Cinema = Class.extend({
         TWEEN.removeAll();
 
     },
-    IsPlaying: function() {
+    isPlaying: function() {
         return this.queue.length !== 0;
     },
-    Tick: function(dTime) {
+    tick: function(dTime) {
 
         if ( this.queue.length === 0 ) return;
 

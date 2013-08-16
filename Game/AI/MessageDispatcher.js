@@ -22,17 +22,17 @@ var MessageType = {
 
 
 var MessageDispatcher = Class.extend({
-	Init: function() {	
+	init: function() {	
 	
 	},
-	Discharge: function(receiver, telegram) {
+	discharge: function(receiver, telegram) {
 
             if ( !receiver.HandleMessage(telegram) ) {
                 console.log("Message not handled");
             }
 	
 	},
-	DispatchMessage: function(delay, sender, receiver, message, extraInfo) {
+	dispatchMessage: function(delay, sender, receiver, message, extraInfo) {
 	
             var telegram = new Telegram(sender, receiver, message, extraInfo);
             

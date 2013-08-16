@@ -424,7 +424,7 @@ var EditorGUI = function() {
 
 
 var Cat = Class.extend({
-  Init: function(range, title, amountoftilesperline) {
+  init: function(range, title, amountoftilesperline) {
 
     if ( !amountoftilesperline ) amountoftilesperline = 10;
 
@@ -458,7 +458,7 @@ var Cat = Class.extend({
 
 
 var LevelEditor = Class.extend({
-  Init: function() {
+  init: function() {
 
     this.isShowingTileIDs = false;
     this.isPaddingTileIDs = true;
@@ -482,7 +482,7 @@ var LevelEditor = Class.extend({
 
     this.selectedNode = null;
   },
-  BuildPreviewBuildMesh: function() {
+  buildPreviewBuildMesh: function() {
 
     if ( this.previewBuildMesh ) {
         this.previewBuildMesh.traverse( function ( object ) {
@@ -544,7 +544,7 @@ var LevelEditor = Class.extend({
     ironbane.scene.add(this.previewBuildMesh);
 
   },
-  AddPreviewSquareToMesh: function(x, z, h, absoluteheight, color) {
+  addPreviewSquareToMesh: function(x, z, h, absoluteheight, color) {
 
     var lineGeoX = new THREE.Geometry();
     lineGeoX.vertices.push( v(-0.5*worldScale, 0.01, -0.5*worldScale), v(-0.5*worldScale, 0.01, 0.5*worldScale));
@@ -566,7 +566,7 @@ var LevelEditor = Class.extend({
 
     this.previewBuildMesh.add(line);
   },
-  AddPreviewCircleToMesh: function(x, z, radius, color) {
+  addPreviewCircleToMesh: function(x, z, radius, color) {
 
     var lineGeoX = new THREE.CircleGeometry(radius, 16);
     var lineMatX = new THREE.LineBasicMaterial({
@@ -583,7 +583,7 @@ var LevelEditor = Class.extend({
 
     this.previewBuildMesh.add(line);
   },
-  SetPreviewMesh: function(id) {
+  setPreviewMesh: function(id) {
 
       levelEditor.editorGUI.mpRotX = 0;
       levelEditor.editorGUI.mpRotY = 0;
@@ -604,7 +604,7 @@ var LevelEditor = Class.extend({
 
 
   },
-  ShowSelectionScreen: function(show) {
+  showSelectionScreen: function(show) {
     if ( show ) {
       $('#tileSelectBox').show();
 
@@ -637,7 +637,7 @@ var LevelEditor = Class.extend({
       $('.tileid').hide();
     }
   },
-  LoadCat: function(cat) {
+  loadCat: function(cat) {
     this.currentCat = cat;
 
     var cat = this.cats[cat];
@@ -735,7 +735,7 @@ var LevelEditor = Class.extend({
     this.SetTile(first);
 
   },
-  SetTile: function(tile) {
+  setTile: function(tile) {
 
     var tileList = this.cats[this.currentCat].tilelist;
 
@@ -746,7 +746,7 @@ var LevelEditor = Class.extend({
 
     levelEditor.editorGUI.selectedTile = tile;
   },
-  UpdateCatLinks: function() {
+  updateCatLinks: function() {
 
     $('#selectRange').html('');
     $('#selectRange').append('Choose a category:<br>');
@@ -766,7 +766,7 @@ var LevelEditor = Class.extend({
     $('#selectRange').append('<hr>');
 
   },
-  Start: function() {
+  start: function() {
 
 
     this.ready = true;
@@ -1157,7 +1157,7 @@ var LevelEditor = Class.extend({
 
   //this.SetTile(levelEditor.editorGUI.selectedTile);
   },
-  PlaceObject: function(position, objectId) {
+  placeObject: function(position, objectId) {
     var gObject = preGameObjects[objectId];
 
     position = position.Round(2);
@@ -1187,7 +1187,7 @@ var LevelEditor = Class.extend({
       terrainHandler.GetCellByWorldPosition(position).objects.push(unit);
     }
   },
-  PlaceModel: function(position, rotX, rotY, rotZ, id) {
+  placeModel: function(position, rotX, rotY, rotZ, id) {
 
     position = position.Round(2);
 
@@ -1226,7 +1226,7 @@ var LevelEditor = Class.extend({
     terrainHandler.RebuildOctree();
 
   },
-  Tick: function(dTime) {
+  tick: function(dTime) {
 
 
 

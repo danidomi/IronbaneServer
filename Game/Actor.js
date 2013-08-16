@@ -17,7 +17,7 @@
 
 
 var Actor = MovingUnit.extend({
-  Init: function(data) {
+  init: function(data) {
 
     this._super(data);
 
@@ -25,7 +25,7 @@ var Actor = MovingUnit.extend({
 
 
   },
-  Awake: function() {
+  awake: function() {
 
     if ( this.id < 0 ) {
 
@@ -72,7 +72,7 @@ var Actor = MovingUnit.extend({
 
     this._super();
   },
-  BuildWaypoints: function() {
+  buildWaypoints: function() {
     // Calculate realistic routes where we can go to
     this.connectedNodeList = [];
 
@@ -144,14 +144,14 @@ var Actor = MovingUnit.extend({
 
     addEdgeNodes(this.connectedNodeList, this.zone, closestNode);
   },
-  Tick: function(dTime) {
+  tick: function(dTime) {
 
     this.stateMachine.Update(dTime);
 
     this._super(dTime);
 
   },
-  HandleMessage: function(message, data) {
+  handleMessage: function(message, data) {
     this.stateMachine.HandleMessage(message, data);
   }
 });

@@ -17,7 +17,7 @@
 
 
 var Switch = Class.extend({
-	Init: function(id, output1, output2, output3, output4) {
+	init: function(id, output1, output2, output3, output4) {
 
             this.id = id;
 
@@ -29,7 +29,7 @@ var Switch = Class.extend({
             if ( ISDEF(output4) ) this.outputs.push(output4);
 
 	},
-    Trigger: function() {
+    trigger: function() {
 
 
 

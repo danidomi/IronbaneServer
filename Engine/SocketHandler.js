@@ -20,7 +20,7 @@ var characterIDCount = 1;
 var SocketHandler = Class.extend({
     bans: [],
     onlinePlayers: [],
-    Init: function() {
+    init: function() {
         var me = this;
 
         this.UpdateBans();
@@ -1861,14 +1861,14 @@ var SocketHandler = Class.extend({
             });
         });
     },
-    UpdateBans: function() {
+    updateBans: function() {
         var me = this;
 
         mysql.query('SELECT * FROM ib_bans', function (err, results, fields) {
             me.bans = results;
         });
     },
-    IsLoggedIn: function(socket) {
+    isLoggedIn: function(socket) {
 
         return ISDEF(socket.unit);
 

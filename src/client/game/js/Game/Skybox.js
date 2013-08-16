@@ -18,7 +18,7 @@
 var skyboxPath = 'plugins/game/images/skybox/';
 
 var Skybox = PhysicsObject.extend({
-  Init: function(onReady) {
+  init: function(onReady) {
 
     var p = terrainHandler.GetReferenceLocation();
 
@@ -101,7 +101,7 @@ var Skybox = PhysicsObject.extend({
 
     this._super();
   },
-  BuildMesh: function(geometry) {
+  buildMesh: function(geometry) {
 
     // Only push materials that are actually inside the materials
     var textures = [];
@@ -149,7 +149,7 @@ var Skybox = PhysicsObject.extend({
     terrainHandler.RebuildOctree();
 
   },
-  Destroy: function() {
+  destroy: function() {
     if ( this.skyboxMesh ) {
       ironbane.scene.remove(this.skyboxMesh);
       releaseMesh(this.skyboxMesh);
@@ -179,7 +179,7 @@ var Skybox = PhysicsObject.extend({
 
     this.isLoaded = false;
   },
-  Tick: function(dTime) {
+  tick: function(dTime) {
 
     var p = terrainHandler.GetReferenceLocationNoClone();
 

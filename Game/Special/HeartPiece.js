@@ -17,14 +17,14 @@
 
 
 var HeartPiece = Unit.extend({
-    Init: function(data) {
+    init: function(data) {
 
         this._super(data);
 
 
 
     },
-    Tick: function(dTime) {
+    tick: function(dTime) {
 
         this._super(dTime);
 

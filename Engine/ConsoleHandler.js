@@ -16,7 +16,7 @@
 */
 
 var ConsoleHandler = Class.extend({
-  Init: function() {
+  init: function() {
     this.AccessLevel = {
       GUEST : 0,
       PLAYER : 1,
@@ -30,7 +30,7 @@ var ConsoleHandler = Class.extend({
 
     this.InitCommands();
   },
-  InitCommands: function() {
+  initCommands: function() {
     this.AddCommand(this.AccessLevel.GUEST, ["generatecell","gc"], "Generates a cell inside a zone", "zone cellX cellZ", "1 0 0", function (params) {
 
       worldHandler.GenerateCell(params[0], params[1], params[2]);
@@ -283,17 +283,17 @@ var ConsoleHandler = Class.extend({
 
   //log(this.commands);
   },
-  AddCommand: function(accessLevel, name, description, paramsyntax, paramdefaults, command) {
+  addCommand: function(accessLevel, name, description, paramsyntax, paramdefaults, command) {
     //this.commands.push(new Command(accessLevel, name, description, paramsyntax, command));
     for(var c=0;c<name.length;c++) {
       this.commands[name[c]] = new ConsoleCommand(accessLevel, name[c], description, paramsyntax, paramdefaults, command);
     }
 
   },
-  SetAccess: function(level) {
+  setAccess: function(level) {
     this.accessLevel = level;
   },
-  ResetAccess: function() {
+  resetAccess: function() {
     this.accessLevel = this.AccessLevel.GUEST;
   },
   exec: function(string) {

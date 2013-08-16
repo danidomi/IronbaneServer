@@ -17,18 +17,18 @@
 
 
 var Turret = State.extend({
-  Init: function() {
+  init: function() {
 
     this.attackTimeout = 0.0;
   },
-  Enter: function(npc) {
+  enter: function(npc) {
 
     npc.maxSpeed = 0.0;
 
 
 
   },
-  Execute: function(npc, dTime) {
+  execute: function(npc, dTime) {
 
     if ( this.attackTimeout > 0 ) this.attackTimeout -= dTime;
 
@@ -57,7 +57,7 @@ var Turret = State.extend({
 //    }
 
   },
-  Exit: function(unit) {
+  exit: function(unit) {
 
   }
 });

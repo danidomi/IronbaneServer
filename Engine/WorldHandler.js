@@ -19,7 +19,7 @@
 var dataPath = clientDir + 'plugins/game/data';
 
 var WorldHandler = Class.extend({
-  Init: function() {
+  init: function() {
 
 
     // World structure
@@ -37,7 +37,7 @@ var WorldHandler = Class.extend({
 
 
   },
-  Awake: function() {
+  awake: function() {
 
 
     this.BuildZoneWaypoints();
@@ -54,7 +54,7 @@ var WorldHandler = Class.extend({
 
   //worldHandler.LoadSwitches();
   },
-  BuildZoneWaypoints: function() {
+  buildZoneWaypoints: function() {
     // Load all waypoints!
 
 
@@ -101,7 +101,7 @@ var WorldHandler = Class.extend({
     log("Loaded "+count+" waypoints in total");
 
   },
-  Tick: function(dTime) {
+  tick: function(dTime) {
 
     if ( !this.hasLoadedWorld ) return;
 
@@ -116,12 +116,12 @@ var WorldHandler = Class.extend({
     }
 
   },
-  SaveWorld: function() {
+  saveWorld: function() {
     this.LoopCellsWithIndex(function(z, cx, cz) {
       this.SaveCell(z, cx, cz);
     });
   },
-  DoFullBackup: function() {
+  doFullBackup: function() {
     chatHandler.AnnounceMods("Backing up server...", "blue");
 
     var deploySh = spawn('sh', [ 'serverbackup.sh' ], {
@@ -147,18 +147,18 @@ var WorldHandler = Class.extend({
       //console.log('child process exited with code ' + code);
     });
   },
-  CheckWorldStructure: function(zone, cx, cz) {
+  checkWorldStructure: function(zone, cx, cz) {
     if ( ISDEF(zone) && !ISDEF(worldHandler.world[zone]) ) return false;
     if ( ISDEF(cx) && !ISDEF(worldHandler.world[zone][cx]) ) return false;
     if ( ISDEF(cz) && !ISDEF(worldHandler.world[zone][cx][cz]) ) return false;
     return true;
   },
-  BuildWorldStructure: function(zone, cx, cz) {
+  buildWorldStructure: function(zone, cx, cz) {
     if ( ISDEF(zone) && !ISDEF(worldHandler.world[zone]) ) worldHandler.world[zone] = {};
     if ( ISDEF(cx) && !ISDEF(worldHandler.world[zone][cx]) ) worldHandler.world[zone][cx] = {};
     if ( ISDEF(cz) && !ISDEF(worldHandler.world[zone][cx][cz]) ) worldHandler.world[zone][cx][cz] = {};
   },
-  LoadWorldLight: function() {
+  loadWorldLight: function() {
 
     this.world = {};
 
@@ -219,7 +219,7 @@ var WorldHandler = Class.extend({
 
 
   },
-  LoopUnits: function(fn) {
+  loopUnits: function(fn) {
     this.LoopCells(function(cell) {
       if ( !_.isUndefined(cell.units) ) {
         _.each(cell.units, function(unit) {
@@ -228,7 +228,7 @@ var WorldHandler = Class.extend({
       }
     });
   },
-  LoopUnitsNear: function(zone, cellX, cellZ, fn) {
+  loopUnitsNear: function(zone, cellX, cellZ, fn) {
     this.LoopCellsNear(zone, cellX, cellZ, function(cell) {
       if ( !_.isUndefined(cell.units) ) {
         _.each(cell.units, function(unit) {
@@ -237,7 +237,7 @@ var WorldHandler = Class.extend({
       }
     });
   },
-  LoopCells: function(fn) {
+  loopCells: function(fn) {
     _.each(this.world, function(zone) {
       _.each(zone, function(cellX) {
         _.each(cellX, function(cellZ) {
@@ -246,7 +246,7 @@ var WorldHandler = Class.extend({
       });
     });
   },
-  LoopCellsNear: function(zone, cellX, cellZ, fn) {
+  loopCellsNear: function(zone, cellX, cellZ, fn) {
     for(var x=cellX-1;x<=cellX+1;x++){
         for(var z=cellZ-1;z<=cellZ+1;z++){
             if ( worldHandler.CheckWorldStructure(zone, x, z) ) {
@@ -255,7 +255,7 @@ var WorldHandler = Class.extend({
         }
     }
   },
-  LoopCellsWithIndex: function(fn) {
+  loopCellsWithIndex: function(fn) {
     for(var zone in this.world) {
       if ( !this.world.hasOwnProperty(zone) ) continue;
       for(var cellX in this.world[zone]) {
@@ -267,7 +267,7 @@ var WorldHandler = Class.extend({
       }
     }
   },
-  LoadSwitches: function() {
+  loadSwitches: function() {
 
     this.switches = {};
 
@@ -290,7 +290,7 @@ var WorldHandler = Class.extend({
 
 
   },
-  LoadUnits: function(zone, cellX, cellZ) {
+  loadUnits: function(zone, cellX, cellZ) {
 
 
     var worldPos = CellToWorldCoordinates(cellX, cellZ, cellSize);
@@ -327,7 +327,7 @@ var WorldHandler = Class.extend({
 
 
   },
-  MakeUnitFromData: function(data) {
+  makeUnitFromData: function(data) {
     data.id = -data.id;
 
 
@@ -424,7 +424,7 @@ var WorldHandler = Class.extend({
 
     return unit;
   },
-  LoadCell: function(zone, cellX, cellZ) {
+  loadCell: function(zone, cellX, cellZ) {
     // Query the entry
     var path = dataPath+"/"+zone+"/"+cellX+"/"+cellZ;
 
@@ -500,7 +500,7 @@ var WorldHandler = Class.extend({
   // 3-3 Very mountaneous, hard to navigate
   // 3-4, 3-5, icepeaks :D
   // 4-3 super sharp peaks
-  GenerateCell: function(zone, cellX, cellZ) {
+  generateCell: function(zone, cellX, cellZ) {
 
     worldHandler.BuildWorldStructure(zone, cellX, cellZ);
 
@@ -514,7 +514,7 @@ var WorldHandler = Class.extend({
     this.SaveCell(zone, cellX, cellZ, true);
 
   },
-  SaveCell: function(zone, cellX, cellZ, clearObjects) {
+  saveCell: function(zone, cellX, cellZ, clearObjects) {
 
 
     var doClearObjects = clearObjects || false;
@@ -667,7 +667,7 @@ var WorldHandler = Class.extend({
     this.world[zone][cellX][cellZ].objects = [];
 
   },
-  UpdateNearbyUnitsOtherUnitsLists: function(zone, cellX, cellZ) {
+  updateNearbyUnitsOtherUnitsLists: function(zone, cellX, cellZ) {
     for(var x=cellX-1;x<=cellX+1;x++){
       for(var z=cellZ-1;z<=cellZ+1;z++){
         if ( worldHandler.CheckWorldStructure(zone, x, z) ) {
@@ -678,7 +678,7 @@ var WorldHandler = Class.extend({
       }
     }
   },
-  FindUnit: function(id) {
+  findUnit: function(id) {
 
     var foundUnit = null;
 
@@ -690,7 +690,7 @@ var WorldHandler = Class.extend({
     return foundUnit;
   },
   // Only for players!!!!
-  FindPlayerByName: function(name) {
+  findPlayerByName: function(name) {
 
     for(var z in worldHandler.world) {
       for(var cx in worldHandler.world[z]) {
@@ -712,7 +712,7 @@ var WorldHandler = Class.extend({
     }
     return null;
   },
-  FindUnitNear: function(id, nearUnit) {
+  findUnitNear: function(id, nearUnit) {
 
     var zone = nearUnit.zone;
     var cx = nearUnit.cellX;
@@ -736,7 +736,7 @@ var WorldHandler = Class.extend({
 
     return null;
   },
-  DeleteUnit: function(id) {
+  deleteUnit: function(id) {
 
     for(var z in worldHandler.world) {
       for(var cx in worldHandler.world[z]) {
@@ -758,7 +758,7 @@ var WorldHandler = Class.extend({
     }
     return false;
   },
-  AutoSaveCell: function(zone, x, z) {
+  autoSaveCell: function(zone, x, z) {
     // Set a timer to auto save this cell
     // If we set the height again, reset the timer
     if ( ISDEF(worldHandler.world[zone][x][z].saveTimer) ) {

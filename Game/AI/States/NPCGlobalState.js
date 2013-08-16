@@ -17,23 +17,23 @@
 
 
 var NPCGlobalState = State.extend({
-	Init: function() {
+	init: function() {
 	
 	
 	},
-	Enter: function(unit) {
+	enter: function(unit) {
 		
 		
 	},
-	Execute: function(unit, dTime) {
+	execute: function(unit, dTime) {
 	
 	
 	},
-	Exit: function(unit) {
+	exit: function(unit) {
 	
 	
 	},
-        HandleMessage: function(unit, message, data) {
+        handleMessage: function(unit, message, data) {
             
             
             

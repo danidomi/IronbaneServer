@@ -24,7 +24,7 @@ var meshPath = 'plugins/game/images/meshes/';
 var scaleModifierRightBeforeJSONLoader = 0;
 
 var Mesh = Unit.extend({
-  Init: function(position, rotation, id, param, metadata) {
+  init: function(position, rotation, id, param, metadata) {
 
     this.metadata = metadata ? metadata : {};
 
@@ -76,7 +76,7 @@ var Mesh = Unit.extend({
 
 
   },
-  Decorate: function() {
+  decorate: function() {
      this.particleEmitters = [];
 
 
@@ -166,7 +166,7 @@ var Mesh = Unit.extend({
 
 
   },
-  Destroy: function() {
+  destroy: function() {
 
     // Destroy events
     switch (this.meshData.name) {
@@ -179,7 +179,7 @@ var Mesh = Unit.extend({
 
     this._super();
   },
-  Add: function () {
+  add: function () {
 
     //console.warn(this.position.x);
 
@@ -215,7 +215,7 @@ var Mesh = Unit.extend({
 
 
   },
-  BuildMesh: function(geometry) {
+  buildMesh: function(geometry) {
 
 
     // Rotate geometry
@@ -352,7 +352,7 @@ var Mesh = Unit.extend({
     this.Decorate();
   //this.UpdateRotation();
   },
-  // OnLoad: function(mesh) {
+  // onLoad: function(mesh) {
   //   //this.mesh = mesh;
   //   this.mesh = new THREE.Mesh(mesh.geometry, new THREE.MeshFaceMaterial());
   //   ironbane.scene.add(this.mesh);
@@ -360,7 +360,7 @@ var Mesh = Unit.extend({
   // },
 
   // Hacky, currently only used by the previewMesh for the level editor
-  UpdateRotationByVertices: function() {
+  updateRotationByVertices: function() {
     if ( !this.mesh ) return;
 
 
@@ -406,7 +406,7 @@ var Mesh = Unit.extend({
     this.boundingBox = this.mesh.geometry.boundingBox;
     this.boundingBox.size = this.boundingBox.max.clone().subSelf(this.boundingBox.min);
   },
-  UpdateRotation: function() {
+  updateRotation: function() {
     if( this.mesh ) {
       this.mesh.rotation.x = (this.rotation.x).ToRadians();
       this.mesh.rotation.y = (this.rotation.y).ToRadians();
@@ -423,7 +423,7 @@ var Mesh = Unit.extend({
 
 
   },
-  Tick: function(dTime) {
+  tick: function(dTime) {
 
 
     // Adjust to the time of the day

@@ -19,7 +19,7 @@
 
  
 var ToggleableObstacle = Train.extend({
-    Init: function(position, rotation, id, param, metadata) {	
+    init: function(position, rotation, id, param, metadata) {	
                 
         if ( showEditor && levelEditor.editorGUI.opShowDebug ) {
             this.drawNameMesh = true;
@@ -42,7 +42,7 @@ var ToggleableObstacle = Train.extend({
 
 
     },  
-    BuildMesh: function(geometry) {          
+    buildMesh: function(geometry) {          
         
         this._super(geometry);
         
@@ -53,7 +53,7 @@ var ToggleableObstacle = Train.extend({
         
         
     },
-    Toggle: function(on) {
+    toggle: function(on) {
         this.on = on;
         
         var height = this.boundingBox.size.y * this.metadata.distanceMultiplier;
@@ -76,7 +76,7 @@ var ToggleableObstacle = Train.extend({
         
         
     },
-    Tick: function(dTime) {
+    tick: function(dTime) {
         
         switch (this.movementType) {            
             case ToggleableObstacleMovementTypeEnum.SwitchVertical:

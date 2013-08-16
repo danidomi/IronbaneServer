@@ -31,7 +31,7 @@ var walkSoundTime = 0.4;
 var meleeTime = 0.3;
 
 var Fighter = Unit.extend({
-  Init: function(position, rotation, id, name, param, size, health, armor, healthMax, armorMax) {
+  init: function(position, rotation, id, name, param, size, health, armor, healthMax, armorMax) {
     this.npctype = name;
     health = health || 0;
     healthMax = healthMax || 0;
@@ -114,7 +114,7 @@ this.walkSoundTimer = 0.0;
       }, 0);
     })(this);
   },
-  Add: function() {
+  add: function() {
 
 
 
@@ -127,7 +127,7 @@ this.walkSoundTimer = 0.0;
 
 
   },
-  Destroy: function() {
+  destroy: function() {
 
 
     //        if ( this.weaponMesh ) {
@@ -141,7 +141,7 @@ this.walkSoundTimer = 0.0;
     this._super();
 
   },
-  UpdateClothes: function() {
+  updateClothes: function() {
     var me = this;
 
     var texture = getCharacterTexture(me.appearance);
@@ -209,7 +209,7 @@ this.walkSoundTimer = 0.0;
     me.mesh.geometry.dynamic = true;
     ironbane.scene.add(me.mesh);
   },
-  UpdateWeapon: function(weapon) {
+  updateWeapon: function(weapon) {
 
 
 
@@ -293,7 +293,7 @@ this.walkSoundTimer = 0.0;
     ironbane.scene.add(this.weaponOrigin);
 
   },
-  Tick: function(dTime) {
+  tick: function(dTime) {
 
 
     // When are we allowed to jump?
@@ -787,7 +787,7 @@ this.walkSoundTimer = 0.0;
     }
   //debug.SetWatch('spriteStep', this.spriteStep);
   },
-  SwingWeapon: function(pos, weapon) {
+  swingWeapon: function(pos, weapon) {
 
 
 
@@ -838,7 +838,7 @@ this.walkSoundTimer = 0.0;
     this.attackStateTimer = attackSwingTime;
 
   },
-  Jump: function() {
+  jump: function() {
 
     if ( this.terrainAngle > 45 && this.position.y > GetZoneConfig('fluidLevel') ) return;
 
@@ -863,7 +863,7 @@ this.walkSoundTimer = 0.0;
 
     soundHandler.Play("jump", this.position);
   },
-  DoMeleeHitAnimation: function(position, power) {
+  doMeleeHitAnimation: function(position, power) {
 
     power = power || 0.3;
 
@@ -875,7 +875,7 @@ this.walkSoundTimer = 0.0;
     this.renderOffset = force;
 
   },
-  GetMeleeHit: function(attacker, power) {
+  getMeleeHit: function(attacker, power) {
 
 
     if ( attacker ) {
@@ -943,7 +943,7 @@ this.walkSoundTimer = 0.0;
     // }
 
   },
-  Die: function(noParticle) {
+  die: function(noParticle) {
     noParticle = noParticle || false;
 
     this.mesh.visible = false;
@@ -985,7 +985,7 @@ this.walkSoundTimer = 0.0;
 
 
   },
-  Respawn: function() {
+  respawn: function() {
 
 
     this.mesh.visible = true;
@@ -1004,7 +1004,7 @@ this.walkSoundTimer = 0.0;
 
 
   },
-  SetHealth: function(newHealth, noParticles) {
+  setHealth: function(newHealth, noParticles) {
 
     var damage = this.health - newHealth;
     this.health = newHealth;
@@ -1068,7 +1068,7 @@ this.walkSoundTimer = 0.0;
       },100);
     }
   },
-  SetArmor: function(newArmor, noParticles) {
+  setArmor: function(newArmor, noParticles) {
 
     var damage = this.armor - newArmor;
     this.armor = newArmor;

@@ -22,7 +22,7 @@
 var billboardSpritePath = 'plugins/game/images/billboards/';
  
 var Waypoint = Billboard.extend({
-    Init: function(position, nodeData) {	
+    init: function(position, nodeData) {	
                 
         this.nodeData = nodeData;
         

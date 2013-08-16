@@ -20,7 +20,7 @@
 
 
 var HeartPiece = Billboard.extend({
-    Init: function(position, id) {	        
+    init: function(position, id) {	        
                 
         
         var texture = "misc/heartpiece";
@@ -35,7 +35,7 @@ var HeartPiece = Billboard.extend({
                 this.renderOffsetMultiplier = 1.0;      
                 
     },
-    Add: function() {
+    add: function() {
         this._super();
 
         (function(unit){
@@ -46,7 +46,7 @@ var HeartPiece = Billboard.extend({
         })(this);
         
     },
-    Tick: function(dTime) {
+    tick: function(dTime) {
       
         this.renderOffset = new THREE.Vector3(0, 0.5 + (Math.cos((new Date()).getTime()/1000.0)*0.25), 0);        
 

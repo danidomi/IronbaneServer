@@ -18,7 +18,7 @@
 
 
 var NPC = Fighter.extend({
-    Init: function(data) {
+    init: function(data) {
 
 
 
@@ -51,21 +51,21 @@ var NPC = Fighter.extend({
 
 
     },
-    Awake: function(){
+    awake: function(){
       this._super();
 
 
 
 
     },
-    Tick: function(dTime) {
+    tick: function(dTime) {
 
         if ( this.calculateNewPathTimeout >= 0 ) this.calculateNewPathTimeout -= dTime;
 
         this._super(dTime);
 
     },
-    SetWeaponsAndLoot: function() {
+    setWeaponsAndLoot: function() {
         this.weapons = [];
         this.loot = [];
         this.weapon = null;
@@ -133,7 +133,7 @@ var NPC = Fighter.extend({
 
         //console.log('**** LOOT SET FOR: ', this.id, this.loot);
     },
-    Jump: function() {
+    jump: function() {
         this.EmitNearby("doJump", {
             id:this.id
         });
@@ -141,7 +141,7 @@ var NPC = Fighter.extend({
         this.jumpTimeout = 2.0;
     },
     // Return an array of nodes or positions that we can follow in order to reach our destination
-    TravelToPosition: function(targetPosition, useSeek, deceleration) {
+    travelToPosition: function(targetPosition, useSeek, deceleration) {
         var distance = DistanceSq(this.position, this.targetNodePosition);
 
         useSeek = useSeek || false;

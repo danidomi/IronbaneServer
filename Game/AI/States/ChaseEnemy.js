@@ -17,7 +17,7 @@
 
 
 var ChaseEnemy = State.extend({
-  Init: function(enemy) {
+  init: function(enemy) {
 
     this.enemy = enemy;
 
@@ -27,7 +27,7 @@ var ChaseEnemy = State.extend({
 
 
   },
-  Enter: function(npc) {
+  enter: function(npc) {
 
     // We want to outrun them still...
     npc.maxSpeed = 4.0;
@@ -48,7 +48,7 @@ var ChaseEnemy = State.extend({
 
 
   },
-  Execute: function(npc, dTime) {
+  execute: function(npc, dTime) {
 
 
     if ( this.minimumChaseTime > 0 ) this.minimumChaseTime -= dTime;
@@ -136,7 +136,7 @@ var ChaseEnemy = State.extend({
     }
 
   },
-  Exit: function(npc) {
+  exit: function(npc) {
 
     if ( this.enemy.health > 0 ) {
       npc.EmitNearby("addParticle", {
@@ -161,7 +161,7 @@ var ChaseEnemy = State.extend({
     }
 
   },
-  HandleMessage: function(unit, message, data) {
+  handleMessage: function(unit, message, data) {
 
 
   }

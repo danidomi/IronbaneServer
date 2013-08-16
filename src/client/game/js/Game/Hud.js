@@ -39,13 +39,13 @@ var selectedHair = 1;
 var messageFadeTime = 0.2;
 
 var BigMessage = Class.extend({
-    Init: function(message, duration) {
+    init: function(message, duration) {
         this.message = message;
         this.duration = duration;
         this.timeLeft = duration;
         this.opacity = 1;
     },
-    Tick: function(dTime) {
+    tick: function(dTime) {
         this.timeLeft -= dTime;
 
         var opac = 0;
@@ -66,7 +66,7 @@ var BigMessage = Class.extend({
 var HUDHandler = Class.extend({
     bigMessages: [],
     alertBoxActive: false,
-    Init: function() {
+    init: function() {
         this.allowSound = !_.isUndefined(localStorage.allowSound) ? (localStorage.allowSound === 'true') : true;
 
         if (Detector.webgl) {
@@ -152,7 +152,7 @@ var HUDHandler = Class.extend({
             handleClick(true);
         }, 1000);
     },
-    MakeSoundButton: function() {
+    makeSoundButton: function() {
         var checkSoundToggle = function(value) {
 
             // We can only change the toggle in the main menu, so always stop/play
@@ -182,7 +182,7 @@ var HUDHandler = Class.extend({
     ShowMainMenuHUD: function() {
         $("#versionNumber, #devNews, #logo, #loadingBar").show();
     },
-    MakeSlotSpace: function(isLoot) {
+    makeSlotSpace: function(isLoot) {
         var HUD = this;
         var div = isLoot ? '#lootBag' : '#itemBar';
         var spaces = isLoot ? 10 : 10;
@@ -212,7 +212,7 @@ var HUDHandler = Class.extend({
             });
         }
     },
-    UpdateEquippedItems: function() {
+    updateEquippedItems: function() {
         for (var x = 0; x < 10; x++) {
             var item = hudHandler.FindItemBySlot(x, false);
             if (item) {
@@ -231,23 +231,23 @@ var HUDHandler = Class.extend({
             }
         }
     },
-    SetEquipped: function(slot) {
+    setEquipped: function(slot) {
         var name = 'is' + slot;
         $('#' + name + '_equip').attr('class', 'equipped');
     },
-    SetUsed: function(slot) {
+    setUsed: function(slot) {
         var name = 'is' + slot;
         $('#' + name + '_equip').attr('class', 'used');
     },
-    SetUnequipped: function(slot) {
+    setUnequipped: function(slot) {
         var name = 'is' + slot;
         $('#' + name + '_equip').attr('class', 'unequipped');
     },
-    SetUnoccupied: function(slot) {
+    setUnoccupied: function(slot) {
         var name = 'is' + slot;
         $('#' + name + '_equip').attr('class', 'unoccupied');
     },
-    ItemSwitchEvent: function(event, ui) {
+    itemSwitchEvent: function(event, ui) {
         var draggable = ui.draggable;
 
         // Are we dragging an inventory item?
@@ -309,7 +309,7 @@ var HUDHandler = Class.extend({
             }
         }
     },
-    PutItem: function(startItem, slotNumber, slotID, acceptOffer) {
+    putItem: function(startItem, slotNumber, slotID, acceptOffer) {
         // We put something from the inventory to the loot
         var data = {
             "npcID": ironbane.player.lootUnit.id,
@@ -402,7 +402,7 @@ var HUDHandler = Class.extend({
 
         });
     },
-    DropItem: function(startItem, itemID, itemNumber) {
+    dropItem: function(startItem, itemID, itemNumber) {
         socketHandler.socket.emit('dropItem', {
             'itemID': itemNumber
         }, function(reply) {
@@ -444,7 +444,7 @@ var HUDHandler = Class.extend({
 
         });
     },
-    SwitchItem: function(slotNumber, startItem, itemID, slotID, inLoot) {
+    switchItem: function(slotNumber, startItem, itemID, slotID, inLoot) {
         var data = {
             'slotNumber': slotNumber,
             'itemID': startItem.id
@@ -483,7 +483,7 @@ var HUDHandler = Class.extend({
 
         });
     },
-    LootItem: function(switchItem, startItem, slotNumber, slotID) {
+    lootItem: function(switchItem, startItem, slotNumber, slotID) {
         var data = {
             'npcID': ironbane.player.lootUnit.id,
             'switchID': switchItem ? switchItem.id : 0,
@@ -530,7 +530,7 @@ var HUDHandler = Class.extend({
 
         });
     },
-    FindItemBySlot: function(slot, inLoot) {
+    findItemBySlot: function(slot, inLoot) {
         var list = inLoot ? ironbane.player.lootItems : socketHandler.playerData.items;
         for (var i = 0; i < list.length; i++) {
             var item = list[i];
@@ -550,7 +550,7 @@ var HUDHandler = Class.extend({
         }
         return null;
     },
-    MakeItemHover: function(div, item) {
+    makeItemHover: function(div, item) {
         var template = items[item.template],
             content = '',
             itemUrl = '',
@@ -637,7 +637,7 @@ var HUDHandler = Class.extend({
 
         MakeHoverBox(div, content);
     },
-    MakeSlotItems: function(isLoot) {
+    makeSlotItems: function(isLoot) {
         var data = isLoot ? ironbane.player.lootItems : socketHandler.playerData.items;
 
         if (isLoot) {
@@ -702,7 +702,7 @@ var HUDHandler = Class.extend({
 
         hudHandler.UpdateEquippedItems();
     },
-    ReloadInventory: function() {
+    reloadInventory: function() {
         if (ironbane.player) {
             this.MakeSlotItems(false);
             if (ironbane.player.canLoot) {
@@ -710,7 +710,7 @@ var HUDHandler = Class.extend({
             }
         }
     },
-    ResizeFrame: function() {
+    resizeFrame: function() {
         frameWidth = $(window).width();
         frameHeight = $(window).height();
         $('#gameFrame').css('width', frameWidth);
@@ -725,7 +725,7 @@ var HUDHandler = Class.extend({
             ironbane.stats.domElement.style.top = ($(window).height() - 55) + 'px';
         }
     },
-    PositionHud: function() {
+    positionHud: function() {
         var halfWidth = frameWidth * 0.5,
             halfHeight = frameHeight * 0.5;
 
@@ -780,7 +780,7 @@ var HUDHandler = Class.extend({
         $('#devNews').css('left', (halfWidth + 200) + 'px');
         $('#devNews').css('top', (halfHeight - 57) + 'px');
     },
-    GetStatContent: function(amount, prefix, fullStat, onlyFull, noMarginSpace) {
+    getStatContent: function(amount, prefix, fullStat, onlyFull, noMarginSpace) {
         var content = '',
             x = 0;
 
@@ -821,7 +821,7 @@ var HUDHandler = Class.extend({
 
         return content;
     },
-    MakeCoinBar: function(flash) {
+    makeCoinBar: function(flash) {
         var self = this,
             el = $('#coinBar'),
             coins = ironbane.player.getTotalCoins(),
@@ -844,7 +844,7 @@ var HUDHandler = Class.extend({
             }, 50);
         }
     },
-    MakeHealthBar: function(doFlash) {
+    makeHealthBar: function(doFlash) {
         doFlash = doFlash || false;
         var content = this.GetStatContent(ironbane.player.health, doFlash ? 'misc/heart_medium_flash' : 'misc/heart_medium', ironbane.player.healthMax);
         //var content = this.GetStatContent(1, 'misc/heart_medium', 6);
@@ -855,7 +855,7 @@ var HUDHandler = Class.extend({
             }, 50);
         }
     },
-    MakeArmorBar: function(doFlash) {
+    makeArmorBar: function(doFlash) {
         doFlash = doFlash || false;
         var content = this.GetStatContent(ironbane.player.armor, doFlash ? 'misc/armor_medium_flash' : 'misc/armor_medium', ironbane.player.armorMax);
         $('#armorBar').html(content);
@@ -863,7 +863,7 @@ var HUDHandler = Class.extend({
                 hudHandler.MakeArmorBar()
             }, 50);
     },
-    HideAlert: function() {
+    hideAlert: function() {
         $('#alertBox').hide();
         hudHandler.alertBoxActive = false;
 
@@ -871,7 +871,7 @@ var HUDHandler = Class.extend({
         if (!_.isUndefined(hudHandler.doNo)) hudHandler.doNo = undefined;
 
     },
-    MessageAlert: function(message, options, doYes, doNo) {
+    messageAlert: function(message, options, doYes, doNo) {
 
         var options = options || null;
 
@@ -926,13 +926,13 @@ var HUDHandler = Class.extend({
             hudHandler.doNo = undefined;
         });
     },
-    DisableButtons: function(buttons) {
+    disableButtons: function(buttons) {
         for (var b = 0; b < buttons.length; b++) {
             this.oldButtonClasses[buttons[b]] = $('#' + buttons[b]).attr('class');
             $('#' + buttons[b]).attr('class', 'ibutton_disabled');
         }
     },
-    EnableButtons: function(buttons) {
+    enableButtons: function(buttons) {
         for (var b = 0; b < buttons.length; b++) {
             if (!_.isUndefined(this.oldButtonClasses[buttons[b]])) {
                 $('#' + buttons[b]).attr('class', this.oldButtonClasses[buttons[b]]);
@@ -959,17 +959,17 @@ var HUDHandler = Class.extend({
         $('div[id^="ii"]').show();
         // $('#chatBox').show();
     },
-    HideMenuScreen: function() {
+    hideMenuScreen: function() {
         $('#loginBox, #devNews, #sideMenu, #soundToggleBox').hide();
         $('#chatBox, #itemBar, #coinBar, #statBar').show();
         soundHandler.FadeOut("music/maintheme", 5000);
     },
-    ShowMenuScreen: function() {
+    showMenuScreen: function() {
         $('#sideMenu, #loginBox, #devNews, #soundToggleBox').show();
         $('#chatBox, #itemBar, #lootBag, #coinBar, #statBar').hide();
         soundHandler.FadeIn("music/maintheme", 5000);
     },
-    MakeCharSelectionScreen: function() {
+    makeCharSelectionScreen: function() {
         var slotsLeft = slotsAvailable - charCount;
 
         var text = '';
@@ -1541,7 +1541,7 @@ var HUDHandler = Class.extend({
         });
 
     },
-    Tick: function(dTime) {
+    tick: function(dTime) {
 
         var output = '';
 
@@ -1563,20 +1563,20 @@ var HUDHandler = Class.extend({
 
 
     },
-    AddBigMessage: function(msg, duration) {
+    addBigMessage: function(msg, duration) {
         this.bigMessages.push(new BigMessage(msg, duration));
     },
-    ShowMap: function() {
+    showMap: function() {
 
         $("#map").css("background-image", "url(plugins/game/data/" + terrainHandler.zone + "/map.png" + (isEditor ? "?" + (new Date()).getTime() : "") + ")");
 
         $("#map").show();
 
     },
-    HideMap: function() {
+    hideMap: function() {
         $("#map").hide();
     },
-    ShowBook: function(text, page) {
+    showBook: function(text, page) {
 
         //<button id="bookPrevPage" class="ibutton_book" style="width:150px">Previous Page</button>
         //<button id="bookNextPage" class="ibutton_book" style="width:150px">Next Page</button>
@@ -1616,10 +1616,10 @@ var HUDHandler = Class.extend({
             $("#bookFooterRight").empty();
         }
     },
-    HideBook: function() {
+    hideBook: function() {
         $("#book").hide();
     },
-    AddChatMessage: function(msg) {
+    addChatMessage: function(msg) {
         if (typeof msg === 'string') {
             // wrap it in an object for the template
             msg = {

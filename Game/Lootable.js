@@ -17,7 +17,7 @@
 
 var Lootable = Unit.extend({
     lifeTime: 0,
-    Init: function(data, loadItems) {
+    init: function(data, loadItems) {
         this._super(data);
 
         // HACKY HACKY!!! See NPC
@@ -65,10 +65,10 @@ var Lootable = Unit.extend({
             });
         });
     },
-    Awake: function() {
+    awake: function() {
         this._super();
     },
-    Restock: function() {
+    restock: function() {
         //    log("Restocking...");
         this.loot = [];
         // Load loot from metadata (with percentages!)
@@ -94,7 +94,7 @@ var Lootable = Unit.extend({
             }
         }
     },
-    Tick: function(dTime) {
+    tick: function(dTime) {
         this.lifeTime += dTime;
 
         // Lootbags (<10) are removed while lootable meshes restock

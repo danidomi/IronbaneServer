@@ -22,7 +22,7 @@ var Deceleration = {
 };
 
 var SteeringBehaviour = Class.extend({
-    Init: function(unit) {
+    init: function(unit) {
         this.unit = unit;
 
 
@@ -37,19 +37,19 @@ var SteeringBehaviour = Class.extend({
 		this.wanderJitter = 180.0;
 		this.wanderTarget = new THREE.Vector3();
     },
-    Calculate: function() {
+    calculate: function() {
         this.steeringForce.set(0,0,0);
     },
-    Seek: function(targetPos) {
+    seek: function(targetPos) {
         var desiredVelocity = targetPos.clone().subSelf(this.unit.position).normalize().multiplyScalar(this.unit.maxSpeed);
         return desiredVelocity.subSelf(this.unit.velocity);
     },
-    Flee: function(targetPos) {
+    flee: function(targetPos) {
 
         var desiredVelocity = this.unit.position.clone().subSelf(targetPos).normalize().multiplyScalar(this.unit.maxSpeed);
         return desiredVelocity.subSelf(this.unit.velocity);
     },
-    Arrive: function(targetPos, deceleration) {
+    arrive: function(targetPos, deceleration) {
         var ToTarget = targetPos.clone().subSelf(this.unit.position);
 
 		//calculate the distance to the target position
@@ -74,7 +74,7 @@ var SteeringBehaviour = Class.extend({
 
         return new THREE.Vector3();
     },
-	Pursuit: function(evader) {
+	pursuit: function(evader) {
 
         var toEvader = evader.position.clone().subSelf(this.unit.position);
 
@@ -90,14 +90,14 @@ var SteeringBehaviour = Class.extend({
 
 		return this.Seek(seek);
 	},
-	Evade: function(pursuer) {
+	evade: function(pursuer) {
         var toPursuer = pursuer.position.clone().subSelf(this.unit.position);
 
 		var lookAheadTime = toPursuer.length() / (this.unit.maxSpeed + pursuer.velocity.length());
 
 		return this.Flee(pursuer.position.clone().addSelf(pursuer.velocity.clone().multiplyScalar(lookAheadTime)));
 	},
-	TurnaroundTime: function(unit, targetPos) {
+	turnaroundTime: function(unit, targetPos) {
 		var toTarget = targetPos.clone().subSelf(unit.position);
 
 		var dot = unit.heading.dot(toTarget);
@@ -106,10 +106,10 @@ var SteeringBehaviour = Class.extend({
 
 		return (dot - 1.0) * -coefficient;
 	},
-    ResetWander: function() {
+    resetWander: function() {
         this.wanderTarget = new THREE.Vector3();
     },
-	Wander: function() {
+	wander: function() {
 
 		this.wanderTarget.addSelf(new THREE.Vector3(RandomClamped() * this.wanderJitter,
 		0,
@@ -120,7 +120,7 @@ var SteeringBehaviour = Class.extend({
 		var offset = this.unit.heading.clone().multiplyScalar(this.wanderDistance);
 		return offset.addSelf(this.wanderTarget);
 	},
-	Interpose: function(unitA, unitB) {
+	interpose: function(unitA, unitB) {
 
 		var midPoint = unitA.position.clone().addSelf(unitB.position).multiplyScalar(0.5);
 

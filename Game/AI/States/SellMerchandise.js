@@ -16,15 +16,15 @@
 */
 
 var SellMerchandise = State.extend({
-    Init: function() {
+    init: function() {
 
 
     },
-    Enter: function(unit) {
+    enter: function(unit) {
 
         this.restockTimer = 300.0;
     },
-    Execute: function(unit, dTime) {
+    execute: function(unit, dTime) {
 
 
         this.restockTimer -= dTime;
@@ -45,11 +45,11 @@ var SellMerchandise = State.extend({
         }
 
     },
-    Exit: function(unit) {
+    exit: function(unit) {
 
 
     },
-    HandleMessage: function(unit, message, data) {
+    handleMessage: function(unit, message, data) {
 
 
     }

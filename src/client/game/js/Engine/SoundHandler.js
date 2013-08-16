@@ -226,7 +226,7 @@ var SoundHandler = Class.extend({
     ],
     sounds: {},
     loadedMainMenuMusic: false,
-    Init: function() {
+    init: function() {
         var self = this;
 
         // Start SoundManager2
@@ -241,7 +241,7 @@ var SoundHandler = Class.extend({
             }
         });
     },
-    Preload: function() {
+    preload: function() {
 
         // TODO: Add a list of all NPC sounds using unitTemplates
         // Check if the sounds exist and load em
@@ -274,7 +274,7 @@ var SoundHandler = Class.extend({
             };
         });
     },
-    FadeOut: function(sound, time) {
+    fadeOut: function(sound, time) {
         var self = this;
 
         this.PlayOnce(sound);
@@ -290,12 +290,12 @@ var SoundHandler = Class.extend({
         }).start();
     },
 
-    SetVolume: function(sound, volume) {
+    setVolume: function(sound, volume) {
         if(sound in this.sounds) {
             this.sounds[sound].sound.setVolume(volume);
         }
     },
-    FadeIn: function(sound, time) {
+    fadeIn: function(sound, time) {
         if(!(sound in this.sounds)) {
             return;
         }
@@ -313,12 +313,12 @@ var SoundHandler = Class.extend({
             self.SetVolume(sound, this.volume);
         }).start();
     },
-    OnLoad: function(sound) {
+    onLoad: function(sound) {
         if (sound === "music/maintheme") {
             this.loadedMainMenuMusic = true;
         }
     },
-    PlayOnce: function(soundID, position) {
+    playOnce: function(soundID, position) {
         if (!hudHandler.allowSound) {
             return;
         }
@@ -340,7 +340,7 @@ var SoundHandler = Class.extend({
         }
         return sounds;
     },
-    Play: function(soundID, position) {
+    play: function(soundID, position) {
         if (!hudHandler.allowSound) {
             return;
         }
@@ -369,7 +369,7 @@ var SoundHandler = Class.extend({
         //soundManager.setPan(sound, 80);
         sound.sound.play();
     },
-    StopAll: function() {
+    stopAll: function() {
         soundManager.stopAll();
     }
 });

@@ -17,23 +17,23 @@
 
 
 var State = Class.extend({
-	Init: function() {
+	init: function() {
 
 
 	},
-	Enter: function(unit) {
+	enter: function(unit) {
 
 
 	},
-	Execute: function(unit, dTime) {
+	execute: function(unit, dTime) {
 
 
 	},
-	Exit: function(unit) {
+	exit: function(unit) {
 
 
 	},
-    HandleMessage: function(unit, telegram) {
+    handleMessage: function(unit, telegram) {
 
 
     }

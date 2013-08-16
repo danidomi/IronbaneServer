@@ -43,7 +43,7 @@ var transitionStateEnum = {
 //
 
 var TerrainHandler = Class.extend({
-  Init: function() {
+  init: function() {
     // Multidimensional array per x/z cell
     this.cells = {};
 
@@ -64,7 +64,7 @@ var TerrainHandler = Class.extend({
     // because of gravity inside a terrain/mesh between teleports
     this.transitionState = transitionStateEnum.END;
   },
-  Destroy: function() {
+  destroy: function() {
     _.each(this.cells, function(cell) {
       cell.Destroy();
     });
@@ -83,7 +83,7 @@ var TerrainHandler = Class.extend({
 
     this.terrainHandlerStatusEnum = this.DESTROYED;
   },
-  Awake: function() {
+  awake: function() {
     // Called after everything is loaded
 
     this.BuildWaterMesh();
@@ -99,7 +99,7 @@ var TerrainHandler = Class.extend({
 
 
   },
-  BuildWaterMesh: function() {
+  buildWaterMesh: function() {
     if ( this.waterMesh ) {
       ironbane.scene.remove(this.waterMesh);
     }
@@ -173,12 +173,12 @@ var TerrainHandler = Class.extend({
 
     ironbane.scene.add(this.waterMesh);
   },
-  GetCellByWorldPosition: function(position) {
+  getCellByWorldPosition: function(position) {
     var cp = WorldToCellCoordinates(position.x, position.z, cellSize);
 
     return this.GetCellByGridPosition(cp.x, cp.z);
   },
-  GetCellByGridPosition: function(x, z) {
+  getCellByGridPosition: function(x, z) {
     var id = x+'-'+z;
 
     if ( typeof this.cells[id] == 'undefined' ) {
@@ -192,10 +192,10 @@ var TerrainHandler = Class.extend({
 
     return this.cells[id];
   },
-  GetReferenceLocation: function() {
+  getReferenceLocation: function() {
     return this.GetReferenceLocationNoClone().clone();
   },
-  GetReferenceLocationNoClone: function() {
+  getReferenceLocationNoClone: function() {
     var p;
 
     if ( ironbane.player ) {
@@ -210,7 +210,7 @@ var TerrainHandler = Class.extend({
 
     return p;
   },
-  ChangeZone: function(newZone) {
+  changeZone: function(newZone) {
 
     if ( this.zone != newZone ) {
       this.Destroy();
@@ -229,12 +229,12 @@ var TerrainHandler = Class.extend({
     }
 
   },
-  ReloadCells: function() {
+  reloadCells: function() {
     _.each(this.cells, function(cell) {
       cell.Reload();
     });
   },
-  RayTest: function(ray, options) {
+  rayTest: function(ray, options) {
 
     options = options || {};
 
@@ -337,7 +337,7 @@ var TerrainHandler = Class.extend({
 
     return intersects;
   },
-  RebuildOctree: function() {
+  rebuildOctree: function() {
     this.lastOctreeBuildPosition = terrainHandler.GetReferenceLocation();
     this.octreeResults = terrainHandler.skybox.terrainOctree
                             .search(this.lastOctreeBuildPosition, 15, true);
@@ -347,7 +347,7 @@ var TerrainHandler = Class.extend({
         .concat(cell.octree.search(this.lastOctreeBuildPosition, 15, true));
     }, this);
   },
-  Tick: function(dTime) {
+  tick: function(dTime) {
 
     if ( this.waterMesh ) {
       this.waterMesh.material.uniforms.time.value = (window.performance.now() - ironbane.startTime)/1000.0;
@@ -461,7 +461,7 @@ var TerrainHandler = Class.extend({
 
 
   },
-  IsLoadingCells: function() {
+  isLoadingCells: function() {
     return _.every(this.cells, function(cell) {
       return cell.status === cellStatusEnum.LOADING;
     });

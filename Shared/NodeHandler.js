@@ -5,10 +5,10 @@
 
 
 var NodeHandler = Class.extend({
-    Init: function() {
+    init: function() {
 
     },
-    GetNodeArrayIndex: function(zone, id) {
+    getNodeArrayIndex: function(zone, id) {
 
         if ( SERVER ) {
             for(var cx in worldHandler.world[zone]) {
@@ -48,7 +48,7 @@ var NodeHandler = Class.extend({
 
         return null;
     },
-    AddNode: function(zone, id, position) {
+    addNode: function(zone, id, position) {
 
         var cellPos = WorldToCellCoordinates(position.x, position.z, cellSize);
 
@@ -76,11 +76,11 @@ var NodeHandler = Class.extend({
         }
 
     },
-    GetNodePosition: function(zone, id) {
+    getNodePosition: function(zone, id) {
         var nodeInfo = this.GetNodeArrayIndex(zone, id);
         return worldHandler.world[zone][nodeInfo.cx][nodeInfo.cz]['graph']['nodes'][nodeInfo.index]['pos'];
     },
-    AddEdge: function(zone, from, to, twoway) {
+    addEdge: function(zone, from, to, twoway) {
 
         twoway = twoway || false;
 
@@ -114,7 +114,7 @@ var NodeHandler = Class.extend({
             this.AddEdge(zone, to, from, false);
         }
     },
-    DeleteNode: function(zone, id) {
+    deleteNode: function(zone, id) {
         var nodeInfoDelete = this.GetNodeArrayIndex(zone, id);
 
         if ( SERVER ) log("Going to delete "+id+" in "+zone);

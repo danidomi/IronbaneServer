@@ -22,7 +22,7 @@ var CameraStatusEnum = {
 };
 
 var Player = Fighter.extend({
-    Init: function(position, rotation, id, name) {
+    init: function(position, rotation, id, name) {
         this._super(position, rotation, id, name, 0,
             socketHandler.playerData.size, socketHandler.playerData.health, socketHandler.playerData.armor,
             socketHandler.playerData.healthMax, socketHandler.playerData.armorMax);
@@ -89,7 +89,7 @@ var Player = Fighter.extend({
             return memo + num;
         }, 0);
     },
-    CheckForItemsBeforeMakingImage: function() {
+    checkForItemsBeforeMakingImage: function() {
         if (socketHandler.playerData.items === null) {
             setTimeout(function() {
                 ironbane.player.CheckForItemsBeforeMakingImage();
@@ -104,14 +104,14 @@ var Player = Fighter.extend({
             }
         }
     },
-    Destroy: function() {
+    destroy: function() {
         //$('#loadingBar').show();
         this.DestroyAimMesh();
         this.DestroyAimHelperMesh();
 
         this._super();
     },
-  DestroyAimMesh: function() {
+  destroyAimMesh: function() {
     if ( this.aimMesh ) {
       ironbane.scene.remove(this.aimMesh);
 
@@ -123,7 +123,7 @@ var Player = Fighter.extend({
 
     }
   },
-  DestroyAimHelperMesh: function() {
+  destroyAimHelperMesh: function() {
     if ( this.aimHelperMesh ) {
       ironbane.scene.remove(this.aimHelperMesh);
 
@@ -148,7 +148,7 @@ var Player = Fighter.extend({
     }
 
   },
-  Tick: function(dTime) {
+  tick: function(dTime) {
 
     this.sendDataTimeout -= dTime;
 
@@ -815,7 +815,7 @@ var Player = Fighter.extend({
     this._super(dTime);
 
   },
-  SendData: function() {
+  sendData: function() {
 
     // Don't send heavy packets
 
@@ -865,7 +865,7 @@ var Player = Fighter.extend({
 
 
   },
-  AttemptAttack: function(position) {
+  attemptAttack: function(position) {
     var player = this;
 
     if (player.attackTimeout > 0.0) {
@@ -924,7 +924,7 @@ var Player = Fighter.extend({
       }
     }
   },
-  UseItem: function(barIndex) {
+  useItem: function(barIndex) {
 
     if ( this.health <= 0 ) {
       bm("You are dead!");
@@ -1097,7 +1097,7 @@ var Player = Fighter.extend({
 
 
   },
-  GetEquippedWeapon: function() {
+  getEquippedWeapon: function() {
 
     for(var i=0;i<socketHandler.playerData.items.length;i++) {
       var item = socketHandler.playerData.items[i];
@@ -1111,7 +1111,7 @@ var Player = Fighter.extend({
 
     return null;
   },
-  UpdateAppearance: function() {
+  updateAppearance: function() {
 
     this.appearance.skin = socketHandler.playerData.skin;
     this.appearance.eyes = socketHandler.playerData.eyes;
@@ -1148,7 +1148,7 @@ var Player = Fighter.extend({
     this.UpdateClothes();
 
   },
-  UpdateMouseProjectedPosition: function() {
+  updateMouseProjectedPosition: function() {
     if ( !ironbane.player ) return;
 
     var vector = new THREE.Vector3( mouse.x, mouse.y, 0.5 );
@@ -1188,10 +1188,10 @@ var Player = Fighter.extend({
     }
 
   },
-  ShowTutorial:function(id) {
+  showTutorial: function(id) {
     $(".ib-tutorial").addClass("tut"+id);
   },
-  HideTutorial:function(id) {
+  hideTutorial: function(id) {
     $(".ib-tutorial").removeClass("tut"+id);
   }
 });

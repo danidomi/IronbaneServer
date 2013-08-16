@@ -19,7 +19,7 @@
 
 
 var Wander = State.extend({
-	Init: function() {
+	init: function() {
 
 
 
@@ -28,14 +28,14 @@ var Wander = State.extend({
             this.targetPosition = new THREE.Vector3();
 
 	},
-	Enter: function(npc) {
+	enter: function(npc) {
 
             this.targetPosition = npc.position.clone();
 
             npc.maxSpeed = 2.0;
 
 	},
-	Execute: function(npc, dTime) {
+	execute: function(npc, dTime) {
 
 
             if ( npc.health <= 0 || npc.template.disabled ) return;
@@ -71,10 +71,10 @@ var Wander = State.extend({
             npc.TravelToPosition(this.targetPosition);
 
 	},
-	Exit: function(npc) {
+	exit: function(npc) {
 
 	},
-    HandleMessage: function(npc, message, data) {
+    handleMessage: function(npc, message, data) {
 
         // switch (message) {
         //   case "attacked":

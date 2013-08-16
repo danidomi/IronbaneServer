@@ -19,7 +19,7 @@
 
 
 var Debugger = Class.extend({
-    Init: function() {
+    init: function() {
         this.on = true;
 	   this.watches = [];
 
@@ -30,7 +30,7 @@ var Debugger = Class.extend({
 
         setTimeout(function(){debug.Clear()}, 0);
     },
-    SetWatch: function(name, variable, show) {
+    setWatch: function(name, variable, show) {
         // if ( !showEditor) return;
 
         show = _.isUndefined(show) ? debugging : showEditor;
@@ -43,7 +43,7 @@ var Debugger = Class.extend({
 
             this.watches.push({ name: name, variable: variable });
     },
-    Tick: function(dTime) {
+    tick: function(dTime) {
         // if ( !showEditor ) return;
 
             var text = '';
@@ -56,13 +56,13 @@ var Debugger = Class.extend({
             this.watches = [];
 
     },
-    Clear: function() {
+    clear: function() {
         for(var h=0;h<this.arrowHelpers.length;h++) {
             ironbane.scene.remove(this.arrowHelpers[h]);
         }
         this.arrowHelpers = [];
     },
-    DrawVector: function(vector, origin, color) {
+    drawVector: function(vector, origin, color) {
 
         color = color || 0x0000FF;
         origin = origin || new THREE.Vector3(0,0,0);

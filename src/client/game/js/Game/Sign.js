@@ -18,7 +18,7 @@
 
 
 var Sign = Mesh.extend({
-  Init: function(position, rotation, id, param, metadata) {
+  init: function(position, rotation, id, param, metadata) {
 
     this.signType = param;
 
@@ -41,7 +41,7 @@ var Sign = Mesh.extend({
     this.dynamic = false;
 
   },
-  BuildMesh: function(geometry) {
+  buildMesh: function(geometry) {
 
     this._super(geometry);
 
@@ -135,7 +135,7 @@ var Sign = Mesh.extend({
 
     this.object3D.add(this.textMesh);
   },
-  Tick: function(dTime) {
+  tick: function(dTime) {
 
 
     this._super(dTime);

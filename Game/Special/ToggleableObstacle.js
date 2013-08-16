@@ -19,7 +19,7 @@
 
 
 var ToggleableObstacle = Unit.extend({
-  Init: function(data) {
+  init: function(data) {
 	
 
     this._super(data);
@@ -31,13 +31,13 @@ var ToggleableObstacle = Unit.extend({
     this.keyUseTimeout = 0.0;
 
   },
-  Awake: function() {
+  awake: function() {
     //log("[ToggleableObstacle] Awake, updating leverlist!");
     this._super();
                      
     this.UpdateLeverList();        
   },    
-  UpdateLeverList: function() {
+  updateLeverList: function() {
     // Get all levers in the world, and check which ones have a targetUnit that points to us
           
     this.leverList = [];
@@ -55,7 +55,7 @@ var ToggleableObstacle = Unit.extend({
     })(this);
           
   },
-  Toggle: function(bool) {
+  toggle: function(bool) {
             
     this.on = bool;
             
@@ -70,7 +70,7 @@ var ToggleableObstacle = Unit.extend({
       this.leverList[l].Toggle(this.on);
     }
   },
-  Tick: function(dTime) {
+  tick: function(dTime) {
       
     // Check if there are players nearby, holding a key with an attr1 that points to us
     this._super(dTime);

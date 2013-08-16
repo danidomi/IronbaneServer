@@ -16,7 +16,7 @@
 */
 
 var ChatHandler = Class.extend({
-  GetChatColor: function(unit) {
+  getChatColor: function(unit) {
 
     //        switch(unit.editor) {
     //            case 0:
@@ -30,7 +30,7 @@ var ChatHandler = Class.extend({
 
     return "#1beee7";
   },
-  Say: function(unit, message) {
+  say: function(unit, message) {
     if (message.substr(0, 1) === "/") {
       var params = message.split(/(".*?")/);
 
@@ -216,7 +216,7 @@ var ChatHandler = Class.extend({
       io.sockets.emit("chatMessage", messageData);
     }
   },
-  Announce: function(message, color) {
+  announce: function(message, color) {
       log("[Announce] " + message);
 
       color = color || "#ffd800";
@@ -231,7 +231,7 @@ var ChatHandler = Class.extend({
 
       io.sockets.emit("chatMessage", messageData);
   },
-  AnnounceMods: function(message, color) {
+  announceMods: function(message, color) {
       log("[AnnounceMods] " + message);
 
       color = color || "#ffd800";
@@ -250,7 +250,7 @@ var ChatHandler = Class.extend({
           }
       }
   },
-  AnnounceNick: function(message, color) {
+  announceNick: function(message, color) {
       // Log it just in case
       log("[AnnounceNick] " + message);
 
@@ -270,7 +270,7 @@ var ChatHandler = Class.extend({
 
       this.AnnouncePersonally(nick, message, color);
   },
-  AnnouncePersonally: function(unit, message, color) {
+  announcePersonally: function(unit, message, color) {
       var messageData = {
           type: 'announce:personal',
           message: {
@@ -281,7 +281,7 @@ var ChatHandler = Class.extend({
 
       unit.socket.emit("chatMessage", messageData);
   },
-  JoinGame: function(unit) {
+  joinGame: function(unit) {
       var messageData = {
           type: 'join',
           user: {
@@ -292,7 +292,7 @@ var ChatHandler = Class.extend({
 
       io.sockets.emit("chatMessage", messageData);
   },
-  Died: function(unit, killer) {
+  died: function(unit, killer) {
       var killerName = killer.id > 0 ? killer.name : killer.template.prefix + ' ' + killer.template.name;
 
       log(unit.name + ' was killed by ' + killerName);
@@ -310,7 +310,7 @@ var ChatHandler = Class.extend({
       };
       io.sockets.emit("chatMessage", messageData);
   },
-  DiedSpecial: function(unit, cause) {
+  diedSpecial: function(unit, cause) {
 
       log(unit.name + ' was killed by ' + cause);
 
@@ -325,7 +325,7 @@ var ChatHandler = Class.extend({
 
       io.sockets.emit("chatMessage", messageData);
   },
-  LeaveGame: function(unit) {
+  leaveGame: function(unit) {
       var messageData = {
           type: 'leave',
           user: {

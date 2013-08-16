@@ -24,11 +24,11 @@ var monsterStateMachines = {
 
 
 var RatBoss = State.extend({
-	Init: function() {
+	init: function() {
 		this.obstacleToOpenOnDeath = worldHandler.FindUnit(-1242);
 
 	},
-	HandleMessage: function(npc, message, data) {
+	handleMessage: function(npc, message, data) {
 
 		if ( !this.obstacleToOpenOnDeath ) return;
 

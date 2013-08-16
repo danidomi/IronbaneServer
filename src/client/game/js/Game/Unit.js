@@ -30,7 +30,7 @@ var unitMaxSpeedBackwards = 3;
 var sizeScalingSpeed = 2;
 
 var Unit = PhysicsObject.extend({
-  Init: function(position, rotation, id, name, param, size) {
+  init: function(position, rotation, id, name, param, size) {
 
     this._super(position);
 
@@ -117,7 +117,7 @@ var Unit = PhysicsObject.extend({
 
   },
   // Taking into account the current camera position and the unit's rotation, get the appropriate vertical sprite index
-  GetDirectionSpriteIndex: function() {
+  getDirectionSpriteIndex: function() {
 
     // We need a vector from the unit to the camera
     var uc = ironbane.camera.position.clone();
@@ -171,7 +171,7 @@ var Unit = PhysicsObject.extend({
 
     return index;
   },
-  Add: function() {
+  add: function() {
 
     if ( debugging ) {
       var lineGeo = new THREE.Geometry();
@@ -250,7 +250,7 @@ var Unit = PhysicsObject.extend({
           unit.nameMesh.material.map = tex;
       }
   },
-  AddShadow: function() {
+  addShadow: function() {
     if ( this.enableShadow ) {
       //            var map = textureHandler.GetTexture('plugins/game/images/misc/shadow.png', true );
       //
@@ -295,11 +295,11 @@ var Unit = PhysicsObject.extend({
 
     }
   },
-  FullDestroy: function() {
+  fullDestroy: function() {
     ironbane.unitList = _.without(ironbane.unitList, this);
     this.Destroy();
   },
-  Destroy: function() {
+  destroy: function() {
 
     _.each(this.lightsToMaintain, function(light){
       this.object3D.remove(light);
@@ -382,7 +382,7 @@ var Unit = PhysicsObject.extend({
     if  ( !this.mesh ) return;
     DisplayUVFrame(this.mesh, indexH, indexV, numberOfSpritesH, numberOfSpritesV, mirror);
   },
-  Tick: function(dTime) {
+  tick: function(dTime) {
 
 
     if ( this instanceof Player &&
@@ -878,13 +878,13 @@ var Unit = PhysicsObject.extend({
 
 
   },
-  InRangeOfUnit: function(unit, range) {
+  inRangeOfUnit: function(unit, range) {
     return this.InRangeOfPosition(unit.position, range);
   },
-  InRangeOfPosition: function(position, range) {
+  inRangeOfPosition: function(position, range) {
     return position.clone().subSelf(this.position).lengthSq() < range*range;
   },
-  RotateTowardsTargetPosition: function(dTime) {
+  rotateTowardsTargetPosition: function(dTime) {
     var side = true;
     if(this.targetRotation.y < this.rotation.y) {
       side = Math.abs(this.targetRotation.y - this.rotation.y) < 180;

@@ -23,7 +23,7 @@ var cellStatusEnum = {
 };
 
 var Cell = Class.extend({
-    Init: function(cellX, cellZ) {
+    init: function(cellX, cellZ) {
 
         this.cellX = cellX;
         this.cellZ = cellZ;
@@ -51,7 +51,7 @@ var Cell = Class.extend({
         this.octree = new THREE.Octree();
 
     },
-    Tick: function(dTime) {
+    tick: function(dTime) {
 
         switch(this.status) {
             case cellStatusEnum.INIT:
@@ -67,7 +67,7 @@ var Cell = Class.extend({
         }
 
     },
-    Load: function() {
+    load: function() {
         var me = this;
 
 
@@ -105,13 +105,13 @@ var Cell = Class.extend({
         }
 
     },
-    FinishLoad: function() {
+    finishLoad: function() {
         if ( !this.filesToLoad ) {
             // Make the mesh
             this.LoadObjects();
         }
     },
-    AddMesh: function() {
+    addMesh: function() {
 
         if ( this.modelsToBuild ) return;
 
@@ -138,7 +138,7 @@ var Cell = Class.extend({
 
         terrainHandler.RebuildOctree();
     },
-    Destroy: function() {
+    destroy: function() {
 
         if ( this.modelGeometry ) {
             _.each(this.modelGeometry.materials, function(material) {
@@ -169,7 +169,7 @@ var Cell = Class.extend({
 
         this.status = cellStatusEnum.DESTROYED;
     },
-    ReloadWaypointsOnly: function() {
+    reloadWaypointsOnly: function() {
 
         _.each(this.objects, function(object) {
             if ( object instanceof Waypoint) {
@@ -189,7 +189,7 @@ var Cell = Class.extend({
 
         this.LoadObjects(true);
     },
-    ReloadObjectsOnly: function() {
+    reloadObjectsOnly: function() {
 
         for(var o=0;o<this.objects.length;o++) {
             this.objects[o].Destroy();
@@ -207,11 +207,11 @@ var Cell = Class.extend({
 
         this.LoadObjects();
     },
-    Reload: function() {
+    reload: function() {
         this.Destroy();
         this.status = cellStatusEnum.INIT;
     },
-    LoadObjects: function(waypointsOnly) {
+    loadObjects: function(waypointsOnly) {
 
         this.modelGeometry = new THREE.Geometry();
 

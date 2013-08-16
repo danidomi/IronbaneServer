@@ -21,7 +21,7 @@
 
 
 var Lever = ToggleableObstacle.extend({
-  Init: function(position, id, metadata) {	
+  init: function(position, id, metadata) {	
             
             
             
@@ -34,7 +34,7 @@ var Lever = ToggleableObstacle.extend({
 	                
             
   },
-  BuildMesh: function(geometry) {          
+  buildMesh: function(geometry) {          
         
     this._super(geometry);
         
@@ -46,7 +46,7 @@ var Lever = ToggleableObstacle.extend({
         
         
   },        
-  Toggle: function(on) {
+  toggle: function(on) {
     this.on = on;
         
     var mp = this.on ? 1 : 0;
@@ -57,7 +57,7 @@ var Lever = ToggleableObstacle.extend({
     soundHandler.Play("misc/switch");
 
   },
-  Tick: function(dTime) {
+  tick: function(dTime) {
         
     this.changeRotation = true;
     this._super(dTime);

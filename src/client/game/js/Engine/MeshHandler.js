@@ -17,14 +17,14 @@
 
 
 var MeshHandler = Class.extend({
-  Init: function() {
+  init: function() {
 
 
     this.geometries = {};
 
 
   },
-  Load: function(model, readyFunc, scale) {
+  load: function(model, readyFunc, scale) {
 
     if ( this.geometries[model] ) {
       setTimeout(function() {
@@ -48,7 +48,7 @@ var MeshHandler = Class.extend({
 
 
   },
-  SpiceGeometry: function(geometry, rotation, metadata, meshData, param, drawNameMesh) {
+  spiceGeometry: function(geometry, rotation, metadata, meshData, param, drawNameMesh) {
 
 
 
@@ -145,11 +145,11 @@ var MeshHandler = Class.extend({
 
     return geometry;
   },
-  BuildMesh: function(geometry, meshData) {
+  buildMesh: function(geometry, meshData) {
 
 
   },
-  Tick: function(dTime) {
+  tick: function(dTime) {
 
 
 

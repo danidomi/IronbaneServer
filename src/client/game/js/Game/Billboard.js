@@ -22,7 +22,7 @@
 var billboardSpritePath = 'plugins/game/images/billboards/';
  
 var Billboard = Unit.extend({
-    Init: function(position, rotY, id, param, customPath, customName) {	
+    init: function(position, rotY, id, param, customPath, customName) {	
         
         this.customPath = customPath || false;
         
@@ -42,7 +42,7 @@ var Billboard = Unit.extend({
         this.collider = null;
 		
     },
-    Add: function () {
+    add: function () {
 
     //console.warn(this.position.x);
 
@@ -58,7 +58,7 @@ var Billboard = Unit.extend({
 
         this._super();
     },
-    TryToBuildMesh: function() {
+    tryToBuildMesh: function() {
         if ( this.texture.image.width === 0 ) {
             (function(unit){setTimeout(function(){unit.TryToBuildMesh()}, 1000)})(this);
         }
@@ -66,7 +66,7 @@ var Billboard = Unit.extend({
             this.BuildMesh();
         }
     },
-    BuildMesh: function() {
+    buildMesh: function() {
         var planeGeo = new THREE.PlaneGeometry(this.size * (this.texture.image.width/16), this.size * (this.texture.image.height/16), 1, 1);
 		
                 
@@ -118,7 +118,7 @@ var Billboard = Unit.extend({
        //this.collider = new THREE.SphereCollider(this.position, 1); 
        
     },
-    Tick: function(dTime) {
+    tick: function(dTime) {
 
         this._super(dTime);
 		

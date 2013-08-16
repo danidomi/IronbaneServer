@@ -22,7 +22,7 @@
 var multiboardSpritePath = 'plugins/game/images/multiboards/';
  
 var Multiboard = Unit.extend({
-    Init: function(position, rotY, id, param) {	
+    init: function(position, rotY, id, param) {	
         this._super(position, rotY, id, 'Multiboard', param);
         
         //        this.targetPosition.x = 1.0;
@@ -33,7 +33,7 @@ var Multiboard = Unit.extend({
 
 		
     },
-	Add: function () {
+	add: function () {
 	
         //console.warn(this.position.x);
     
@@ -90,7 +90,7 @@ var Multiboard = Unit.extend({
 		ironbane.scene.add(this.mesh);
 
 	},
-    Tick: function(dTime) {
+    tick: function(dTime) {
 
         this._super(dTime);
 		

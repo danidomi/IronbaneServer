@@ -17,7 +17,7 @@
 
 
 var ExploreAndLookForEnemies = State.extend({
-	Init: function() {
+	init: function() {
 
             this.walkBackTimeout = 0;
 
@@ -29,14 +29,14 @@ var ExploreAndLookForEnemies = State.extend({
 
             this.minimumExploreTime = 5.0;
 	},
-	Enter: function(npc) {
+	enter: function(npc) {
 
             this.targetPosition = npc.position.clone();
 
             npc.maxSpeed = 2.0;
 
 	},
-	Execute: function(npc, dTime) {
+	execute: function(npc, dTime) {
 
 
             if ( npc.health <= 0 || npc.template.disabled ) return;
@@ -103,10 +103,10 @@ var ExploreAndLookForEnemies = State.extend({
             }
 
 	},
-	Exit: function(npc) {
+	exit: function(npc) {
 
 	},
-        HandleMessage: function(npc, message, data) {
+        handleMessage: function(npc, message, data) {
 
             switch (message) {
               case "attacked":

@@ -17,7 +17,7 @@
 
 
 var Server = Class.extend({
-    Init: function() {
+    init: function() {
 
 
         //this.unitList = new Array();
@@ -78,7 +78,7 @@ var Server = Class.extend({
         //setTimeout(function(){server.AutoBackup();}, 3600 * 24 * 1000);
 
     },
-    AutoBackup: function() {
+    autoBackup: function() {
       log("Creating daily backup...");
       //chatHandler.Announce("Performing auto-backup...", "blue");
       worldHandler.DoFullBackup();
@@ -92,7 +92,7 @@ var Server = Class.extend({
         this.itemIDCount++;
         return this.itemIDCount;
     },
-    Tick: function(dTime) {
+    tick: function(dTime) {
 
 
         if ( this.versionWarningTimer > 0 ) {

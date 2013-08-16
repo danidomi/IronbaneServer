@@ -17,7 +17,7 @@
 
 
 var ParticleFunctions = {
-    OpacityLifeTime: function(p, begin, end) {
+    opacityLifeTime: function(p, begin, end) {
         var opac = (p.lifeTimer/p.lifeTime);
         if ( opac < begin ) return opac/begin;
         if ( opac > end ) return (1-opac)/(1-end);

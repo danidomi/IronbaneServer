@@ -18,7 +18,7 @@
 
 
 var Lever = Unit.extend({
-	Init: function(data) {
+	init: function(data) {
 	
 
             this._super(data);
@@ -32,7 +32,7 @@ var Lever = Unit.extend({
 
              
 	},
-        Awake: function() {
+        awake: function() {
             if ( !this.data.switchNumber ) {
                 log("Bad switch number for "+this.id);
                 this.targetUnit = null;
@@ -57,7 +57,7 @@ var Lever = Unit.extend({
             
             this._super();
         },
-        Toggle: function(bool) {
+        toggle: function(bool) {
             
             log("[Lever] "+this.id+" toggled "+(bool?"on":"off"));
             
@@ -68,7 +68,7 @@ var Lever = Unit.extend({
             this.useTimeout = 2.0;
     
         },
-        Tick: function(dTime) {
+        tick: function(dTime) {
             
             this._super(dTime);
             

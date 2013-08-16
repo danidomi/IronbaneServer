@@ -19,7 +19,7 @@ var playerZone = 1;
 
 
 var SocketHandler = Class.extend({
-    Init: function() {
+    init: function() {
 
         if (!Detector.webgl) return;
 
@@ -40,7 +40,7 @@ var SocketHandler = Class.extend({
         this.InitConnection();
 
     },
-    InitConnection: function() {
+    initConnection: function() {
 
         if (this.serverOnline) {
 
@@ -115,7 +115,7 @@ var SocketHandler = Class.extend({
         }
 
     },
-    Connect: function(abortConnect) {
+    connect: function(abortConnect) {
         if (!this.serverOnline) return;
 
         if (!ISDEF(startdata.characterUsed)) return;
@@ -176,7 +176,7 @@ var SocketHandler = Class.extend({
             hudHandler.MakeSlotItems(false);
         });
     },
-    Setup: function() {
+    setup: function() {
 
         this.socket.on('addUnit', function(data) {
             //if ( !socketHandler.loggedIn ) return;

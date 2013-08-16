@@ -22,7 +22,7 @@
 var itemSpritePath = 'plugins/game/images/items/';
  
 var LootBag = Billboard.extend({
-    Init: function(position, id, param) {	
+    init: function(position, id, param) {	
         
 
 		
@@ -33,7 +33,7 @@ var LootBag = Billboard.extend({
 
 		
     },
-    Add: function () {
+    add: function () {
 
     //console.warn(this.position.x);
         var image;

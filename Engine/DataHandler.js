@@ -21,10 +21,10 @@
 
 
 var DataHandler = Class.extend({
-    Init: function() {
+    init: function() {
         this.Load();
     },
-    Load: function() {
+    load: function() {
 
         this.items = {};
         this.units = {};

@@ -15,23 +15,23 @@
     along with Ironbane MMO.  If not, see <http://www.gnu.org/licenses/>.
 */
 var ParticleHandler = Class.extend({
-    Init: function () {
+    init: function () {
 
         this.particleEmitters = [];
 
 
     },
-    Add: function (type, data) {     
+    add: function (type, data) {     
         var emitter = new ParticleEmitter(type, data);
         this.particleEmitters.push(emitter);
         return emitter;
     },
-    RemoveAll: function() {
+    removeAll: function() {
         for (var i = 0; i < this.particleEmitters.length; ++i) {
             this.particleEmitters[i].removeNextTick = true;
         }
     },
-    Tick: function (dTime) {
+    tick: function (dTime) {
 
 	
         for (var i = 0; i < this.particleEmitters.length; ++i) {

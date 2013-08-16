@@ -19,7 +19,7 @@
 
 
 var ParticleEmitter = Class.extend({
-    Init: function (type, data) {
+    init: function (type, data) {
 
         this.followUnit = data.followUnit || null;
         this.particleFollowUnit = data.particleFollowUnit || null;
@@ -58,7 +58,7 @@ var ParticleEmitter = Class.extend({
         this.removeNextTick = false;
 
     },
-    AddParticle: function () {
+    addParticle: function () {
 
 
         // Spawn children
@@ -162,7 +162,7 @@ var ParticleEmitter = Class.extend({
         ironbane.scene.add(particle.sprite);
 
     },
-    Destroy: function () {
+    destroy: function () {
 
         for ( var p=0;p<this.particles.length;p++ ) {
             if ( this.particles[p] ) {
@@ -180,7 +180,7 @@ var ParticleEmitter = Class.extend({
     // ironbane.scene.remove(this.particleSystem);
 
     },
-    Tick: function (dTime) {
+    tick: function (dTime) {
 
 
         // Keep aligned with our followUnit if we have one

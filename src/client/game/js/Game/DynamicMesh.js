@@ -19,7 +19,7 @@
 
 
 var DynamicMesh = Mesh.extend({
-    Init: function(position, rotation, id, param, metadata) {
+    init: function(position, rotation, id, param, metadata) {
 
 
 
@@ -39,7 +39,7 @@ var DynamicMesh = Mesh.extend({
         if ( ISDEF(this.metadata.distanceMultiplier) ) this.distanceMultiplier = parseFloat(this.metadata.distanceMultiplier);
 
     },
-    BuildMesh: function(geometry) {
+    buildMesh: function(geometry) {
 
         this._super(geometry);
 
@@ -52,7 +52,7 @@ var DynamicMesh = Mesh.extend({
 //        this.rotation.copy(this.startRotation);
 //        this.RotateVertices();
     },
-    Tick: function(dTime) {
+    tick: function(dTime) {
 
         if ( this.changeRotation ) {
 
@@ -63,7 +63,7 @@ var DynamicMesh = Mesh.extend({
         this._super(dTime);
 
     },
-    RotateVertices: function() {
+    rotateVertices: function() {
 
         if ( !this.mesh ) return;
 

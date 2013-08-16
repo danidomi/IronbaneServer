@@ -16,7 +16,7 @@
 */
 
 var TeleportEntrance = Unit.extend({
-    Init: function(data) {
+    init: function(data) {
 
         this._super(data);
 
@@ -25,14 +25,14 @@ var TeleportEntrance = Unit.extend({
         this.useTimeout = 3.0;
 
     },
-    Awake: function() {
+    awake: function() {
 
       this._super();
 
       this.FindTargetExit();
 
     },
-    FindTargetExit: function() {
+    findTargetExit: function() {
 
         if (this.data && ISDEF(this.data.targetExit) ) {
 
@@ -48,7 +48,7 @@ var TeleportEntrance = Unit.extend({
 
 
     },
-    Tick: function(dTime) {
+    tick: function(dTime) {
 
         this._super(dTime);
 
