@@ -32,7 +32,7 @@ var WorldHandler = Class.extend({
 
     this.loadWorldLight();
 
-    this.awake = false;
+    this.isAwake = false;
     this.hasLoadedWorld = false;
 
 
@@ -50,7 +50,7 @@ var WorldHandler = Class.extend({
     });
 
     log("World has awaken!");
-    this.awake = true;
+    this.isAwake = true;
 
   //worldHandler.loadSwitches();
   },

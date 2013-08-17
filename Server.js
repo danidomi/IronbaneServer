@@ -84,11 +84,11 @@ var Server = Class.extend({
       worldHandler.doFullBackup();
       setTimeout(function(){server.autoBackup()}, 3600 * 24 * 1000);
     },
-    GetAValidNPCID: function() {
+    getAValidNPCID: function() {
         this.npcIDCount++;
         return -this.npcIDCount;
     },
-    GetAValidItemID: function() {
+    getAValidItemID: function() {
         this.itemIDCount++;
         return this.itemIDCount;
     },
@@ -102,7 +102,7 @@ var Server = Class.extend({
 
 
 
-                var msg = ChooseSequenced([
+                var msg = chooseSequenced([
 
                     "Welcome to Ironbane! Server uptime: "+timeSince(((new Date()).getTime()/1000.0)-(this.startTime/1000.0))+"<br>"+
                     "Note that Ironbane is still in an early Alpha stage.<br>Please report all bugs in the forum!",

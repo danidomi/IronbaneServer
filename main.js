@@ -128,7 +128,7 @@ module.exports = function() {
     var IronbaneGame = require('./src/server/game');
 
     // create express.io server
-    var HttpServer = require('./src/server/http/server').server,
+    var HttpServer = require('./src/server/http/server').Server,
         httpServer = new HttpServer({db: mysql});
 
     // for the global access coming...todo: refactor

@@ -255,7 +255,7 @@ IronbaneApp
                         // Change the message on production
                         if ( $window.isProduction ) {
                             game.currentLoadingTickTimer = getRandomFloat(0.5, 3.0);
-                            game.currentLoadingMessage = ChooseSequenced(game.loadingMessages);
+                            game.currentLoadingMessage = chooseSequenced(game.loadingMessages);
                         }
                         else {
                             game.currentLoadingTickTimer = 0.5;

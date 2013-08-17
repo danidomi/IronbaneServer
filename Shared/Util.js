@@ -637,7 +637,7 @@ function ChooseRandom(a) {
 }
 
 var sequencedTimers = {};
-function ChooseSequenced(a) {
+function chooseSequenced(a) {
   var uid = "";
   for (var b in a) uid += b;
   if ( !ISDEF(sequencedTimers[uid]) ) sequencedTimers[uid] = 0;
@@ -778,7 +778,7 @@ var dateChunks = new Array(
   new Array(1, 'second')
 
   );
-/*
+
 function timeSince(since) {
 
 
@@ -811,7 +811,7 @@ function timeSince(since) {
   return print;
 
 }
-*/
+
 
 //there is no fixed order for attributes of an object. also this function could return a function...
 function firstOfObject(o) {
