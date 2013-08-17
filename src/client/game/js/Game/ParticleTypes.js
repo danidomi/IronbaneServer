@@ -28,7 +28,7 @@ var ParticleFunctions = {
 var ParticleTypeEnum = {
     TEST: {
         texture: function(){
-            return ChooseRandom(['misc/heart_full','misc/heart_empty','misc/heart_half'])
+            return chooseRandom(['misc/heart_full','misc/heart_empty','misc/heart_half'])
         },
         delay: 0.0,
 
@@ -296,7 +296,7 @@ var ParticleTypeEnum = {
     },
     SPLASH: {
         texture: function(){
-            return ChooseRandom(['particles/splash1','particles/splash2','particles/splash3'])
+            return chooseRandom(['particles/splash1','particles/splash2','particles/splash3'])
         },
         delay: 0,
         // The amount of particles to spawn
@@ -317,7 +317,7 @@ var ParticleTypeEnum = {
     },
     LAVABURN: {
         texture: function(){
-            return ChooseRandom(['particles/flame1','particles/flame2','particles/flame3'])
+            return chooseRandom(['particles/flame1','particles/flame2','particles/flame3'])
         },
         delay: 0,
         // The amount of particles to spawn
@@ -427,7 +427,7 @@ var ParticleTypeEnum = {
     },
     GREENBLOBIMPACT: {
         texture: function(){
-            return ChooseRandom(['particles/greenBlob1','particles/greenBlob2','particles/greenBlob3'])
+            return chooseRandom(['particles/greenBlob1','particles/greenBlob2','particles/greenBlob3'])
         },
         delay: 0,
         // The amount of particles to spawn
@@ -471,7 +471,7 @@ var ParticleTypeEnum = {
 	},
     ROCKSHATTER: {
         texture: function(){
-            return ChooseRandom(['particles/rocksplatter1','particles/rocksplatter2','particles/rocksplatter3'])
+            return chooseRandom(['particles/rocksplatter1','particles/rocksplatter2','particles/rocksplatter3'])
         },
         delay: 0,
         // The amount of particles to spawn
@@ -497,7 +497,7 @@ var ParticleTypeEnum = {
     },
     MELEEHIT: {
         texture: function(){
-            return ChooseRandom(['particles/hit1','particles/hit2','particles/hit3']);
+            return chooseRandom(['particles/hit1','particles/hit2','particles/hit3']);
         },
         delay: 0,
         // The amount of particles to spawn
@@ -514,7 +514,7 @@ var ParticleTypeEnum = {
     },
     CLOUD: {
         texture: function(){
-            return ChooseRandom(['misc/cloud1','misc/cloud2','misc/cloud3'])
+            return chooseRandom(['misc/cloud1','misc/cloud2','misc/cloud3'])
         },
         delay: 0,
         particleStartPosition: function(){
@@ -545,7 +545,7 @@ var ParticleTypeEnum = {
     },
     TELEPORTENTRANCE: {
         texture: function(){
-            return ChooseRandom(['particles/spark1','particles/spark2','particles/spark3'])
+            return chooseRandom(['particles/spark1','particles/spark2','particles/spark3'])
         },
         delay: 0,
         particleSpawnOffset: new THREE.Vector3(0, 0.5, 0),
@@ -563,7 +563,7 @@ var ParticleTypeEnum = {
     },
     TELEPORTEXIT: {
         texture: function(){
-            return ChooseRandom(['particles/spark1','particles/spark2','particles/spark3'])
+            return chooseRandom(['particles/spark1','particles/spark2','particles/spark3'])
         },
         delay: 0,
         particleSpawnOffset: new THREE.Vector3(0, 0.5, 0),
@@ -609,7 +609,7 @@ var ParticleTypeEnum = {
     },
     FIRESMALL: {
         texture: function(){
-            return ChooseRandom(['particles/flameSmall1','particles/flameSmall2','particles/flameSmall3']);
+            return chooseRandom(['particles/flameSmall1','particles/flameSmall2','particles/flameSmall3']);
         },
         particleSpawnOffset: new THREE.Vector3(0, 0.0, 0),
         particleStartPosition: function(p){
@@ -631,7 +631,7 @@ var ParticleTypeEnum = {
     },
     HEALSPARKS: {
         texture: function(){
-            return ChooseRandom(['particles/spark1','particles/spark2','particles/spark3'])+"_green";
+            return chooseRandom(['particles/spark1','particles/spark2','particles/spark3'])+"_green";
         },
         delay: 0,
         count:10,

@@ -52,7 +52,7 @@ var Wander = State.extend({
                     log("[Wander] Error: No nodes found!");
                 }
                 else {
-                    var randomNode = ChooseRandom(npc.connectedNodeList);
+                    var randomNode = chooseRandom(npc.connectedNodeList);
                     this.targetPosition = ConvertVector3(randomNode.pos);
                     log("[Wander] Traveling to node "+randomNode.id+"...");
                 }

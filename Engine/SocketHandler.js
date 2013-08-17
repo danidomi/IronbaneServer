@@ -669,7 +669,7 @@ var SocketHandler = Class.extend({
                 if (bag.template.type === UnitTypeEnum.VENDOR) {
                     if (item.price > 0 && player.getTotalCoins() < item.price) {
                         reply({
-                            errmsg: ChooseRandom(["Ye got no money, bum!", "Show me some gold coins!", "Wher's the gold?"])
+                            errmsg: chooseRandom(["Ye got no money, bum!", "Show me some gold coins!", "Wher's the gold?"])
                         });
                         return;
                     }
@@ -781,7 +781,7 @@ var SocketHandler = Class.extend({
                     // Update the money
                     player.purchase(item);
 
-                    bag.say(ChooseRandom(["Another satisfied customer!", "Hope ye kick some butt!", "Come again soon!", "Is that all ye buyin'?"]));
+                    bag.say(chooseRandom(["Another satisfied customer!", "Hope ye kick some butt!", "Come again soon!", "Is that all ye buyin'?"]));
 
                     // It's now our property, so remove the price tag
                     delete item.price;
@@ -868,7 +868,7 @@ var SocketHandler = Class.extend({
                             });
                         } else {
                             reply({
-                                errmsg: ChooseRandom(["Take yer stuff with ye!", "Haven't ye got better items?", "Me thinks that is not worth the trouble!"])
+                                errmsg: chooseRandom(["Take yer stuff with ye!", "Haven't ye got better items?", "Me thinks that is not worth the trouble!"])
                             });
                         }
                         return;
@@ -883,7 +883,7 @@ var SocketHandler = Class.extend({
                         // Give the player the original price
                         player.addCoins(offeredPrice);
 
-                        bag.say(ChooseRandom(["A pleasure doing business!", "Ye got a good deal!", "'Tis most splendid!"]));
+                        bag.say(chooseRandom(["A pleasure doing business!", "Ye got a good deal!", "'Tis most splendid!"]));
                     }
                 }
 
@@ -1010,7 +1010,7 @@ var SocketHandler = Class.extend({
 
                     if (bag.template.type === UnitTypeEnum.VENDOR) {
                         reply({
-                            errmsg: ChooseRandom(["Dareth not touch my stuff!", "What do you think yer doing?"])
+                            errmsg: chooseRandom(["Dareth not touch my stuff!", "What do you think yer doing?"])
                         });
                         return;
                     }

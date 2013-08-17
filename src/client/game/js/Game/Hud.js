@@ -398,7 +398,7 @@ var HUDHandler = Class.extend({
 
             hudHandler.updateEquippedItems();
 
-            soundHandler.play(ChooseRandom(["bag1"]));
+            soundHandler.play(chooseRandom(["bag1"]));
 
         });
     },
@@ -526,7 +526,7 @@ var HUDHandler = Class.extend({
 
 
 
-            soundHandler.play(ChooseRandom(["bag1"]));
+            soundHandler.play(chooseRandom(["bag1"]));
 
         });
     },

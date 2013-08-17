@@ -98,7 +98,7 @@ var ProjectileTypeEnum = {
         impactParticle: ParticleTypeEnum.MELEEHIT,
         destroyOnImpact: true,
         impactParticleOnUnitsOnly: true
-        // impactSound: function(){return ChooseRandom(["arrowHit1","arrowHit2","arrowHit3"])}
+        // impactSound: function(){return chooseRandom(["arrowHit1","arrowHit2","arrowHit3"])}
     },
     BONE: {
         speed: 18,

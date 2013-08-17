@@ -975,10 +975,10 @@ var Player = Fighter.extend({
 
               switch (template.subtype) {
                  case 'cash':
-            soundHandler.play(ChooseRandom(["getCoin1","getCoin2", "getCoin3"]), this.position);
+            soundHandler.play(chooseRandom(["getCoin1","getCoin2", "getCoin3"]), this.position);
             break;
                 case "restorative":
-                  soundHandler.play(ChooseRandom(["bubble1", "bubble2", "bubble3"]));
+                  soundHandler.play(chooseRandom(["bubble1", "bubble2", "bubble3"]));
                   break;
               }
 
@@ -1031,7 +1031,7 @@ var Player = Fighter.extend({
             case 'sword':
             case 'dagger':
             case 'axe':
-              // soundHandler.play(item.equipped ? ChooseRandom(["equipSword1","equipSword2","equipSword3"]) : "equip2");
+              // soundHandler.play(item.equipped ? chooseRandom(["equipSword1","equipSword2","equipSword3"]) : "equip2");
               break;
 
             case 'book':

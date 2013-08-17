@@ -93,7 +93,7 @@ var ChaseEnemy = State.extend({
           this.attackTimeout = npc.weapon.delay;
 
 
-          //if ( getRandomInt(0, 10) == 1 ) npc.say(ChooseRandom(["Show me what you got!","Eat this!","I love a good fight!"]));
+          //if ( getRandomInt(0, 10) == 1 ) npc.say(chooseRandom(["Show me what you got!","Eat this!","I love a good fight!"]));
 
           npc.attemptAttack(this.enemy);
 

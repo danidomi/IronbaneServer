@@ -62,7 +62,7 @@ var ExploreAndLookForEnemies = State.extend({
                      this.targetPosition.z = npc.startPosition.z+getRandomInt(-20,20);
                 }
                 else {
-                    var randomNode = ChooseRandom(npc.connectedNodeList);
+                    var randomNode = chooseRandom(npc.connectedNodeList);
                     this.targetPosition = ConvertVector3(randomNode.pos).addSelf(new THREE.Vector3(getRandomFloat(-1, 1), 0, getRandomFloat(-1, 1)));
                    // log("[ExploreAndLookForEnemies] Traveling to node "+randomNode.id+"...");
                 }

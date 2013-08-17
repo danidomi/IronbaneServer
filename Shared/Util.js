@@ -632,7 +632,7 @@ function getRandomFloat(minValue,maxValue,precision){
   return parseFloat(Math.min(minValue + (Math.random() * (maxValue - minValue)),maxValue).toFixed(precision));
 }
 
-function ChooseRandom(a) {
+function chooseRandom(a) {
   return a[getRandomInt(0,a.length-1)];
 }
 

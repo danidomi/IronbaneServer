@@ -222,10 +222,10 @@ var TerrainHandler = Class.extend({
     if ( ironbane.player ) {
       ironbane.player.onChangeZone(newZone);
     }
-    
+
 
     if ( socketHandler.loggedIn ) {
-      this.targetMusic = ChooseRandom(GetZoneConfig("music"));
+      this.targetMusic = chooseRandom(GetZoneConfig("music"));
     }
 
   },
