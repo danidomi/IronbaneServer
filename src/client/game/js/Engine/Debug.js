@@ -28,7 +28,7 @@ var Debugger = Class.extend({
 
         this.arrowHelpers = [];
 
-        setTimeout(function(){debug.Clear()}, 0);
+        setTimeout(function(){debug.clear()}, 0);
     },
     setWatch: function(name, variable, show) {
         // if ( !showEditor) return;
@@ -39,7 +39,7 @@ var Debugger = Class.extend({
 
         // if ( !le("globalEnable") ) return;
 
-        variable = variable instanceof THREE.Vector3 ? variable.ToString() : variable;
+        variable = variable instanceof THREE.Vector3 ? variable.toString() : variable;
 
             this.watches.push({ name: name, variable: variable });
     },

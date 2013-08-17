@@ -158,7 +158,7 @@ var PhysicsObject = Class.extend({
 
                     var str = "";
 
-//                    str += "localPosition was: "+this.localPosition.ToString();
+//                    str += "localPosition was: "+this.localPosition.toString();
 
                     // Change the local position!
                     this.localPosition.copy(this.position.clone().subSelf(this.unitStandingOn.position));
@@ -177,7 +177,7 @@ var PhysicsObject = Class.extend({
                     }
 
 
-//                    str += "<br>localPosition is now: "+this.localPosition.ToString();
+//                    str += "<br>localPosition is now: "+this.localPosition.toString();
 
                     //this.object3D.updateMatrixWorld();
 
@@ -185,14 +185,14 @@ var PhysicsObject = Class.extend({
                     this.unitStandingOn.object3D.add(this.object3D);
 
 
-//                    str += "<br><br>position was: "+this.position.ToString();
+//                    str += "<br><br>position was: "+this.position.toString();
 
                     this.object3D.updateMatrixWorld(true);
 
 
 //                    this.position.getPositionFromMatrix(this.object3D.matrixWorld);
 
-//                    str += "<br>position is now: "+this.position.ToString();
+//                    str += "<br>position is now: "+this.position.toString();
 //
 //                    ba(str);
 //
@@ -215,25 +215,25 @@ var PhysicsObject = Class.extend({
 ////              this.object3D.children[c].unit.position.getPositionFromMatrix(this.object3D.children[c].matrixWorld);
 //        }
 
-//        debug.DrawVector(this.position, new THREE.Vector3(), 0xFF0000);
+//        debug.drawVector(this.position, new THREE.Vector3(), 0xFF0000);
 //
 //
 //
 //
 //        if ( this.unitStandingOn ) {
-//            debug.DrawVector(this.localPosition, this.unitStandingOn.position, 0x00FF00);
+//            debug.drawVector(this.localPosition, this.unitStandingOn.position, 0x00FF00);
 //        }
 
 //        if ( this.localPosition.equals(this.position) ) sw("equals", true);
 
 
 //        if ( this == ironbane.player ) {
-//            sw("P local", this.localPosition.ToString());
-//            sw("P global", this.position.ToString());
+//            sw("P local", this.localPosition.toString());
+//            sw("P global", this.position.toString());
 //        }
 //        else {
-//            sw("local", this.localPosition.ToString());
-//            sw("global", this.position.ToString());
+//            sw("local", this.localPosition.toString());
+//            sw("global", this.position.toString());
 //        }
 //
 //        if ( this.unitStandingOn != null ) {
@@ -249,7 +249,7 @@ var PhysicsObject = Class.extend({
 
 
 
-        this.velocity.Truncate(this.maxSpeed);
+        this.velocity.truncate(this.maxSpeed);
 
 
         // Add velocity, but relative to our object3D
@@ -284,7 +284,7 @@ var PhysicsObject = Class.extend({
             }
         }
 
-//        debug.DrawVector(this.heading, this.position, 0x0000FF);
+//        debug.drawVector(this.heading, this.position, 0x0000FF);
 
         this.lastUnitStandingOn = this.unitStandingOn;
 

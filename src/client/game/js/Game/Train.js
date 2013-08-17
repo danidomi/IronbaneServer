@@ -40,16 +40,16 @@ var Train = DynamicMesh.extend({
 //        else {
 //            this.velocity.
 //        }
-        this.steeringForce = this.steeringBehaviour.Arrive(this.targetPosition, 1.0);
+        this.steeringForce = this.steeringBehaviour.arrive(this.targetPosition, 1.0);
 
-        // sw("this.targetRotation", this.targetRotation.ToString());
-        // sw("this.rotation", this.rotation.ToString());
+        // sw("this.targetRotation", this.targetRotation.toString());
+        // sw("this.rotation", this.rotation.toString());
 
         this.rotation.lerpSelf(this.targetRotation, dTime*4);
 
         this._super(dTime);
 
-        //this.UpdateRotation();
+        //this.updateRotation();
 
     }
 });

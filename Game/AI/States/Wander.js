@@ -63,12 +63,12 @@ var Wander = State.extend({
 
                  //this.targetPosition.set(this.test ? 0 : 25, 0, this.test ? 0 : 10);
 
-                 log("[Wander] New target position: "+this.targetPosition.ToString());
-                 //log("[ExploreAndLookForEnemies] Current NPC nodepath: "+npc.targetNodePosition.ToString());
+                 log("[Wander] New target position: "+this.targetPosition.toString());
+                 //log("[ExploreAndLookForEnemies] Current NPC nodepath: "+npc.targetNodePosition.toString());
             }
 
-            //npc.steeringForce = npc.steeringBehaviour.Wander();
-            npc.TravelToPosition(this.targetPosition);
+            //npc.steeringForce = npc.steeringBehaviour.wander();
+            npc.travelToPosition(this.targetPosition);
 
 	},
 	exit: function(npc) {
@@ -81,7 +81,7 @@ var Wander = State.extend({
         //     // We're attacked!
 
         //     // Change state to ChaseEnemy
-        //     npc.stateMachine.ChangeState(new ChaseEnemy(data.attacker));
+        //     npc.stateMachine.changeState(new ChaseEnemy(data.attacker));
 
         //     break;
         // }

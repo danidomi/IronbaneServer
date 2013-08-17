@@ -25,7 +25,7 @@ var NodeHandler = Class.extend({
             }
         }
         else {
-            var p = terrainHandler.GetReferenceLocation();
+            var p = terrainHandler.getReferenceLocation();
 
             var cp = WorldToCellCoordinates(p.x, p.z, cellSize);
 
@@ -34,7 +34,7 @@ var NodeHandler = Class.extend({
 
                     if ( _.isUndefined(terrainHandler.cells[x+'-'+z])  ) continue;
 
-                    var graphData = terrainHandler.GetCellByGridPosition(x, z).graphData;
+                    var graphData = terrainHandler.getCellByGridPosition(x, z).graphData;
 
                     if ( graphData["nodes"] === undefined ) continue;
 
@@ -66,25 +66,25 @@ var NodeHandler = Class.extend({
             worldHandler.world[zone][cellPos.x][cellPos.z]['graph']['nodes'].push(newNode);
         }
         else {
-            var graphData = terrainHandler.GetCellByGridPosition(cellPos.x, cellPos.z).graphData;
+            var graphData = terrainHandler.getCellByGridPosition(cellPos.x, cellPos.z).graphData;
             if ( graphData['nodes'] === undefined ) {
                 graphData['nodes'] = [];
             }
             graphData['nodes'].push(newNode);
 
-            terrainHandler.GetCellByWorldPosition(position).ReloadWaypointsOnly();
+            terrainHandler.getCellByWorldPosition(position).ReloadWaypointsOnly();
         }
 
     },
     getNodePosition: function(zone, id) {
-        var nodeInfo = this.GetNodeArrayIndex(zone, id);
+        var nodeInfo = this.getNodeArrayIndex(zone, id);
         return worldHandler.world[zone][nodeInfo.cx][nodeInfo.cz]['graph']['nodes'][nodeInfo.index]['pos'];
     },
     addEdge: function(zone, from, to, twoway) {
 
         twoway = twoway || false;
 
-        var nodeInfoFrom = this.GetNodeArrayIndex(zone, from);
+        var nodeInfoFrom = this.getNodeArrayIndex(zone, from);
 
         if ( SERVER ) {
             worldHandler.world[zone][nodeInfoFrom.cx][nodeInfoFrom.cz]['graph']['nodes'][nodeInfoFrom.index]['edges'].push(to);
@@ -92,7 +92,7 @@ var NodeHandler = Class.extend({
                 = _.uniq(worldHandler.world[zone][nodeInfoFrom.cx][nodeInfoFrom.cz]['graph']['nodes'][nodeInfoFrom.index]['edges']);
         }
         else {
-            var graphData = terrainHandler.GetCellByGridPosition(nodeInfoFrom.cx, nodeInfoFrom.cz).graphData;
+            var graphData = terrainHandler.getCellByGridPosition(nodeInfoFrom.cx, nodeInfoFrom.cz).graphData;
 
             if ( !graphData.nodes ) return;
 
@@ -104,18 +104,18 @@ var NodeHandler = Class.extend({
             if ( !twoway ) {
 
                 _.each(terrainHandler.cells, function(cell) {
-                    cell.ReloadWaypointsOnly();
+                    cell.reloadWaypointsOnly();
                 });
 
             }
         }
 
         if ( twoway ) {
-            this.AddEdge(zone, to, from, false);
+            this.addEdge(zone, to, from, false);
         }
     },
     deleteNode: function(zone, id) {
-        var nodeInfoDelete = this.GetNodeArrayIndex(zone, id);
+        var nodeInfoDelete = this.getNodeArrayIndex(zone, id);
 
         if ( SERVER ) log("Going to delete "+id+" in "+zone);
 
@@ -123,7 +123,7 @@ var NodeHandler = Class.extend({
             worldHandler.world[zone][nodeInfoDelete.cx][nodeInfoDelete.cz]['graph']['nodes'].splice(nodeInfoDelete.index, 1);
         }
         else {
-            var graphData = terrainHandler.GetCellByGridPosition(nodeInfoDelete.cx, nodeInfoDelete.cz).graphData;
+            var graphData = terrainHandler.getCellByGridPosition(nodeInfoDelete.cx, nodeInfoDelete.cz).graphData;
             graphData['nodes'].splice(nodeInfoDelete.index, 1);
         }
 
@@ -171,7 +171,7 @@ var NodeHandler = Class.extend({
 
 
             _.each(terrainHandler.cells, function(cell) {
-                cell.ReloadWaypointsOnly();
+                cell.reloadWaypointsOnly();
             });
         }
     }

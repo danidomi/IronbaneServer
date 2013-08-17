@@ -132,7 +132,7 @@ var Mesh = Unit.extend({
 
         _.each(cell.objects, function(obj) {
 
-          if ( me.InRangeOfPosition(obj.position, light.distance) ) {
+          if ( me.inRangeOfPosition(obj.position, light.distance) ) {
             if ( obj.mesh ) {
               if ( ISDEF(obj.mesh.material.needsUpdate) ) {
                 obj.mesh.material.needsUpdate = true;
@@ -160,7 +160,7 @@ var Mesh = Unit.extend({
 
     _.each(this.particleEmitters, function(emitter) {
             this.particleEmittersToMaintain.push(
-              particleHandler.Add(emitter.particle,
+              particleHandler.add(emitter.particle,
                 emitter.data));
     }, this);
 
@@ -197,15 +197,15 @@ var Mesh = Unit.extend({
     var filename = (this.meshData['filename'].split("."))[0]+".js";
 
     var model = meshPath + filename;
-    //this.texture = textureHandler.GetTexture( texture, true);
+    //this.texture = textureHandler.getTexture( texture, true);
 
 
     (function(unit){
-      meshHandler.Load(model, function(geometry) {
-        unit.BuildMesh( geometry );
+      meshHandler.load(model, function(geometry) {
+        unit.buildMesh( geometry );
       }, unit.meshData['scale']);
     })(this);
-    //meshHandler.GetMesh(this.param, this);
+    //meshHandler.getMesh(this.param, this);
 
 
 
@@ -272,7 +272,7 @@ var Mesh = Unit.extend({
       // }
 
       if ( this.drawNameMesh ) {
-        materials.push(textureHandler.GetTexture('plugins/game/images/'+tiles[i] + '.png', false, {
+        materials.push(textureHandler.getTexture('plugins/game/images/'+tiles[i] + '.png', false, {
           transparent:true,
           opacity:0.5,
           seeThrough:true,
@@ -282,7 +282,7 @@ var Mesh = Unit.extend({
         }));
       }
       else {
-        materials.push(textureHandler.GetTexture('plugins/game/images/'+tiles[i] + '.png', false, {
+        materials.push(textureHandler.getTexture('plugins/game/images/'+tiles[i] + '.png', false, {
           transparent:this.meshData["transparent"] === 1,
           alphaTest:0.1,
           useLighting:true
@@ -346,11 +346,11 @@ var Mesh = Unit.extend({
 
     // (function(unit){
     //   setTimeout(function() {
-    //     unit.Decorate();
+    //     unit.decorate();
     //   }, 10000);
     // })(this);
-    this.Decorate();
-  //this.UpdateRotation();
+    this.decorate();
+  //this.updateRotation();
   },
   // onLoad: function(mesh) {
   //   //this.mesh = mesh;
@@ -479,7 +479,7 @@ var Mesh = Unit.extend({
     //
     //            for(var m in this.mesh.geometry.materials) {
     //                //bm("test");
-    //                this.mesh.geometry.materials[m].uniforms.camPos.value = terrainHandler.GetReferenceLocationNoClone();
+    //                this.mesh.geometry.materials[m].uniforms.camPos.value = terrainHandler.getReferenceLocationNoClone();
     //                this.mesh.geometry.materials[m].uniforms.meshPos.value = this.position;
     //                //this.mesh.geometry.materials[m].uniformsList[3][0].value = ironbane.player.position
     //            }

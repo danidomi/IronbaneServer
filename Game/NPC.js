@@ -40,7 +40,7 @@ var NPC = Fighter.extend({
         this.rotationSpeed = 10.0;
 
 
-        this.SetWeaponsAndLoot();
+        this.setWeaponsAndLoot();
 
 
         // A sub node position, used in the path finding
@@ -134,7 +134,7 @@ var NPC = Fighter.extend({
         //console.log('**** LOOT SET FOR: ', this.id, this.loot);
     },
     jump: function() {
-        this.EmitNearby("doJump", {
+        this.emitNearby("doJump", {
             id:this.id
         });
 
@@ -158,18 +158,18 @@ var NPC = Fighter.extend({
             this.calculateNewPathTimeout = 2.0;
 
             if ( targetPositionDistance > 1 ) {
-                //log("[TravelToPosition] Calculating new path to "+targetPosition.ToString());
-                this.CalculatePath(targetPosition);
+                //log("[TravelToPosition] Calculating new path to "+targetPosition.toString());
+                this.calculatePath(targetPosition);
 
-                //log("[TravelToPosition] Node Path: "+this.targetNodePosition.ToString());
+                //log("[TravelToPosition] Node Path: "+this.targetNodePosition.toString());
             }
         }
 
         if ( targetPositionDistance > 4 || useSeek ) {
-            this.steeringForce = this.steeringBehaviour.Seek(this.targetNodePosition);
+            this.steeringForce = this.steeringBehaviour.seek(this.targetNodePosition);
         }
         else {
-            this.steeringForce = this.steeringBehaviour.Arrive(this.targetNodePosition, deceleration);
+            this.steeringForce = this.steeringBehaviour.arrive(this.targetNodePosition, deceleration);
         }
     }
 });

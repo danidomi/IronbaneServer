@@ -32,7 +32,7 @@ var ChatBubble = PhysicsObject.extend({
         this.textMesh = null;
 
 
-        this.MakeTextMesh(text);
+        this.makeTextMesh(text);
 
         this.text = text;
 
@@ -153,11 +153,11 @@ var ChatBubble = PhysicsObject.extend({
         if ( this.textMesh ) {
             this.textMesh.position.copy(this.localPosition);
 
-            this.textMesh.LookAt(ironbane.camera.position);
+            this.textMesh.lookAt(ironbane.camera.position);
 
         }
 
-        if ( this.lifeTime <= 0 ) this.Destroy();
+        if ( this.lifeTime <= 0 ) this.destroy();
 
     }
 });

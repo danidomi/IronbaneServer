@@ -54,14 +54,14 @@ var Fighter = Unit.extend({
 
     this._super(position, rotation, id, name, param, size);
 
-    this.SpriteStatusEnum = {
+    this.spriteStatusEnum = {
       STAND : 0,
       WALK : 1,
       FIGHT : 2,
       CAST : 3
     };
 
-    this.spriteStatus = this.SpriteStatusEnum.STAND;
+    this.spriteStatus = this.spriteStatusEnum.STAND;
     this.spriteForward = true;
 
 this.walkSoundTimer = 0.0;
@@ -110,7 +110,7 @@ this.walkSoundTimer = 0.0;
 
     (function(unit){
       setTimeout(function(){
-        if ( unit.health <= 0 ) unit.Die(true);
+        if ( unit.health <= 0 ) unit.die(true);
       }, 0);
     })(this);
   },
@@ -119,8 +119,8 @@ this.walkSoundTimer = 0.0;
 
 
 
-    //this.UpdateWeapon();
-    //this.UpdateClothes();
+    //this.updateWeapon();
+    //this.updateClothes();
 
     this._super();
 
@@ -145,7 +145,7 @@ this.walkSoundTimer = 0.0;
     var me = this;
 
     var texture = getCharacterTexture(me.appearance);
-    var directionSpriteIndex = me.GetDirectionSpriteIndex();
+    var directionSpriteIndex = me.getDirectionSpriteIndex();
     if (me.mesh) {
       ironbane.scene.remove(me.mesh);
       me.mesh = null;
@@ -183,7 +183,7 @@ this.walkSoundTimer = 0.0;
       },
       texture1: {
         type: 't',
-        value: textureHandler.GetFreshTexture(texture, true)
+        value: textureHandler.getFreshTexture(texture, true)
       }
     };
 
@@ -195,7 +195,7 @@ this.walkSoundTimer = 0.0;
       alphaTest: 0.5
     });
 
-    //shaderMaterial = new THREE.MeshBasicMaterial( { map: textureHandler.GetTexture( texture ), alphaTest: 0.5, transparent: true } );
+    //shaderMaterial = new THREE.MeshBasicMaterial( { map: textureHandler.getTexture( texture ), alphaTest: 0.5, transparent: true } );
 
     if (stealth) shaderMaterial.wireframe = true;
 
@@ -253,7 +253,7 @@ this.walkSoundTimer = 0.0;
       },
       texture1 : {
         type: 't',
-        value: textureHandler.GetTexture( texture, true )
+        value: textureHandler.getTexture( texture, true )
       }
     };
 
@@ -270,7 +270,7 @@ this.walkSoundTimer = 0.0;
     shaderMaterial.side = THREE.DoubleSide;
     //shaderMaterial.wireframe = true;
 
-    //shaderMaterial = new THREE.MeshBasicMaterial( { map: textureHandler.GetTexture( texture ) , alphaTest: 0.5, transparent: true } );
+    //shaderMaterial = new THREE.MeshBasicMaterial( { map: textureHandler.getTexture( texture ) , alphaTest: 0.5, transparent: true } );
 
     this.weaponMesh = new THREE.Mesh(planeGeo, shaderMaterial);
 
@@ -331,12 +331,12 @@ this.walkSoundTimer = 0.0;
     if ( this.attackTimeout > 0.0 ) this.attackTimeout -= dTime;
     if (this.walkSoundTimer > 0.0 ) this.walkSoundTimer -= dTime;
 
-    //        debug.SetWatch('speed', this.speed);
-    //        debug.SetWatch(this.id+': name', this.name);
-    //debug.SetWatch(this.id+': speed', this.speed);
-    //        debug.SetWatch(this.id+': targetSpeed', this.targetSpeed);
-    //debug.SetWatch(this.id+': targetPosition', this.targetPosition.ToString());
-    //debug.SetWatch(this.id+': velocity', this.velocity.ToString());
+    //        debug.setWatch('speed', this.speed);
+    //        debug.setWatch(this.id+': name', this.name);
+    //debug.setWatch(this.id+': speed', this.speed);
+    //        debug.setWatch(this.id+': targetSpeed', this.targetSpeed);
+    //debug.setWatch(this.id+': targetPosition', this.targetPosition.toString());
+    //debug.setWatch(this.id+': velocity', this.velocity.toString());
 
 
 
@@ -363,12 +363,12 @@ this.walkSoundTimer = 0.0;
 
 
     this.lastSpriteIndex = this.spriteIndex;
-    this.spriteIndex = this.GetDirectionSpriteIndex();
+    this.spriteIndex = this.getDirectionSpriteIndex();
 
 
 
     if ( this.mesh ) {
-      this.mesh.LookAt(ironbane.camera.position, 0, 0, 0, true);
+      this.mesh.lookAt(ironbane.camera.position, 0, 0, 0, true);
 
 
 
@@ -393,7 +393,7 @@ this.walkSoundTimer = 0.0;
 
         var mp = 0.5+(Math.cos(new Date().getTime()/1000*(5))/2);
 
-        //debug.SetWatch('mp', mp.Round(2));
+        //debug.setWatch('mp', mp.round(2));
 
 
         this.mesh.material.uniforms.hue.value.y = mp;
@@ -418,7 +418,7 @@ this.walkSoundTimer = 0.0;
 
     if ( this.weaponMesh ) {
 
-      var firstPerson = (this instanceof Player) && this.cameraStatus == CameraStatusEnum.FirstPerson;
+      var firstPerson = (this instanceof Player) && this.cameraStatus == CameraStatusEnum.firstPerson;
 
       var offset = new THREE.Vector3(0.0, firstPerson ? 0.25 : 0, firstPerson ? -0.5 : 0);
       var front = true;
@@ -661,7 +661,7 @@ this.walkSoundTimer = 0.0;
 
       if ( terrainHandler.skybox ) this.weaponMesh.material.uniforms.vSun.value.copy(terrainHandler.skybox.sunVector);
 
-      //debug.SetWatch("targetWalkAngleZ", targetWalkAngleZ);
+      //debug.setWatch("targetWalkAngleZ", targetWalkAngleZ);
 
 
       DisplayUVFrame(this.weaponMesh, 0, 0, 1, 1, false);
@@ -679,7 +679,7 @@ this.walkSoundTimer = 0.0;
       var swingRotation = (this.attackStateTimer*2)/attackSwingTime;
       if ( swingRotation > 1 ) swingRotation = 2 - swingRotation;
       if ( swingRotation <= 0 ) swingRotation = 0;
-      //debug.SetWatch("swingRotation", swingRotation);
+      //debug.setWatch("swingRotation", swingRotation);
 
       this.weaponPivot.rotation.x = ((swingRotation*swingXamount)+rotateX).ToRadians();
       this.weaponPivot.rotation.y = ((swingRotation*swingYamount)+rotateY).ToRadians();
@@ -698,11 +698,11 @@ this.walkSoundTimer = 0.0;
         this.weaponPivot.position.z = zPosition+offset.z;
       }
       else {
-        this.weaponPivot.rotation.z = (this.weaponPivot.rotation.z.Lerp(((swingRotation*swingZamount)+rotateZ+targetWalkAngleZ).ToRadians(), dTime*speed));
+        this.weaponPivot.rotation.z = (this.weaponPivot.rotation.z.lerp(((swingRotation*swingZamount)+rotateZ+targetWalkAngleZ).ToRadians(), dTime*speed));
 
-        this.weaponPivot.position.x = this.weaponPivot.position.x.Lerp(holdingDistance+targetWalkOffsetX+offset.x, dTime*speed);
-        this.weaponPivot.position.y = this.weaponPivot.position.y.Lerp(holdingHeight+offset.y, dTime*speed);
-        this.weaponPivot.position.z = this.weaponPivot.position.z.Lerp(zPosition, dTime*speed);
+        this.weaponPivot.position.x = this.weaponPivot.position.x.lerp(holdingDistance+targetWalkOffsetX+offset.x, dTime*speed);
+        this.weaponPivot.position.y = this.weaponPivot.position.y.lerp(holdingHeight+offset.y, dTime*speed);
+        this.weaponPivot.position.z = this.weaponPivot.position.z.lerp(zPosition, dTime*speed);
       }
 
       this.weaponMesh.rotation.x = 0;
@@ -716,7 +716,7 @@ this.walkSoundTimer = 0.0;
       this.weaponMesh.scale.x = scaleX;
       this.weaponMesh.scale.y = scaleY;
 
-      this.weaponOrigin.LookAt(ironbane.camera.position, 0, 0, 0, true);
+      this.weaponOrigin.lookAt(ironbane.camera.position, 0, 0, 0, true);
 
     }
 
@@ -726,26 +726,26 @@ this.walkSoundTimer = 0.0;
 
     //        if ( this.lastJumpTimer <= 0 ) {
     //            this.lastJumpTimer = 3;
-    //            this.SwingWeapon(null);
+    //            this.swingWeapon(null);
     //        }
 
 
     // this needs partly be moved to Player.js for slight performance improvements
 
     if ( this.speed > 0.1 ) {
-      this.spriteStatus = this.SpriteStatusEnum.WALK;
+      this.spriteStatus = this.spriteStatusEnum.WALK;
       if(this.walkSoundTimer <= 0 ) {
         if(this instanceof Player) {
-          //soundHandler.Play("Footsteps");
+          //soundHandler.play("Footsteps");
       }
       this.walkSoundTimer = walkSoundTime;
     }
     }
     else {
-      this.spriteStatus = this.SpriteStatusEnum.STAND;
+      this.spriteStatus = this.spriteStatusEnum.STAND;
     }
 
-    //        this.spriteStatus = this.SpriteStatusEnum.WALK;
+    //        this.spriteStatus = this.spriteStatusEnum.WALK;
     //        var tempSpeed = 0.5;
 
     //var oldSpriteIndex = this.spriteStep;
@@ -753,9 +753,9 @@ this.walkSoundTimer = 0.0;
     this.walkSpriteTimer += dTime / this.size;
 
     //        this.speed = 2.0;
-    //        this.spriteStatus = this.SpriteStatusEnum.WALK;
+    //        this.spriteStatus = this.spriteStatusEnum.WALK;
 
-    if ( this.spriteStatus == this.SpriteStatusEnum.WALK && Math.abs(this.speed) > 0.1) {
+    if ( this.spriteStatus == this.spriteStatusEnum.WALK && Math.abs(this.speed) > 0.1) {
       var stepFactor = (parseFloat(Math.abs(this.speed))/5.0);
 
 
@@ -764,7 +764,7 @@ this.walkSoundTimer = 0.0;
       stepFactor = 1.0 - stepFactor;
       stepFactor = Math.max(stepFactor, 0.1);
 
-      //debug.SetWatch('stepFactor', stepFactor);
+      //debug.setWatch('stepFactor', stepFactor);
 
       if ( this.walkSpriteTimer > stepFactor ) {
         this.walkSpriteTimer = 0.0;
@@ -778,14 +778,14 @@ this.walkSoundTimer = 0.0;
         }
       }
     }
-    else if ( this.spriteStatus == this.SpriteStatusEnum.STAND ) {
+    else if ( this.spriteStatus == this.spriteStatusEnum.STAND ) {
       this.spriteStep = 1;
     }
 
     if ( this.mesh ) {
-      this.DisplayUVFrame(this.spriteStep, this.spriteIndex, 3, 8);
+      this.displayUVFrame(this.spriteStep, this.spriteIndex, 3, 8);
     }
-  //debug.SetWatch('spriteStep', this.spriteStep);
+  //debug.setWatch('spriteStep', this.spriteStep);
   },
   swingWeapon: function(pos, weapon) {
 
@@ -801,10 +801,10 @@ this.walkSoundTimer = 0.0;
     this.meleeHitPosition = null;
 
     if ( !this.weaponMesh ) {
-      this.DoMeleeHitAnimation(pos, 0.5);
+      this.doMeleeHitAnimation(pos, 0.5);
     }
     // else {
-    //   this.DoMeleeHitAnimation(this.position.clone().addSelf(this.heading), 0.5);
+    //   this.doMeleeHitAnimation(this.position.clone().addSelf(this.heading), 0.5);
     // }
 
 
@@ -814,13 +814,13 @@ this.walkSoundTimer = 0.0;
 
       switch (weapon.subtype) {
         case 'bow':
-          soundHandler.Play("battle/fireArrow", this.position);
+          soundHandler.play("battle/fireArrow", this.position);
           break;
         case 'staff':
-          soundHandler.Play("battle/fireStaff", this.position);
+          soundHandler.play("battle/fireStaff", this.position);
           break;
         default:
-          soundHandler.Play("battle/swing", this.position);
+          soundHandler.play("battle/swing", this.position);
           break;
       }
     }
@@ -854,14 +854,14 @@ this.walkSoundTimer = 0.0;
     this.allowJump = false;
 
     // if(this.template.type !== UnitTypeEnum.PLAYER) {
-    //   soundHandler.Play(this.npctype + "/jump", this.position);
+    //   soundHandler.play(this.npctype + "/jump", this.position);
     // }
     // else
     // {
-    //   soundHandler.Play("player/jump/", this.position);
+    //   soundHandler.play("player/jump/", this.position);
     // }
 
-    soundHandler.Play("jump", this.position);
+    soundHandler.play("jump", this.position);
   },
   doMeleeHitAnimation: function(position, power) {
 
@@ -887,7 +887,7 @@ this.walkSoundTimer = 0.0;
       if ( this.dead ) return;
 
 
-      attacker.SwingWeapon(this.position, attacker.weaponTemplate);
+      attacker.swingWeapon(this.position, attacker.weaponTemplate);
 
 
       power = power || 0.3;
@@ -904,14 +904,14 @@ this.walkSoundTimer = 0.0;
 
 
       // if ( this.armor > 0 ) {
-      //   soundHandler.Play("hit1", this.position);
+      //   soundHandler.play("hit1", this.position);
       // }
       // else {
-      //   soundHandler.Play("hit2", this.position);
+      //   soundHandler.play("hit2", this.position);
       // }
 
       //        if ( attacker != ironbane.player && pos ) {
-      //            attacker.SwingWeapon(pos);
+      //            attacker.swingWeapon(pos);
       //        }
       //
     }
@@ -920,7 +920,7 @@ this.walkSoundTimer = 0.0;
 
       this.playSound("battle/die");
 
-      this.Die();
+      this.die();
 
     }
     else {
@@ -932,14 +932,14 @@ this.walkSoundTimer = 0.0;
 
   playSound: function(sound) {
 
-    soundHandler.Play(sound, this.position);
+    soundHandler.play(sound, this.position);
 
     // if(this.template.type !== UnitTypeEnum.PLAYER) {
-    //   soundHandler.Play("npcs/" +this.npctype + "/" + sound, this.position);
+    //   soundHandler.play("npcs/" +this.npctype + "/" + sound, this.position);
     // }
     // else
     // {
-    //   soundHandler.Play("player/" + sound, this.position);
+    //   soundHandler.play("player/" + sound, this.position);
     // }
 
   },
@@ -959,7 +959,7 @@ this.walkSoundTimer = 0.0;
     this.shadowMesh.visible = false;
 
     if ( !noParticle ) {
-      particleHandler.Add(ParticleTypeEnum.DEATH, {
+      particleHandler.add(ParticleTypeEnum.DEATH, {
         followUnit:this
       });
     }
@@ -977,9 +977,9 @@ this.walkSoundTimer = 0.0;
 
       socketHandler.playerData.items = [];
 
-      hudHandler.ReloadInventory();
+      hudHandler.reloadInventory();
 
-      hudHandler.HideHUD();
+      hudHandler.hideHUD();
     }
 
 
@@ -1037,7 +1037,7 @@ this.walkSoundTimer = 0.0;
       for(var x=0;x<fullHearts/2;x++){
         (function(victim){
           setTimeout(function(){
-            particleHandler.Add(heal ? ParticleTypeEnum.HEAL2 : ParticleTypeEnum.DAMAGE2, {
+            particleHandler.add(heal ? ParticleTypeEnum.HEAL2 : ParticleTypeEnum.DAMAGE2, {
               followUnit:victim
             });
           }, delay);
@@ -1051,7 +1051,7 @@ this.walkSoundTimer = 0.0;
       if ( halfHeart ) {
         (function(victim){
           setTimeout(function(){
-            particleHandler.Add(heal ? ParticleTypeEnum.HEAL1 : ParticleTypeEnum.DAMAGE1, {
+            particleHandler.add(heal ? ParticleTypeEnum.HEAL1 : ParticleTypeEnum.DAMAGE1, {
               followUnit:victim
             });
           }, delay);
@@ -1062,9 +1062,9 @@ this.walkSoundTimer = 0.0;
 
 
     if ( this == ironbane.player && damage > 0 ) {
-      hudHandler.MakeHealthBar(true);
+      hudHandler.makeHealthBar(true);
       setTimeout(function(){
-        hudHandler.MakeHealthBar(true);
+        hudHandler.makeHealthBar(true);
       },100);
     }
   },
@@ -1101,7 +1101,7 @@ this.walkSoundTimer = 0.0;
       for(var x=0;x<fullHearts/2;x++){
         (function(victim){
           setTimeout(function(){
-            particleHandler.Add(heal ? ParticleTypeEnum.ARMORHEAL2 : ParticleTypeEnum.ARMORHIT2, {
+            particleHandler.add(heal ? ParticleTypeEnum.ARMORHEAL2 : ParticleTypeEnum.ARMORHIT2, {
               followUnit:victim
             });
           }, delay);
@@ -1115,7 +1115,7 @@ this.walkSoundTimer = 0.0;
       if ( halfHeart ) {
         (function(victim){
           setTimeout(function(){
-            particleHandler.Add(heal ? ParticleTypeEnum.ARMORHEAL1 : ParticleTypeEnum.ARMORHIT1, {
+            particleHandler.add(heal ? ParticleTypeEnum.ARMORHEAL1 : ParticleTypeEnum.ARMORHIT1, {
               followUnit:victim
             });
           }, delay);
@@ -1125,9 +1125,9 @@ this.walkSoundTimer = 0.0;
 
 
       if ( this == ironbane.player && damage > 0) {
-        hudHandler.MakeArmorBar(true);
+        hudHandler.makeArmorBar(true);
         setTimeout(function(){
-          hudHandler.MakeArmorBar(true);
+          hudHandler.makeArmorBar(true);
         },100);
       }
     }

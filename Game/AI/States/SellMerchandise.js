@@ -34,9 +34,9 @@ var SellMerchandise = State.extend({
 
 
             // Restock a random item
-            unit.SetWeaponsAndLoot();
+            unit.setWeaponsAndLoot();
 
-            // unit.Say(ChooseRandom([
+            // unit.say(ChooseRandom([
             //  "I've got new stuff!",
             //  "Restocked merchandise!",
             //  "New and better deals!"

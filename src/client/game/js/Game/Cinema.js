@@ -27,7 +27,7 @@ var Cinema = Class.extend({
     },
     playCutscene: function(id) {
         $("#chatBox").css("opacity", 0);
-        hudHandler.HideHUD();
+        hudHandler.hideHUD();
     $('#black-bar-top,#black-bar-bottom').animate({
         height: 60
       }, 1000, function() {
@@ -45,7 +45,7 @@ var Cinema = Class.extend({
     $('#black-bar-top,#black-bar-bottom').animate({
         height: 0
       }, 1000, function() {
-        hudHandler.ShowHUD();
+        hudHandler.showHUD();
         $("#chatBox").css("opacity", "");
       });
 
@@ -57,7 +57,7 @@ var Cinema = Class.extend({
         $('#black-bar-top,#black-bar-bottom').animate({
             height: 0
           }, 1000, function() {
-            hudHandler.ShowHUD();
+            hudHandler.showHUD();
           });
 
         this.queue = [];

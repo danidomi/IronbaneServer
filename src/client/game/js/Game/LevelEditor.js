@@ -142,7 +142,7 @@ var EditorGUI = function() {
         movementType:parseInt(levelEditor.editorGUI.epmoMovementType, 10),
         speedMultiplier:parseFloat(levelEditor.editorGUI.epmoSpeedMultiplier),
         distanceMultiplier:parseFloat(levelEditor.editorGUI.epmoDistanceMultiplier),
-        rotY: ironbane.player.rotation.y.Round()
+        rotY: ironbane.player.rotation.y.round()
       }
     });
   };
@@ -162,7 +162,7 @@ var EditorGUI = function() {
         movementType:parseInt(levelEditor.editorGUI.eptoMovementType, 10),
         speedMultiplier:parseFloat(levelEditor.editorGUI.eptoSpeedMultiplier),
         distanceMultiplier:parseFloat(levelEditor.editorGUI.eptoDistanceMultiplier),
-        rotY: ironbane.player.rotation.y.Round(),
+        rotY: ironbane.player.rotation.y.round(),
         startOpen : levelEditor.editorGUI.eptoStartOpen
       }
     });
@@ -220,7 +220,7 @@ var EditorGUI = function() {
       data: {
         text: levelEditor.editorGUI.epsText,
         fontSize: levelEditor.editorGUI.epsFontSize,
-        rotY: ironbane.player.rotation.y.Round()
+        rotY: ironbane.player.rotation.y.round()
       }
     });
   }
@@ -236,7 +236,7 @@ var EditorGUI = function() {
       data: {
         loot:levelEditor.editorGUI.eplmLootItems,
         respawnTime: levelEditor.editorGUI.eplmRespawnTime,
-        rotY: ironbane.player.rotation.y.Round()
+        rotY: ironbane.player.rotation.y.round()
       }
     });
   }
@@ -294,7 +294,7 @@ var EditorGUI = function() {
   //        // Check if our npcID is not 0, and send a request to update the NPC with given ID
   //        // our given editor data
   //        if ( levelEditor.editorGUI.npcID == 0 ) {
-  //            hudHandler.MessageAlert('Select an NPC first!');
+  //            hudHandler.messageAlert('Select an NPC first!');
   //            return;
   //        }
   //
@@ -336,7 +336,7 @@ var EditorGUI = function() {
       zone: levelEditor.editorGUI.tpZone
     }, function(reply) {
       if ( ISDEF(reply.errmsg) ) {
-        hudHandler.MessageAlert(reply.errmsg);
+        hudHandler.messageAlert(reply.errmsg);
         return;
       }
     });
@@ -371,7 +371,7 @@ var EditorGUI = function() {
 
     levelEditor.terrainMode = true;
 
-    levelEditor.ShowSelectionScreen(this.showTileSelectBox);
+    levelEditor.showSelectionScreen(this.showTileSelectBox);
   };
 
   this.selectObject = function() {
@@ -391,7 +391,7 @@ var EditorGUI = function() {
     levelEditor.terrainMode = false;
 
 
-    levelEditor.ShowSelectionScreen(this.showTileSelectBox);
+    levelEditor.showSelectionScreen(this.showTileSelectBox);
   };
 
 
@@ -530,7 +530,7 @@ var LevelEditor = Class.extend({
 
       if ( levelEditor.editorGUI.ppMode == PathPlacerModeEnum.NODES ) {
 
-          //this.AddPreviewCircleToMesh(ix, iz, levelEditor.editorGUI.ppAutoConnectWithin, 0xffffff);
+          //this.addPreviewCircleToMesh(ix, iz, levelEditor.editorGUI.ppAutoConnectWithin, 0xffffff);
 
 
 
@@ -594,7 +594,7 @@ var LevelEditor = Class.extend({
       }
 
     if ( this.previewMesh ) {
-      this.previewMesh.Destroy();
+      this.previewMesh.destroy();
     }
 
     if ( id ) {
@@ -609,14 +609,14 @@ var LevelEditor = Class.extend({
       $('#tileSelectBox').show();
 
       // Build tiles
-      levelEditor.UpdateCatLinks();
+      levelEditor.updateCatLinks();
 
 
       // for(var i=0;i<this.cats.length;i++){
-      //   levelEditor.LoadCat(i, true);
+      //   levelEditor.loadCat(i, true);
       // }
 
-      levelEditor.LoadCat(0);
+      levelEditor.loadCat(0);
 
 
     }
@@ -626,7 +626,7 @@ var LevelEditor = Class.extend({
   },
   PaddingTileIDs: function() {
     this.isPaddingTileIDs = !this.isPaddingTileIDs;
-    this.LoadCat(this.currentcat);
+    this.loadCat(this.currentcat);
   },
   ShowTileIDs: function() {
     this.isShowingTileIDs = !this.isShowingTileIDs;
@@ -642,7 +642,7 @@ var LevelEditor = Class.extend({
 
     var cat = this.cats[cat];
 
-    this.UpdateCatLinks();
+    this.updateCatLinks();
 
     var result = '';
     var first;
@@ -668,7 +668,7 @@ var LevelEditor = Class.extend({
       var uid = tile;
       if ( i == 0 ) first = uid;
 
-      result += '<div id="tiletype'+uid+'" class=tile onclick="levelEditor.SetTile('+uid+')"><div class=tileid style=display:none>'+uid+'</div></div>';
+      result += '<div id="tiletype'+uid+'" class=tile onclick="levelEditor.setTile('+uid+')"><div class=tileid style=display:none>'+uid+'</div></div>';
 
     //        if ( (i+1) % 8 == 0 ) {
     //            result += "</div><div style=\"height:36px;width:1px\">&nbsp;</div><div>";
@@ -731,8 +731,8 @@ var LevelEditor = Class.extend({
 
     //alert($('#tileList').html());
 
-    //window.opener.SetEditorTileType(first);
-    this.SetTile(first);
+    //window.opener.setEditorTileType(first);
+    this.setTile(first);
 
   },
   setTile: function(tile) {
@@ -759,7 +759,7 @@ var LevelEditor = Class.extend({
         $('#selectRange').append('[<b>'+this.cats[i].title+'</b>] ');
       }
       else {
-        $('#selectRange').append('<a href=# onclick=levelEditor.LoadCat('+i+')>'+this.cats[i].title+'</a> ');
+        $('#selectRange').append('<a href=# onclick=levelEditor.loadCat('+i+')>'+this.cats[i].title+'</a> ');
       }
 
     }
@@ -963,7 +963,7 @@ var LevelEditor = Class.extend({
       ironbane.player.enableGravity = !value;
       ironbane.player.velocity.set(0,0,0);
 
-      ironbane.player.cameraStatus = CameraStatusEnum.ThirdPerson;
+      ironbane.player.cameraStatus = CameraStatusEnum.thirdPerson;
       ironbane.player.unitStandingOn = null;
 
       localStorage.chFlyMode = value;
@@ -1012,10 +1012,10 @@ var LevelEditor = Class.extend({
        ironbane.player.thirdPersonReference.y = levelEditor.editorGUI.camDistance;
        ironbane.player.thirdPersonReference.z = -levelEditor.editorGUI.camHeight;
        if ( levelEditor.editorGUI.enableModelPlacer ) {
-         levelEditor.SetPreviewMesh(levelEditor.editorGUI.selectModel);
+         levelEditor.setPreviewMesh(levelEditor.editorGUI.selectModel);
        }
        else {
-         levelEditor.SetPreviewMesh(null);
+         levelEditor.setPreviewMesh(null);
        }
 
      }
@@ -1024,14 +1024,14 @@ var LevelEditor = Class.extend({
        ironbane.player.thirdPersonReference.y = 3;
 
        ironbane.player.thirdPersonReference.z = -4;
-       levelEditor.SetPreviewMesh(null);
+       levelEditor.setPreviewMesh(null);
 
      }
 
 
       localStorage.globalEnable = value;
 
-      terrainHandler.ReloadCells();
+      terrainHandler.reloadCells();
 
 
     });
@@ -1081,7 +1081,7 @@ var LevelEditor = Class.extend({
       if ( levelEditor.editorGUI.mpRotY <= -1 ) levelEditor.editorGUI.mpRotY = 355;
       if ( levelEditor.editorGUI.mpRotZ <= -1 ) levelEditor.editorGUI.mpRotZ = 355;
 
-      //if ( levelEditor.previewMesh ) levelEditor.previewMesh.UpdateRotation();
+      //if ( levelEditor.previewMesh ) levelEditor.previewMesh.updateRotation();
 
       for (var i=0;i<levelEditor.editorGUI.gui.__folders['Model Placer'].__controllers.length;i++) {
         levelEditor.editorGUI.gui.__folders['Model Placer'].__controllers[i].updateDisplay();
@@ -1093,14 +1093,14 @@ var LevelEditor = Class.extend({
     guiControls['enableModelPlacer'].onFinishChange(function(value) {
       if ( levelEditor.editorGUI.globalEnable ) {
         if ( value ) {
-          levelEditor.SetPreviewMesh(levelEditor.editorGUI.selectModel);
+          levelEditor.setPreviewMesh(levelEditor.editorGUI.selectModel);
         }
         else {
-          levelEditor.SetPreviewMesh(null);
+          levelEditor.setPreviewMesh(null);
         }
       }
       else {
-        levelEditor.SetPreviewMesh(null);
+        levelEditor.setPreviewMesh(null);
       }
     });
 
@@ -1108,15 +1108,15 @@ var LevelEditor = Class.extend({
 
     guiControls['mpMode'].onFinishChange(function(value) {
       if ( value == ModelPlacerModeEnum.PLACE ) {
-        levelEditor.SetPreviewMesh(levelEditor.editorGUI.selectModel);
+        levelEditor.setPreviewMesh(levelEditor.editorGUI.selectModel);
       }
       else {
-        levelEditor.SetPreviewMesh(null);
+        levelEditor.setPreviewMesh(null);
       }
     });
 
     guiControls['selectModel'].onFinishChange(function(value) {
-      levelEditor.SetPreviewMesh(value);
+      levelEditor.setPreviewMesh(value);
     });
 
 
@@ -1155,12 +1155,12 @@ var LevelEditor = Class.extend({
     var customContainer = document.getElementById('editorControls');
     customContainer.appendChild(this.editorGUI.gui.domElement);
 
-  //this.SetTile(levelEditor.editorGUI.selectedTile);
+  //this.setTile(levelEditor.editorGUI.selectedTile);
   },
   placeObject: function(position, objectId) {
     var gObject = preGameObjects[objectId];
 
-    position = position.Round(2);
+    position = position.round(2);
 
     // We emit, and must add the Object ourselves because it is static
     // Set the cell to reload
@@ -1184,12 +1184,12 @@ var LevelEditor = Class.extend({
 
     if ( unit ) {
       ironbane.unitList.push(unit);
-      terrainHandler.GetCellByWorldPosition(position).objects.push(unit);
+      terrainHandler.getCellByWorldPosition(position).objects.push(unit);
     }
   },
   placeModel: function(position, rotX, rotY, rotZ, id) {
 
-    position = position.Round(2);
+    position = position.round(2);
 
     //position.y += levelEditor.editorGUI.mpHeightOffset;
 
@@ -1199,7 +1199,7 @@ var LevelEditor = Class.extend({
 
     var cellPos = WorldToCellCoordinates(position.x, position.z, cellSize);
     //[{"x":1.83,"y":0,"z":13.04,"t":5,"p":"1","rX":0,"rY":0,"rZ":0}]
-    terrainHandler.GetCellByWorldPosition(position).objectData.push({
+    terrainHandler.getCellByWorldPosition(position).objectData.push({
       x:position.x,
       y:position.y,
       z:position.z,
@@ -1215,15 +1215,15 @@ var LevelEditor = Class.extend({
 
     if ( unit ) {
       ironbane.unitList.push(unit);
-      terrainHandler.GetCellByWorldPosition(position).objects.push(unit);
+      terrainHandler.getCellByWorldPosition(position).objects.push(unit);
     }
     else {
       ba("Bad unit for PlaceModel!");
     }
 
-    if ( !le("globalEnable") ) terrainHandler.GetCellByWorldPosition(position).Reload();
+    if ( !le("globalEnable") ) terrainHandler.getCellByWorldPosition(position).Reload();
 
-    terrainHandler.RebuildOctree();
+    terrainHandler.rebuildOctree();
 
   },
   tick: function(dTime) {
@@ -1238,7 +1238,7 @@ var LevelEditor = Class.extend({
       this.previewMesh.rotation.y = levelEditor.editorGUI.mpRotY;
       this.previewMesh.rotation.z = levelEditor.editorGUI.mpRotZ;
 
-      if ( levelEditor.previewMesh ) levelEditor.previewMesh.UpdateRotationByVertices();
+      if ( levelEditor.previewMesh ) levelEditor.previewMesh.updateRotationByVertices();
 
       if ( currentMouseToWorldData ) {
 
@@ -1290,7 +1290,7 @@ var LevelEditor = Class.extend({
 
 
         this.previewMesh.localPosition.y += levelEditor.editorGUI.mpHeightOffset;
-        this.previewMesh.Tick(dTime);
+        this.previewMesh.tick(dTime);
       }
     }
 
@@ -1303,14 +1303,14 @@ var LevelEditor = Class.extend({
     //   controller.updateDisplay();
     // });
 
-    //this.SetTileHeight(1, 1, this.heightTest);
+    //this.setTileHeight(1, 1, this.heightTest);
     // if ( currentMouseToWorldData ) {
-    //   //            debug.SetWatch("currentMouseToWorldData.point", ConvertVector3(currentMouseToWorldData.point).ToString());
-    //   //            debug.SetWatch("currentMouseToWorldData.normal", ConvertVector3(currentMouseToWorldData.face.normal).ToString());
-    //   //            debug.SetWatch("currentMouseToWorldData.rotation", ConvertVector3(currentMouseToWorldData.object.rotation).ToString());
+    //   //            debug.setWatch("currentMouseToWorldData.point", ConvertVector3(currentMouseToWorldData.point).ToString());
+    //   //            debug.setWatch("currentMouseToWorldData.normal", ConvertVector3(currentMouseToWorldData.face.normal).ToString());
+    //   //            debug.setWatch("currentMouseToWorldData.rotation", ConvertVector3(currentMouseToWorldData.object.rotation).ToString());
     //   //
     //   //            if ( ISDEF(currentMouseToWorldData.object.unit) ) {
-    //   //                debug.SetWatch("currentMouseToWorldData.unit.name", currentMouseToWorldData.object.unit.name);
+    //   //                debug.setWatch("currentMouseToWorldData.unit.name", currentMouseToWorldData.object.unit.name);
     //   //            }
 
     //   // Alter the normal to rotate with the mesh;
@@ -1318,7 +1318,7 @@ var LevelEditor = Class.extend({
     //   var rotationMatrix = (new THREE.Matrix4()).extractRotation(currentMouseToWorldData.object.matrix);
     //   //matrixRotationWorld
     //   normal = rotationMatrix.multiplyVector3(normal);
-    // //debug.SetWatch("altered normal", normal.Round(2).ToString());
+    // //debug.setWatch("altered normal", normal.round(2).ToString());
 
 
     // }

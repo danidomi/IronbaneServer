@@ -35,7 +35,7 @@ var ToggleableObstacle = Unit.extend({
     //log("[ToggleableObstacle] Awake, updating leverlist!");
     this._super();
                      
-    this.UpdateLeverList();        
+    this.updateLeverList();        
   },    
   updateLeverList: function() {
     // Get all levers in the world, and check which ones have a targetUnit that points to us
@@ -43,7 +43,7 @@ var ToggleableObstacle = Unit.extend({
     this.leverList = [];
         
     (function(toggleableObstacle){
-      worldHandler.LoopUnits(function(unit){
+      worldHandler.loopUnits(function(unit){
         if ( unit instanceof Lever ) {
 
           if ( unit.targetUnit == toggleableObstacle ) {
@@ -59,7 +59,7 @@ var ToggleableObstacle = Unit.extend({
             
     this.on = bool;
             
-    this.EmitNearby('toggle', {
+    this.emitNearby('toggle', {
       id:this.id,
       on:this.on
     });
@@ -95,7 +95,7 @@ var ToggleableObstacle = Unit.extend({
             var template = dataHandler.items[item.template];
             if ( template.type === "tool" && template.subtype === "key" ) {      
               if ( item.attr1 === -this.id ) {
-                this.Toggle(!this.on);  
+                this.toggle(!this.on);  
                 this.keyUseTimeout = 2.0;
               }
             }

@@ -30,7 +30,7 @@ var WorldHandler = Class.extend({
 
     this.switches = {};
 
-    this.LoadWorldLight();
+    this.loadWorldLight();
 
     this.awake = false;
     this.hasLoadedWorld = false;
@@ -40,19 +40,19 @@ var WorldHandler = Class.extend({
   awake: function() {
 
 
-    this.BuildZoneWaypoints();
+    this.buildZoneWaypoints();
 
 
 
     // All units ready! Awaken!
-    worldHandler.LoopUnits(function(u){
-      u.Awake();
+    worldHandler.loopUnits(function(u){
+      u.awake();
     });
 
     log("World has awaken!");
     this.awake = true;
 
-  //worldHandler.LoadSwitches();
+  //worldHandler.loadSwitches();
   },
   buildZoneWaypoints: function() {
     // Load all waypoints!
@@ -92,9 +92,9 @@ var WorldHandler = Class.extend({
 
     }
 
-    worldHandler.LoopUnits(function(u){
+    worldHandler.loopUnits(function(u){
       if ( u instanceof Actor ) {
-        u.BuildWaypoints();
+        u.buildWaypoints();
       }
     });
 
@@ -108,21 +108,21 @@ var WorldHandler = Class.extend({
     if ( !this.awake ) {
       var hasLoadedUnits = true;
 
-      this.LoopCells(function(cell) {
+      this.loopCells(function(cell) {
         if ( !cell.hasLoadedUnits ) hasLoadedUnits = false;
       });
 
-      if ( hasLoadedUnits ) this.Awake();
+      if ( hasLoadedUnits ) this.awake();
     }
 
   },
   saveWorld: function() {
-    this.LoopCellsWithIndex(function(z, cx, cz) {
-      this.SaveCell(z, cx, cz);
+    this.loopCellsWithIndex(function(z, cx, cz) {
+      this.saveCell(z, cx, cz);
     });
   },
   doFullBackup: function() {
-    chatHandler.AnnounceMods("Backing up server...", "blue");
+    chatHandler.announceMods("Backing up server...", "blue");
 
     var deploySh = spawn('sh', [ 'serverbackup.sh' ], {
       //cwd: process.env.HOME + '/myProject',
@@ -133,7 +133,7 @@ var WorldHandler = Class.extend({
     });
 
     deploySh.stderr.on('data', function (data) {
-      chatHandler.AnnounceMods(data, "red");
+      chatHandler.announceMods(data, "red");
       //console.log('stderr: ' + data);
     });
 
@@ -143,7 +143,7 @@ var WorldHandler = Class.extend({
     });
 
     deploySh.on('exit', function (code) {
-      chatHandler.AnnounceMods("Backup complete!", "blue");
+      chatHandler.announceMods("Backup complete!", "blue");
       //console.log('child process exited with code ' + code);
     });
   },
@@ -183,7 +183,7 @@ var WorldHandler = Class.extend({
         if ( !isNumber(cz) ) continue;
 
 
-        worldHandler.BuildWorldStructure(zone, cx, cz);
+        worldHandler.buildWorldStructure(zone, cx, cz);
 
         // Load navigation graph, even in a light world because we need it
         if ( file == "graph.json" ) {
@@ -209,7 +209,7 @@ var WorldHandler = Class.extend({
 
         log("Loaded cell ("+cx+","+cz+") in zone "+zone);
 
-        worldHandler.LoadUnits(zone, cx, cz);
+        worldHandler.loadUnits(zone, cx, cz);
       }
 
       worldHandler.hasLoadedWorld = true;
@@ -220,7 +220,7 @@ var WorldHandler = Class.extend({
 
   },
   loopUnits: function(fn) {
-    this.LoopCells(function(cell) {
+    this.loopCells(function(cell) {
       if ( !_.isUndefined(cell.units) ) {
         _.each(cell.units, function(unit) {
           fn(unit);
@@ -229,7 +229,7 @@ var WorldHandler = Class.extend({
     });
   },
   loopUnitsNear: function(zone, cellX, cellZ, fn) {
-    this.LoopCellsNear(zone, cellX, cellZ, function(cell) {
+    this.loopCellsNear(zone, cellX, cellZ, function(cell) {
       if ( !_.isUndefined(cell.units) ) {
         _.each(cell.units, function(unit) {
           fn(unit);
@@ -249,7 +249,7 @@ var WorldHandler = Class.extend({
   loopCellsNear: function(zone, cellX, cellZ, fn) {
     for(var x=cellX-1;x<=cellX+1;x++){
         for(var z=cellZ-1;z<=cellZ+1;z++){
-            if ( worldHandler.CheckWorldStructure(zone, x, z) ) {
+            if ( worldHandler.checkWorldStructure(zone, x, z) ) {
                 fn(worldHandler.world[zone][x][z]);
             }
         }
@@ -313,7 +313,7 @@ var WorldHandler = Class.extend({
             var unitdata = results[u];
 
 
-            worldHandler.MakeUnitFromData(unitdata);
+            worldHandler.makeUnitFromData(unitdata);
 
 
           }
@@ -502,7 +502,7 @@ var WorldHandler = Class.extend({
   // 4-3 super sharp peaks
   generateCell: function(zone, cellX, cellZ) {
 
-    worldHandler.BuildWorldStructure(zone, cellX, cellZ);
+    worldHandler.buildWorldStructure(zone, cellX, cellZ);
 
 
     this.world[zone][cellX][cellZ].units = [];
@@ -511,7 +511,7 @@ var WorldHandler = Class.extend({
 
     log("Generated cell ("+cellX+","+cellZ+")");
 
-    this.SaveCell(zone, cellX, cellZ, true);
+    this.saveCell(zone, cellX, cellZ, true);
 
   },
   saveCell: function(zone, cellX, cellZ, clearObjects) {
@@ -519,7 +519,7 @@ var WorldHandler = Class.extend({
 
     var doClearObjects = clearObjects || false;
 
-    chatHandler.AnnounceMods("Saving cell "+cellX+", "+cellZ+" in zone "+zone+"...");
+    chatHandler.announceMods("Saving cell "+cellX+", "+cellZ+" in zone "+zone+"...");
 
     // Instead of saving instantly, we load the cell, overwrite it with the terrain we have, and save it! And empty terrain!
 
@@ -527,7 +527,7 @@ var WorldHandler = Class.extend({
     var buffer_graph = JSON.parse(JSON.stringify(this.world[zone][cellX][cellZ].graph));
     var buffer_units = this.world[zone][cellX][cellZ].units;
 
-    this.LoadCell(zone, cellX, cellZ);
+    this.loadCell(zone, cellX, cellZ);
 
     if ( doClearObjects ) {
       this.world[zone][cellX][cellZ].objects = [];
@@ -550,7 +550,7 @@ var WorldHandler = Class.extend({
 
 
         var pos = ConvertVector3(obj.pos);
-        pos = pos.Round(2);
+        pos = pos.round(2);
 
 
         var found = false;
@@ -603,7 +603,7 @@ var WorldHandler = Class.extend({
 
 
         data = ConvertVector3(data);
-        data = data.Round(2);
+        data = data.round(2);
 
 
 
@@ -614,7 +614,7 @@ var WorldHandler = Class.extend({
 
 
           obj = ConvertVector3(obj);
-          obj = obj.Round(2);
+          obj = obj.round(2);
 
           if ( data.x === obj.x && data.y === obj.y && data.z === obj.z ) {
             worldHandler.world[zone][cellX][cellZ].objects.splice(o--, 1);
@@ -656,7 +656,7 @@ var WorldHandler = Class.extend({
     astar.cleanUp(this.world[zone][cellX][cellZ].graph);
 
     // Rebuild the zone waypoints
-    worldHandler.BuildZoneWaypoints();
+    worldHandler.buildZoneWaypoints();
 
     str = JSON.stringify(this.world[zone][cellX][cellZ].graph);
     fs.writeFileSync(path+"/graph.json", str);
@@ -670,7 +670,7 @@ var WorldHandler = Class.extend({
   updateNearbyUnitsOtherUnitsLists: function(zone, cellX, cellZ) {
     for(var x=cellX-1;x<=cellX+1;x++){
       for(var z=cellZ-1;z<=cellZ+1;z++){
-        if ( worldHandler.CheckWorldStructure(zone, x, z) ) {
+        if ( worldHandler.checkWorldStructure(zone, x, z) ) {
           for(var u=0;u<worldHandler.world[zone][x][z].units.length;u++) {
             worldHandler.world[zone][x][z].units[u].UpdateOtherUnitsList();
           }
@@ -682,7 +682,7 @@ var WorldHandler = Class.extend({
 
     var foundUnit = null;
 
-    this.LoopUnits(function(unit) {
+    this.loopUnits(function(unit) {
       if ( foundUnit ) return;
       if ( unit.id === id ) foundUnit = unit;
     });
@@ -721,7 +721,7 @@ var WorldHandler = Class.extend({
 
     for(var x=cx-1;x<=cx+1;x++){
       for(var z=cz-1;z<=cz+1;z++){
-        if ( !worldHandler.CheckWorldStructure(zone, x, z) ) continue;
+        if ( !worldHandler.checkWorldStructure(zone, x, z) ) continue;
 
         if ( ISDEF(worldHandler.world[zone][x][z].units) ) {
 
@@ -768,7 +768,7 @@ var WorldHandler = Class.extend({
     worldHandler.world[zone][x][z].saveTimer = setTimeout(
       (function(zone, cx, cz) {
         return function() {
-          worldHandler.SaveCell(zone, cx, cz);
+          worldHandler.saveCell(zone, cx, cz);
         };
       })(zone, x, z), 5000);
   },

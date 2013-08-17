@@ -64,11 +64,11 @@ var ParticleEmitter = Class.extend({
         // Spawn children
         _.each(this.children, function(child) {
           if ( this.particleFollowUnit ) {
-            particleHandler.Add(ParticleTypeEnum[child],
+            particleHandler.add(ParticleTypeEnum[child],
               {position:this.particleFollowUnit.position.clone()});
           }
           else {
-            particleHandler.Add(ParticleTypeEnum[child],
+            particleHandler.add(ParticleTypeEnum[child],
               {position:this.position.clone()});
             }
         }, this);
@@ -135,14 +135,14 @@ var ParticleEmitter = Class.extend({
         // var material = new THREE.ParticleBasicMaterial({
         // color: 0xFFFFFF,
         // size: 20,
-        // map: textureHandler.GetTexture('plugins/game/images/' + texture + '.png', true),
+        // map: textureHandler.getTexture('plugins/game/images/' + texture + '.png', true),
         // blending: THREE.AdditiveBlending,
         // transparent: true
         // });
 
         particle.sprite = new THREE.Sprite({
             color: ColorEnum.WHITE,
-            map: textureHandler.GetTexture('plugins/game/images/' + texture + '.png', true),
+            map: textureHandler.getTexture('plugins/game/images/' + texture + '.png', true),
             useScreenCoordinates: false,
             transparent : false,
             alphaTest: 0.5
@@ -209,10 +209,10 @@ var ParticleEmitter = Class.extend({
             this.spawnWaitTime = CheckForFunctionReturnValue(this.type.particleDelay, this) || 1.0;
 
             // And add a particle
-            this.AddParticle();
+            this.addParticle();
         }
 
-        //debug.SetWatch('Particles spawned', this.particles.length);
+        //debug.setWatch('Particles spawned', this.particles.length);
 
         //for (var i = 0; i < this.particleSystem.geometry.vertices.length; ++i) {
         for (var i = 0; i < this.particles.length; ++i) {
@@ -224,7 +224,7 @@ var ParticleEmitter = Class.extend({
 
             var acceleration = steeringForce.multiplyScalar(particle.mass);
             particle.velocity.addSelf(acceleration.multiplyScalar(dTime));
-            particle.velocity.Truncate(particle.maxSpeed);
+            particle.velocity.truncate(particle.maxSpeed);
 
 
             if ( particle.enableGravity ) {

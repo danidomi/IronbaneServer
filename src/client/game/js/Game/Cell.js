@@ -55,7 +55,7 @@ var Cell = Class.extend({
 
         switch(this.status) {
             case cellStatusEnum.INIT:
-                this.Load();
+                this.load();
                 this.status = cellStatusEnum.LOADING;
                 break;
             case cellStatusEnum.LOADING:
@@ -79,12 +79,12 @@ var Cell = Class.extend({
           me.filesToLoad--;
           me.objectData = data;
           console.log('Loaded: '+objectsFile);
-          me.FinishLoad();
+          me.finishLoad();
         }).error(function() {
           me.filesToLoad--;
           me.objectData = [];
           console.warn('Not found: '+objectsFile);
-          me.FinishLoad();
+          me.finishLoad();
         });
 
 
@@ -95,12 +95,12 @@ var Cell = Class.extend({
             me.filesToLoad--;
             me.graphData = data;
             console.log('Loaded graph: '+graphFile);
-            me.FinishLoad();
+            me.finishLoad();
           }).error(function() {
             me.filesToLoad--;
             me.graphData = {};
             console.warn('No graph found: '+graphFile);
-            me.FinishLoad();
+            me.finishLoad();
           });
         }
 
@@ -108,7 +108,7 @@ var Cell = Class.extend({
     finishLoad: function() {
         if ( !this.filesToLoad ) {
             // Make the mesh
-            this.LoadObjects();
+            this.loadObjects();
         }
     },
     addMesh: function() {
@@ -136,7 +136,7 @@ var Cell = Class.extend({
 
         this.status = cellStatusEnum.LOADED;
 
-        terrainHandler.RebuildOctree();
+        terrainHandler.rebuildOctree();
     },
     destroy: function() {
 
@@ -159,7 +159,7 @@ var Cell = Class.extend({
 
 
         _.each(this.objects, function(object) {
-            object.Destroy();
+            object.destroy();
 
             // Remove from unitList
             ironbane.unitList = _.without(ironbane.unitList, object);
@@ -173,7 +173,7 @@ var Cell = Class.extend({
 
         _.each(this.objects, function(object) {
             if ( object instanceof Waypoint) {
-                object.Destroy();
+                object.destroy();
 
                 // Remove from unitList
                 ironbane.unitList = _.without(ironbane.unitList, object);
@@ -187,7 +187,7 @@ var Cell = Class.extend({
 
         this.waypointMeshes = [];
 
-        this.LoadObjects(true);
+        this.loadObjects(true);
     },
     reloadObjectsOnly: function() {
 
@@ -205,10 +205,10 @@ var Cell = Class.extend({
 
         this.objects = [];
 
-        this.LoadObjects();
+        this.loadObjects();
     },
     reload: function() {
-        this.Destroy();
+        this.destroy();
         this.status = cellStatusEnum.INIT;
     },
     loadObjects: function(waypointsOnly) {
@@ -222,7 +222,7 @@ var Cell = Class.extend({
 
         if ( _.isEmpty(this.objectData) ) {
             // Skip to add mesh instantly
-            this.AddMesh();
+            this.addMesh();
         }
 
         _.each(this.objectData, function(gObject) {
@@ -272,9 +272,9 @@ var Cell = Class.extend({
                 var model = meshPath + filename;
 
                 (function(cell, pos, rotation, metadata, meshData, param){
-                meshHandler.Load(model, function(geometry) {
+                meshHandler.load(model, function(geometry) {
 
-                        var geometry = meshHandler.SpiceGeometry(geometry, rotation,
+                        var geometry = meshHandler.spiceGeometry(geometry, rotation,
                             metadata, meshData, param, false);
 
                         _.each(geometry.vertices, function(v) {
@@ -289,7 +289,7 @@ var Cell = Class.extend({
                         // Ready! Decrease modelsToBuild
                         cell.modelsToBuild--;
 
-                        cell.AddMesh();
+                        cell.addMesh();
 
                 }, meshData.scale);
                 })(this, pos, rotation, metadata, meshData, param);
@@ -334,7 +334,7 @@ var Cell = Class.extend({
 
                                     if ( _.isUndefined(terrainHandler.cells[x+'-'+z])  ) continue;
 
-                                    var graphData = terrainHandler.GetCellByGridPosition(x, z).graphData;
+                                    var graphData = terrainHandler.getCellByGridPosition(x, z).graphData;
 
                                     if ( graphData.nodes === undefined ) continue;
 

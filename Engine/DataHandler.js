@@ -22,7 +22,7 @@
 
 var DataHandler = Class.extend({
     init: function() {
-        this.Load();
+        this.load();
     },
     load: function() {
 

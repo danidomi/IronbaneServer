@@ -37,7 +37,7 @@ var SocketHandler = Class.extend({
         this.inGame = false;
 
 
-        this.InitConnection();
+        this.initConnection();
 
     },
     initConnection: function() {
@@ -51,13 +51,13 @@ var SocketHandler = Class.extend({
             this.socket.emit('getStartData', {}, function(reply) {
                 numberOfPlayersOnline = reply.numberOfPlayersOnline;
 
-                socketHandler.Setup();
+                socketHandler.setup();
 
             });
 
             // Socket behaviour
             this.socket.on('chatMessage', function(data) {
-                hudHandler.AddChatMessage(data);
+                hudHandler.addChatMessage(data);
             });
 
             this.socket.on('bigMessage', function(data) {
@@ -65,7 +65,7 @@ var SocketHandler = Class.extend({
             });
 
             this.socket.on('cutscene', function(id) {
-                cinema.PlayCutscene(id);
+                cinema.playCutscene(id);
             });
 
             this.socket.on('say', function(data) {
@@ -88,7 +88,7 @@ var SocketHandler = Class.extend({
 
                 ironbane.unitList = [];
 
-                terrainHandler.Destroy();
+                terrainHandler.destroy();
 
                 ironbane.player = null;
 
@@ -97,14 +97,14 @@ var SocketHandler = Class.extend({
                 if (!noDisconnectTrigger) {
                     socketHandler.serverOnline = false;
 
-                    hudHandler.MessageAlert('It appears the server crashed! Either that, or there is something wrong with your internet connection. I\'m terribly sorry about that.<br><br>In case the server crashed, an auto-restart will most-likely occur. Please refresh the page in a few seconds.', 'nobutton');
+                    hudHandler.messageAlert('It appears the server crashed! Either that, or there is something wrong with your internet connection. I\'m terribly sorry about that.<br><br>In case the server crashed, an auto-restart will most-likely occur. Please refresh the page in a few seconds.', 'nobutton');
                 }
 
 
 
-                //hudHandler.ShowMenuScreen();
+                //hudHandler.showMenuScreen();
 
-                //hudHandler.Init();
+                //hudHandler.init();
 
 
                 //alert('socket disconnected');
@@ -146,9 +146,9 @@ var SocketHandler = Class.extend({
 
         this.socket.emit('connectServer', data, function(reply) {
             if (ISDEF(reply.errmsg)) {
-                hudHandler.MessageAlert(reply.errmsg);
+                hudHandler.messageAlert(reply.errmsg);
                 abortConnect();
-                hudHandler.ShowMenuScreen();
+                hudHandler.showMenuScreen();
                 return;
             }
 
@@ -164,16 +164,16 @@ var SocketHandler = Class.extend({
                 ironbane.showingGame = false;
             }, 100);
 
-            terrainHandler.ChangeZone(reply.zone);
+            terrainHandler.changeZone(reply.zone);
 
             socketHandler.inGame = true;
 
             if (reply.editor) {
                 showEditor = true;
-                levelEditor.Start();
+                levelEditor.start();
             }
 
-            hudHandler.MakeSlotItems(false);
+            hudHandler.makeSlotItems(false);
         });
     },
     setup: function() {
@@ -272,10 +272,10 @@ var SocketHandler = Class.extend({
 
             if (unit) {
                 if (unit instanceof Fighter) {
-                    unit.UpdateClothes();
+                    unit.updateClothes();
 
                     if (ISDEF(data['weapon'])) {
-                        unit.UpdateWeapon(data['weapon']);
+                        unit.updateWeapon(data['weapon']);
                     }
                 }
 
@@ -287,7 +287,7 @@ var SocketHandler = Class.extend({
 
             var unit = FindUnit(data.id);
 
-            unit.Jump();
+            unit.jump();
 
 
         });
@@ -316,7 +316,7 @@ var SocketHandler = Class.extend({
             var unit = FindUnit(data.id);
 
             if (unit && unit instanceof ToggleableObstacle) {
-                unit.Toggle(data['on']);
+                unit.toggle(data['on']);
             }
 
 
@@ -329,16 +329,16 @@ var SocketHandler = Class.extend({
 
             if (ISDEF(data['fu'])) {
                 var unit = FindUnit(data['fu']);
-                particleHandler.Add(ParticleTypeEnum[data['p']], {
+                particleHandler.add(ParticleTypeEnum[data['p']], {
                     followUnit: unit
                 });
             } else if (ISDEF(data['pfu'])) {
                 var unit = FindUnit(data['pfu']);
-                particleHandler.Add(ParticleTypeEnum[data['p']], {
+                particleHandler.add(ParticleTypeEnum[data['p']], {
                     particleFollowUnit: unit
                 });
             } else if (ISDEF(data['pos'])) {
-                particleHandler.Add(ParticleTypeEnum[data['p']], {
+                particleHandler.add(ParticleTypeEnum[data['p']], {
                     position: ConvertVector3(data['pos'])
                 });
             }
@@ -366,7 +366,7 @@ var SocketHandler = Class.extend({
             var target = ConvertVector3(data['t']);
 
             if (data.sw) {
-                unit.SwingWeapon(target, weapon);
+                unit.swingWeapon(target, weapon);
             }
 
             var particle = new Projectile(ConvertVector3(data['s']), target, unit, data['w']);
@@ -387,7 +387,7 @@ var SocketHandler = Class.extend({
             unit.appearance.body = data['body'];
             unit.appearance.feet = data['feet'];
 
-            unit.UpdateClothes();
+            unit.updateClothes();
 
         });
 
@@ -396,7 +396,7 @@ var SocketHandler = Class.extend({
 
             var unit = FindUnit(data.id);
 
-            unit.UpdateWeapon(data['weapon']);
+            unit.updateWeapon(data['weapon']);
 
         });
 
@@ -406,7 +406,7 @@ var SocketHandler = Class.extend({
 
             socketHandler.playerData.items.push(data);
 
-            hudHandler.ReloadInventory();
+            hudHandler.reloadInventory();
 
         });
 
@@ -414,7 +414,7 @@ var SocketHandler = Class.extend({
             // occurs when someone nearby loots from a bag
             // refresh the bag
             console.log('lootFromBag REPLY:', data);
-            hudHandler.ReloadInventory();
+            hudHandler.reloadInventory();
             if (ironbane.player.canLoot) {
                 ironbane.player.lootItems = data.loot;
             }
@@ -445,17 +445,17 @@ var SocketHandler = Class.extend({
 
 
                         socketHandler.readyToReceiveUnits = false;
-                        ironbane.player.UpdateWeapon(0);
+                        ironbane.player.updateWeapon(0);
 
-                        terrainHandler.ChangeZone(data.z);
+                        terrainHandler.changeZone(data.z);
 
                         ironbane.player.unitStandingOn = null;
 
-                        hudHandler.ShowHUD();
-                        hudHandler.MakeHealthBar(true);
+                        hudHandler.showHUD();
+                        hudHandler.makeHealthBar(true);
 
 
-                        hudHandler.ReloadInventory();
+                        hudHandler.reloadInventory();
 
 
                     });
@@ -467,7 +467,7 @@ var SocketHandler = Class.extend({
                 unit.canMove = true;
                 unit.dead = false;
 
-                unit.Respawn();
+                unit.respawn();
 
             }
 
@@ -478,7 +478,7 @@ var SocketHandler = Class.extend({
         //
         //            var unit = FindUnit(data.id);
         //
-        //            unit.SwingWeapon();
+        //            unit.swingWeapon();
         //        });
         // this.socket.on('swingWeapon', function (data) {
         //     var attacker = FindUnit(data.id);
@@ -486,13 +486,13 @@ var SocketHandler = Class.extend({
         //     var weapon = ISDEF(data.w) ? items[data.w] : null;
 
         //     if ( data['p'] == null ) {
-        //         attacker.SwingWeapon(null, weapon);
+        //         attacker.swingWeapon(null, weapon);
         //     }
         //     else {
         //         var attackPosition = ConvertVector3(data['p']);
 
         //         if ( attacker ) {
-        //             attacker.SwingWeapon(attackPosition, weapon);
+        //             attacker.swingWeapon(attackPosition, weapon);
         //         }
         //     }
         // });
@@ -503,28 +503,28 @@ var SocketHandler = Class.extend({
             if (unit) {
                 if (data['s'] == 'h') {
                     //unit.health = data['h'];
-                    unit.SetHealth(data['h'], data['np']);
+                    unit.setHealth(data['h'], data['np']);
                     if (unit == ironbane.player) {
-                        hudHandler.MakeHealthBar(true);
+                        hudHandler.makeHealthBar(true);
                     }
                 }
                 if (data['s'] == 'a') {
                     //unit.armor = data['a'];
-                    unit.SetArmor(data['a'], data['np']);
+                    unit.setArmor(data['a'], data['np']);
                     if (unit == ironbane.player) {
-                        hudHandler.MakeArmorBar(true);
+                        hudHandler.makeArmorBar(true);
                     }
                 }
                 if (data['s'] == 'hm') {
                     unit.healthMax = data['hm'];
                     if (unit == ironbane.player) {
-                        hudHandler.MakeHealthBar(true);
+                        hudHandler.makeHealthBar(true);
                     }
                 }
                 if (data['s'] == 'am') {
                     unit.armorMax = data['am'];
                     if (unit == ironbane.player) {
-                        hudHandler.MakeArmorBar(true);
+                        hudHandler.makeArmorBar(true);
                     }
                 }
             }
@@ -551,7 +551,7 @@ var SocketHandler = Class.extend({
 
                 socketHandler.readyToReceiveUnits = false;
 
-                terrainHandler.ChangeZone(data.zone);
+                terrainHandler.changeZone(data.zone);
 
                 ironbane.player.localPosition.copy(data.pos);
                 ironbane.player.unitStandingOn = null;
@@ -569,15 +569,15 @@ var SocketHandler = Class.extend({
             var victim = FindUnit(data['victim']);
             var attacker = FindUnit(data['attacker']);
 
-            victim.SetHealth(data['h']);
+            victim.setHealth(data['h']);
 
 
 
-            victim.SetArmor(data['a']);
+            victim.setArmor(data['a']);
 
 
 
-            victim.GetMeleeHit(attacker);
+            victim.getMeleeHit(attacker);
 
 
         });
@@ -588,7 +588,7 @@ var SocketHandler = Class.extend({
             for (var d = 0; d < array.length; d++) {
                 var data = array[d];
 
-                levelEditor.SetTileHeight(data['tx'], data['tz'], data['height'], false, false, true);
+                levelEditor.setTileHeight(data['tx'], data['tz'], data['height'], false, false, true);
             }
 
 
@@ -602,7 +602,7 @@ var SocketHandler = Class.extend({
         this.socket.on('setTileImage', function(data) {
             if (!le("globalEnable")) return;
 
-            levelEditor.SetTileImage(data['tx'], data['tz'], data['image'], false, true);
+            levelEditor.setTileImage(data['tx'], data['tz'], data['image'], false, true);
         });
         this.socket.on('removeUnit', function(data) {
             //if ( !socketHandler.loggedIn ) return;
@@ -624,9 +624,9 @@ var SocketHandler = Class.extend({
             //if ( !socketHandler.loggedIn ) return;
             //bm('remove unit: '+data.id);
 
-            hudHandler.AddChatMessage('Adding model...');
+            hudHandler.addChatMessage('Adding model...');
 
-            levelEditor.PlaceModel(ConvertVector3(data.position),
+            levelEditor.placeModel(ConvertVector3(data.position),
                 data.rX,
                 data.rY,
                 data.rZ,
@@ -647,7 +647,7 @@ var SocketHandler = Class.extend({
                 var cellPos = WorldToCellCoordinates(data.pos.x,
                     data.pos.z, cellSize);
 
-                _.each(terrainHandler.GetCellByGridPosition(cellPos.x, cellPos.z).objectData, function(obj) {
+                _.each(terrainHandler.getCellByGridPosition(cellPos.x, cellPos.z).objectData, function(obj) {
 
                     if (obj.metadata &&
                         ConvertVector3(obj).equals(ConvertVector3(data.pos).Round())) {
@@ -659,14 +659,14 @@ var SocketHandler = Class.extend({
 
 
                 _.each(terrainHandler.cells, function(cell) {
-                    cell.ReloadObjectsOnly();
+                    cell.reloadObjectsOnly();
                 });
             } else {
 
                 var cellPos = WorldToCellCoordinates(data.pos.x,
                     data.pos.z, cellSize);
 
-                _.each(terrainHandler.GetCellByGridPosition(cellPos.x, cellPos.z).objectData, function(obj) {
+                _.each(terrainHandler.getCellByGridPosition(cellPos.x, cellPos.z).objectData, function(obj) {
 
                     if (_.isEmpty(data.metadata)) {
                         delete obj.metadata;
@@ -689,7 +689,7 @@ var SocketHandler = Class.extend({
 
                             cell.objects = _.without(cell.objects, obj);
 
-                            obj.Destroy();
+                            obj.destroy();
 
                             setTimeout(function() {
                                 var unit = new Mesh(ConvertVector3(data.pos),
@@ -712,7 +712,7 @@ var SocketHandler = Class.extend({
             //bm('remove unit: '+data.id);
 
 
-            hudHandler.AddChatMessage("Removing model...");
+            hudHandler.addChatMessage("Removing model...");
 
             // Check
             _.each(terrainHandler.cells, function(cell) {
@@ -723,17 +723,17 @@ var SocketHandler = Class.extend({
 
                         var cellPos = WorldToCellCoordinates(obj.position.x, obj.position.z, cellSize);
 
-                        var objInList = _.find(terrainHandler.GetCellByGridPosition(cellPos.x, cellPos.z).objectData, function(otherObj) {
+                        var objInList = _.find(terrainHandler.getCellByGridPosition(cellPos.x, cellPos.z).objectData, function(otherObj) {
                             return obj.position.clone().Round(2).equals(ConvertVector3(otherObj));
                         });
 
                         if (objInList) {
-                            var temp = terrainHandler.GetCellByGridPosition(cellPos.x, cellPos.z).objectData;
+                            var temp = terrainHandler.getCellByGridPosition(cellPos.x, cellPos.z).objectData;
                             temp =
                                 _.without(temp, objInList);
                         }
 
-                        obj.Destroy();
+                        obj.destroy();
                     }
                 });
 
@@ -748,11 +748,11 @@ var SocketHandler = Class.extend({
             });
 
             if (!le("globalEnable")) {
-                terrainHandler.GetCellByWorldPosition(pos).Reload();
+                terrainHandler.getCellByWorldPosition(pos).Reload();
             }
 
 
-            terrainHandler.RebuildOctree();
+            terrainHandler.rebuildOctree();
 
         });
 
@@ -761,19 +761,19 @@ var SocketHandler = Class.extend({
         this.socket.on('ppAddNode', function(data) {
             if (!showEditor) return;
 
-            nodeHandler.AddNode(0, data.id, ConvertVector3(data['pos']));
+            nodeHandler.addNode(0, data.id, ConvertVector3(data['pos']));
         });
 
         this.socket.on('ppAddEdge', function(data) {
             if (!showEditor) return;
 
-            nodeHandler.AddEdge(0, data['from'], data['to'], data['twoway']);
+            nodeHandler.addEdge(0, data['from'], data['to'], data['twoway']);
         });
 
         this.socket.on('ppDeleteNode', function(data) {
             if (!showEditor) return;
 
-            nodeHandler.DeleteNode(0, data.id);
+            nodeHandler.deleteNode(0, data.id);
         });
 
 
@@ -821,7 +821,7 @@ var SocketHandler = Class.extend({
                         ////                        unit.targetSpeed = Math.min(distance*100, max_speed);
                         //                        unit.targetSpeed = Math.max(distance*50, player.tSpeed);
                         //
-                        //                        debug.SetWatch('unit.targetSpeed', unit.targetSpeed);
+                        //                        debug.setWatch('unit.targetSpeed', unit.targetSpeed);
                     }
                 }
             }

@@ -237,7 +237,7 @@ var SoundHandler = Class.extend({
             preferFlash: false,
             onready: function() {
                 // Ready to use; soundManager.createSound() etc. can now be called.
-                self.Preload();
+                self.preload();
             }
         });
     },
@@ -265,7 +265,7 @@ var SoundHandler = Class.extend({
                     autoLoad: !! sound.preload,
                     onload: function(success) {
                         if (success) {
-                            self.OnLoad(key);
+                            self.onLoad(key);
                         }
                     }
                 }),
@@ -277,7 +277,7 @@ var SoundHandler = Class.extend({
     fadeOut: function(sound, time) {
         var self = this;
 
-        this.PlayOnce(sound);
+        this.playOnce(sound);
 
         var tween = new TWEEN.Tween({
             volume: 100
@@ -286,7 +286,7 @@ var SoundHandler = Class.extend({
             volume: 0
         }, time)
             .onUpdate(function() {
-            self.SetVolume(sound, this.volume);
+            self.setVolume(sound, this.volume);
         }).start();
     },
 
@@ -301,7 +301,7 @@ var SoundHandler = Class.extend({
         }
 
         var self = this;
-        this.PlayOnce(sound);
+        this.playOnce(sound);
 
         var tween = new TWEEN.Tween({
             volume: 0
@@ -310,7 +310,7 @@ var SoundHandler = Class.extend({
             volume: 100
         }, time)
             .onUpdate(function() {
-            self.SetVolume(sound, this.volume);
+            self.setVolume(sound, this.volume);
         }).start();
     },
     onLoad: function(sound) {
@@ -329,7 +329,7 @@ var SoundHandler = Class.extend({
             return;
         }
 
-        this.Play(soundID, position);
+        this.play(soundID, position);
     },
     getAllSounds: function(s) {
         var sounds = [];
@@ -353,7 +353,7 @@ var SoundHandler = Class.extend({
         var distance = 0;
 
         if (position) {
-            distance = terrainHandler.GetReferenceLocation().subSelf(position).length();
+            distance = terrainHandler.getReferenceLocation().subSelf(position).length();
             distance = Math.pow(distance, 1);
         }
 
@@ -364,7 +364,7 @@ var SoundHandler = Class.extend({
         volume = volume * 100;
         volume = volume.clamp(0, 100);
 
-        //this.SetVolume(s, volume);
+        //this.setVolume(s, volume);
         sound.sound.setVolume(volume);
         //soundManager.setPan(sound, 80);
         sound.sound.play();

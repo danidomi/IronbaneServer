@@ -78,12 +78,12 @@ IronbaneApp
         Game.prototype.start = function() {
             var game = this;
 
-            if (!$window.Detector.webgl) {
-                $window.hudHandler.ResizeFrame();
+            if (!$window.detector.webgl) {
+                $window.hudHandler.resizeFrame();
                 return;
             }
 
-            var bgcolor = $window.ColorEnum.LIGHTBLUE;
+            var bgcolor = $window.colorEnum.LIGHTBLUE;
             this.scene = new $window.THREE.Scene();
             this.octree = new $window.THREE.Octree();
             this.camera = new $window.THREE.PerspectiveCamera(75, $window.innerWidth / $window.innerHeight, 0.1, 100000);
@@ -119,7 +119,7 @@ IronbaneApp
                 $('#gameFrame').append(this.stats.domElement);
             }
 
-            $window.hudHandler.ResizeFrame();
+            $window.hudHandler.resizeFrame();
 
             var charUrl = '';
             if ($window.startdata.user === 0) {
@@ -141,8 +141,8 @@ IronbaneApp
                     $log.error('error loading character data! ', response);
                 })
                 .then(function() {
-                    $window.hudHandler.MakeCharSelectionScreen();
-                    $window.terrainHandler.Tick(0.1);
+                    $window.hudHandler.makeCharSelectionScreen();
+                    $window.terrainHandler.tick(0.1);
 
                     game.isRunning = true;
                     game.startTime = window.performance.now(); // shimmed!
@@ -154,14 +154,14 @@ IronbaneApp
 
         Game.prototype.render = function() {
             this.renderer.render(this.scene, this.camera);
-            $window.debug.Clear();
+            $window.debug.clear();
         };
 
         Game.prototype.tick = function(dTime) {
             var game = this;
 
             // if ( showEditor  ) {
-            $window.debug.Tick(dTime);
+            $window.debug.tick(dTime);
             // }
 
             if (game.stats) {
@@ -169,39 +169,39 @@ IronbaneApp
             }
 
             if ($window.showEditor) {
-                $window.levelEditor.Tick(dTime);
+                $window.levelEditor.tick(dTime);
             }
 
-            $window.hudHandler.Tick(dTime);
+            $window.hudHandler.tick(dTime);
 
-            if (!$window.socketHandler.loggedIn && !$window.cinema.IsPlaying()) {
+            if (!$window.socketHandler.loggedIn && !$window.cinema.isPlaying()) {
                 game.camera.position.x = $window.previewLocation.x + (Math.cos(new Date().getTime() / 20000) * $window.previewDistance) - 0;
                 game.camera.position.y = $window.previewLocation.y + $window.previewHeight;
                 game.camera.position.z = $window.previewLocation.z + (Math.sin(new Date().getTime() / 20000) * $window.previewDistance) - 0;
                 game.camera.lookAt($window.previewLocation);
             }
 
-            $window.terrainHandler.Tick(dTime);
+            $window.terrainHandler.tick(dTime);
 
             if ($window.socketHandler.loggedIn) {
                 // Add the player once we have terrain we can walk on
                 if (!game.player) {
                     if ($window.terrainHandler.status === $window.terrainHandlerStatusEnum.LOADED &&
-                        !$window.terrainHandler.IsLoadingCells()) {
+                        !$window.terrainHandler.isLoadingCells()) {
 
-                        game.player = new $window.Player($window.socketHandler.spawnLocation, new $window.THREE.Vector3(0, $window.socketHandler.spawnRotation, 0), $window.socketHandler.playerData.id, $window.socketHandler.playerData.name);
+                        game.player = new $window.player($window.socketHandler.spawnLocation, new $window.THREE.Vector3(0, $window.socketHandler.spawnRotation, 0), $window.socketHandler.playerData.id, $window.socketHandler.playerData.name);
                         game.unitList.push(game.player);
                     }
                 }
             }
 
-            $window.particleHandler.Tick(dTime);
+            $window.particleHandler.tick(dTime);
 
             for (var x = 0; x < game.unitList.length; x++) {
                 game.unitList[x].Tick(dTime);
             }
 
-            $window.cinema.Tick(dTime);
+            $window.cinema.tick(dTime);
 
             $window.sw("THREE.Object3DLibrary.length", $window.THREE.Object3DLibrary.length);
             $window.sw("THREE.GeometryLibrary.length", $window.THREE.GeometryLibrary.length);
@@ -219,7 +219,7 @@ IronbaneApp
                 doneLoading = false;
                 if ( !$window.isProduction ) game.currentLoadingMessage = "Loading Terrain";
             }
-            else if ( $window.terrainHandler.IsLoadingCells() ) {
+            else if ( $window.terrainHandler.isLoadingCells() ) {
                 doneLoading = false;
                 if ( !$window.isProduction ) game.currentLoadingMessage = "Loading Cells";
             }
@@ -230,7 +230,7 @@ IronbaneApp
 
             if ( !game.showingGame && doneLoading ) {
                 if (!$window.socketHandler.inGame) {
-                    $window.hudHandler.MakeSoundButton();
+                    $window.hudHandler.makeSoundButton();
                 }
 
                 game.showingGame = true;
@@ -273,7 +273,7 @@ IronbaneApp
 
             $window.relativeMouse = $window.mouse.clone().subSelf($window.lastMouse);
             $window.lastMouse = $window.mouse.clone();
-            $window.sw("relativeMouse", $window.ConvertVector3($window.relativeMouse));
+            $window.sw("relativeMouse", $window.convertVector3($window.relativeMouse));
         };
 
         return Game;

@@ -28,10 +28,10 @@ var Deceleration = {
     pursuit: function (a) {
         var b = a.position.clone().subSelf(this.unit.position),
             c = this.unit.heading.dot(a.heading);
-        if (0 < b.dot(this.unit.heading) && -0.95 > c) return this.Seek(a.position);
+        if (0 < b.dot(this.unit.heading) && -0.95 > c) return this.seek(a.position);
         b = b.length() / (this.unit.maxSpeed + a.velocity.length());        
         a = a.position.clone().addSelf(a.velocity.clone().multiplyScalar(b));
-        return this.Seek(a)
+        return this.seek(a)
     },
     turnaroundTime: function (a, b) {
         var c = b.clone().subSelf(a.position);

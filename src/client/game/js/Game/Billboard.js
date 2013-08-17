@@ -51,19 +51,19 @@ var Billboard = Unit.extend({
 
 
         var texture = this.customPath ? 'plugins/game/images/'  + this.param+'.png' : billboardSpritePath + ''+this.param+'.png';
-        this.texture = textureHandler.GetTexture( texture, true);
+        this.texture = textureHandler.getTexture( texture, true);
 
-        this.TryToBuildMesh();;
+        this.tryToBuildMesh();;
 
 
         this._super();
     },
     tryToBuildMesh: function() {
         if ( this.texture.image.width === 0 ) {
-            (function(unit){setTimeout(function(){unit.TryToBuildMesh()}, 1000)})(this);
+            (function(unit){setTimeout(function(){unit.tryToBuildMesh()}, 1000)})(this);
         }
         else {
-            this.BuildMesh();
+            this.buildMesh();
         }
     },
     buildMesh: function() {
@@ -123,7 +123,7 @@ var Billboard = Unit.extend({
         this._super(dTime);
 		
         if ( this.mesh ) {
-            this.mesh.LookAt(ironbane.camera.position, 0, 0, 0, true);
+            this.mesh.lookAt(ironbane.camera.position, 0, 0, 0, true);
         }
     }
 });

@@ -41,8 +41,8 @@ var TeleportEntrance = Unit.extend({
 
         (function(unit){
         setTimeout(function(){
-            unit.particleEmittersToMaintain.push(particleHandler.Add(ParticleTypeEnum.TELEPORTENTRANCE, {followUnit:unit}));
-            unit.particleEmittersToMaintain.push(particleHandler.Add(ParticleTypeEnum.TELEPORTENTRANCECIRCLES, {followUnit:unit}));
+            unit.particleEmittersToMaintain.push(particleHandler.add(ParticleTypeEnum.TELEPORTENTRANCE, {followUnit:unit}));
+            unit.particleEmittersToMaintain.push(particleHandler.add(ParticleTypeEnum.TELEPORTENTRANCECIRCLES, {followUnit:unit}));
         }, 0);
         })(this);
 

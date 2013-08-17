@@ -40,8 +40,8 @@ var HeartPiece = Billboard.extend({
 
         (function(unit){
         setTimeout(function(){
-            //unit.particleEmittersToMaintain.push(particleHandler.Add(ParticleTypeEnum.TELEPORTENTRANCE, {followUnit:unit}));
-            unit.particleEmittersToMaintain.push(particleHandler.Add(ParticleTypeEnum.TELEPORTEXIT, {followUnit:unit}));
+            //unit.particleEmittersToMaintain.push(particleHandler.add(ParticleTypeEnum.TELEPORTENTRANCE, {followUnit:unit}));
+            unit.particleEmittersToMaintain.push(particleHandler.add(ParticleTypeEnum.TELEPORTEXIT, {followUnit:unit}));
         }, 0);
         })(this);
         

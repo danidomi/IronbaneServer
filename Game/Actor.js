@@ -30,7 +30,7 @@ var Actor = MovingUnit.extend({
     if ( this.id < 0 ) {
 
 
-      this.BuildWaypoints();
+      this.buildWaypoints();
 
       // Load the real state
       var currentState = null;
@@ -61,12 +61,12 @@ var Actor = MovingUnit.extend({
           break;
       }
 
-      this.stateMachine.ChangeState(currentState);
+      this.stateMachine.changeState(currentState);
 
       // Check if we have a global state defined
       if ( !_.isUndefined(monsterStateMachines[this.template.name]) ) {
         this.stateMachine
-          .SetGlobalState(monsterStateMachines[this.template.name]());
+          .setGlobalState(monsterStateMachines[this.template.name]());
       }
     }
 
@@ -102,7 +102,7 @@ var Actor = MovingUnit.extend({
 
     function AnnounceOccurredError(msg, amount) {
 
-            chatHandler.AnnounceMods(msg+"<br><i>Warning: this error happened "+amount+" seconds ago.</i>", "red");
+            chatHandler.announceMods(msg+"<br><i>Warning: this error happened "+amount+" seconds ago.</i>", "red");
     }
 
     function addEdgeNodes(list, zone, node) {
@@ -120,7 +120,7 @@ var Actor = MovingUnit.extend({
           "</b> and node <b>"+node.edges[x]+"</b>!<br>Location: " +
           ConvertVector3(node.pos).ToString() + " in zone "+me.zone;
 
-          chatHandler.AnnounceMods(msg, "red");
+          chatHandler.announceMods(msg, "red");
 
           log("ERROR: "+msg);
 
@@ -146,12 +146,12 @@ var Actor = MovingUnit.extend({
   },
   tick: function(dTime) {
 
-    this.stateMachine.Update(dTime);
+    this.stateMachine.update(dTime);
 
     this._super(dTime);
 
   },
   handleMessage: function(message, data) {
-    this.stateMachine.HandleMessage(message, data);
+    this.stateMachine.handleMessage(message, data);
   }
 });

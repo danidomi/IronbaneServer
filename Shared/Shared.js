@@ -205,7 +205,7 @@ var maxHealth = 20;
 
 function CalculateItemPrice(item) {
   //                    var temp = {
-  //                        id: server.GetAValidItemID(),
+  //                        id: server.getAValidItemID(),
   //                        template : item,
   //                        slot:l,
   //                        attr1: dataHandler.items[item].attr1,

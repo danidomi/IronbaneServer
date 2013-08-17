@@ -194,7 +194,7 @@ if ( !SERVER ) {
   console.info = console.info || function(){};
 
   $(document).ready(function(){
-    THREE.Object3D.prototype.LookAt = function (position, lockX, lockY, lockZ, billboardStyle) {
+    THREE.Object3D.prototype.lookAt = function (position, lockX, lockY, lockZ, billboardStyle) {
 
       var target = position.clone();
 
@@ -258,7 +258,7 @@ if ( !SERVER ) {
 
     }
 
-    THREE.Vector3.prototype.ToString = function ( ) {
+    THREE.Vector3.prototype.toString = function ( ) {
       return "X: "+roundNumber(this.x,2)+", Y: "+roundNumber(this.y,2)+", Z: "+roundNumber(this.z,2)+"";
     }
   });
@@ -304,16 +304,16 @@ if ( !SERVER ) {
   }
 
   function ba(msg) {
-    hudHandler.MessageAlert(msg);
+    hudHandler.messageAlert(msg);
   }
   function bm(msg) {
-    hudHandler.AddBigMessage(msg, 5);
+    hudHandler.addBigMessage(msg, 5);
   }
   function le(prop) {
     return showEditor && levelEditor.editorGUI[prop];
   }
   function sw(a,b,c) {
-    debug.SetWatch(a, b, c);
+    debug.setWatch(a, b, c);
   }
 
   function cl(msg) {
@@ -340,7 +340,7 @@ if ( !SERVER ) {
   //
   //                if (contact.normal != Vector3.Zero)
   //                {
-  //                    contact.normal.Normalize();
+  //                    contact.normal.normalize();
   //                }
   //
   //                contact.radius_Projection = Radius;
@@ -575,8 +575,8 @@ String.prototype.trim = function() {
     // The dummy class constructor
     function Class() {
       // All construction is actually done in the init method
-      if ( !initializing && this.Init )
-        this.Init.apply(this, arguments);
+      if ( !initializing && this.init )
+        this.init.apply(this, arguments);
     }
 
     // Populate our constructed prototype object
@@ -600,22 +600,22 @@ function roundNumber(number, decimals) {
   return parseFloat(newnumber);
 }
 
-Number.prototype.Round2 = function() {
+Number.prototype.round2 = function() {
   return this % 2 == 0 ? this : this+1;
 };
-Number.prototype.Round = function(digits) {
+Number.prototype.round = function(digits) {
   return roundNumber(this, digits);
 };
 Number.prototype.clamp = function(min, max) {
   return Math.min(Math.max(this, min), max);
 };
-Number.prototype.ToDegrees = function() {
+Number.prototype.toDegrees = function() {
   return this * (180 / Math.PI);
 };
-Number.prototype.ToRadians = function() {
+Number.prototype.toRadians = function() {
   return this * (Math.PI / 180);
 };
-Number.prototype.Lerp = function(t, alpha) {
+Number.prototype.lerp = function(t, alpha) {
   return this + ( t - this ) * alpha;
 };
 
@@ -669,7 +669,7 @@ function CheckForFunctionReturnValue(v, data) {
 }
 
 
-THREE.Vector3.prototype.Round = function(n) {
+THREE.Vector3.prototype.round = function(n) {
   this.x = roundNumber(this.x, n);
   this.y = roundNumber(this.y, n);
   this.z = roundNumber(this.z, n);
@@ -677,22 +677,22 @@ THREE.Vector3.prototype.Round = function(n) {
   return this;
 };
 
-THREE.Vector3.prototype.ToRadians = function(n) {
-  this.x = this.x.ToRadians();
-  this.y = this.y.ToRadians();
-  this.z = this.z.ToRadians();
+THREE.Vector3.prototype.toRadians = function(n) {
+  this.x = this.x.toRadians();
+  this.y = this.y.toRadians();
+  this.z = this.z.toRadians();
 
   return this;
 };
 
-THREE.Vector3.prototype.InRangeOf = function(vector, range) {
+THREE.Vector3.prototype.inRangeOf = function(vector, range) {
     return vector.clone().subSelf(this).lengthSq() < range*range;
 };
 
-THREE.Vector3.prototype.ToDegrees = function(n) {
-  this.x = this.x.ToDegrees();
-  this.y = this.y.ToDegrees();
-  this.z = this.z.ToDegrees();
+THREE.Vector3.prototype.toDegrees = function(n) {
+  this.x = this.x.toDegrees();
+  this.y = this.y.toDegrees();
+  this.z = this.z.toDegrees();
 
   return this;
 };
@@ -705,10 +705,10 @@ function RoundVector(vec, n) {
 }
 
 /*
-Number.prototype.ToBig = function() {
+Number.prototype.toBig = function() {
   return this * 100;
 };
-THREE.Vector3.prototype.ToBig = function(n) {
+THREE.Vector3.prototype.toBig = function(n) {
   this.x = this.x * 100;
   this.y = this.y * 100;
   this.z = this.z * 100;
@@ -716,14 +716,14 @@ THREE.Vector3.prototype.ToBig = function(n) {
   return this;
 };
 */
-THREE.Vector3.prototype.Truncate = function(n) {
+THREE.Vector3.prototype.truncate = function(n) {
   if ( this.length() > n ) {
     return this.normalize().multiplyScalar(n);
   }
   return this;
 };
 
-THREE.Vector3.prototype.Perp = function() {
+THREE.Vector3.prototype.perp = function() {
   return this.crossSelf(new THREE.Vector3(0, 1, 0));
 };
 

@@ -121,7 +121,7 @@ $('#statBar,#coinBar,#itemBar,#lootBag,div[id^="li"],div[id^="ii"]').on("mouseov
 
 $(window).resize(function() {
   //alert('resize');
-  hudHandler.ResizeFrame();
+  hudHandler.resizeFrame();
 
   // notify the renderer of the size change
   ironbane.renderer.setSize( window.innerWidth, window.innerHeight );
@@ -151,46 +151,46 @@ $(document).keydown(function(event){
 
   if ( ironbane.player ) {
     if ( event.keyCode == 49 ) {
-      ironbane.player.UseItem(0);
+      ironbane.player.useItem(0);
     }
     if ( event.keyCode == 50 ) {
-      ironbane.player.UseItem(1);
+      ironbane.player.useItem(1);
     }
     if ( event.keyCode == 51 ) {
-      ironbane.player.UseItem(2);
+      ironbane.player.useItem(2);
     }
     if ( event.keyCode == 52 ) {
-      ironbane.player.UseItem(3);
+      ironbane.player.useItem(3);
     }
     if ( event.keyCode == 53 ) {
-      ironbane.player.UseItem(4);
+      ironbane.player.useItem(4);
     }
     if ( event.keyCode == 54 ) {
-      ironbane.player.UseItem(5);
+      ironbane.player.useItem(5);
     }
     if ( event.keyCode == 55 ) {
-      ironbane.player.UseItem(6);
+      ironbane.player.useItem(6);
     }
     if ( event.keyCode == 56 ) {
-      ironbane.player.UseItem(7);
+      ironbane.player.useItem(7);
     }
     if ( event.keyCode == 57 ) {
-      ironbane.player.UseItem(8);
+      ironbane.player.useItem(8);
     }
     if ( event.keyCode == 48 ) {
-      ironbane.player.UseItem(9);
+      ironbane.player.useItem(9);
     }
   }
 
 
   if ( event.keyCode === 27 ) {
 
-    if (!cinema.IsPlaying()) {
-      hudHandler.MessageAlert("Back to the Main Menu?", "question", function() {
+    if (!cinema.isPlaying()) {
+      hudHandler.messageAlert("Back to the Main Menu?", "question", function() {
         socketHandler.readyToReceiveUnits = false;
         socketHandler.socket.emit('backToMainMenu', {}, function(reply) {
           if (ISDEF(reply.errmsg)) {
-            hudHandler.MessageAlert(reply.errmsg);
+            hudHandler.messageAlert(reply.errmsg);
             return;
           }
 
@@ -210,7 +210,7 @@ $(document).keydown(function(event){
 
             ironbane.unitList = [];
 
-            terrainHandler.Destroy();
+            terrainHandler.destroy();
 
             terrainHandler.status = terrainHandlerStatusEnum.INIT;
 
@@ -227,8 +227,8 @@ $(document).keydown(function(event){
                     window.chars = data;
                     window.charCount = window.chars.length;
 
-                    hudHandler.ShowMenuScreen();
-                    hudHandler.MakeCharSelectionScreen();
+                    hudHandler.showMenuScreen();
+                    hudHandler.makeCharSelectionScreen();
                 })
                 .fail(function(err) {
                     console.error('error getting chars...', err);
@@ -241,9 +241,9 @@ $(document).keydown(function(event){
 
     }
     else {
-      hudHandler.MessageAlert("Skip Cutscene?", "question", function() {
+      hudHandler.messageAlert("Skip Cutscene?", "question", function() {
         ironbane.player.canMove = true;
-        cinema.Clear();
+        cinema.clear();
       }, function() {});
     }
   }
@@ -324,7 +324,7 @@ $(document).mousemove(function(event) {
   mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
 
-//    if ( ironbane.player ) ironbane.player.UpdateMouseProjectedPosition();
+//    if ( ironbane.player ) ironbane.player.updateMouseProjectedPosition();
 });
 
 var mouseIntervalFunction = function(event){
@@ -352,7 +352,7 @@ var mouseIntervalFunction = function(event){
         _.each(ironbane.unitList, function(obj) {
 
 
-          if ( obj.InRangeOfPosition(position, 1)
+          if ( obj.inRangeOfPosition(position, 1)
             && ((obj instanceof Unit) && obj.id < 0) ) {
             npc = obj;
           }
@@ -388,7 +388,7 @@ var mouseIntervalFunction = function(event){
         _.each(terrainHandler.cells, function(cell) {
             _.each(cell.objects, function(obj) {
             if ( obj instanceof Waypoint && obj.mesh ) {
-              if ( obj.InRangeOfPosition(position, 1) ) {
+              if ( obj.inRangeOfPosition(position, 1) ) {
                 waypoint = obj;
               }
             }
@@ -410,10 +410,10 @@ var mouseIntervalFunction = function(event){
         if ( levelEditor.editorGUI.ppMode == PathPlacerModeEnum.NODES ) {
 
           // Send a request to destroy this object
-          socketHandler.socket.emit('ppAddNode', position.Round(2), function(reply) {
+          socketHandler.socket.emit('ppAddNode', position.round(2), function(reply) {
 
             if ( ISDEF(reply.errmsg) ) {
-              hudHandler.MessageAlert(reply.errmsg);
+              hudHandler.messageAlert(reply.errmsg);
               return;
             }
 
@@ -421,7 +421,7 @@ var mouseIntervalFunction = function(event){
                 _.each(cell.objects, function(obj) {
 
                     if ( obj instanceof Waypoint ) {
-                      if ( obj.InRangeOfPosition(position, levelEditor.editorGUI.ppAutoConnectWithin) ) {
+                      if ( obj.inRangeOfPosition(position, levelEditor.editorGUI.ppAutoConnectWithin) ) {
                         socketHandler.socket.emit('ppAddEdge', {
                           from:reply.newNodeID,
                           to:obj.nodeData['id'],
@@ -429,7 +429,7 @@ var mouseIntervalFunction = function(event){
                           }, function(reply) {
 
                           if ( ISDEF(reply.errmsg) ) {
-                            hudHandler.MessageAlert(reply.errmsg);
+                            hudHandler.messageAlert(reply.errmsg);
                             return;
                           }
 
@@ -464,7 +464,7 @@ var mouseIntervalFunction = function(event){
                 }, function(reply) {
 
                 if ( ISDEF(reply.errmsg) ) {
-                  hudHandler.MessageAlert(reply.errmsg);
+                  hudHandler.messageAlert(reply.errmsg);
                   return;
                 }
 
@@ -475,7 +475,7 @@ var mouseIntervalFunction = function(event){
             }
 
             _.each(terrainHandler.cells, function(cell) {
-              cell.ReloadWaypointsOnly();
+              cell.reloadWaypointsOnly();
             });
 
           }
@@ -485,7 +485,7 @@ var mouseIntervalFunction = function(event){
               levelEditor.selectedNode = waypoint.nodeData;
 
               _.each(terrainHandler.cells, function(cell) {
-                cell.ReloadWaypointsOnly();
+                cell.reloadWaypointsOnly();
               });
             }
           }
@@ -501,7 +501,7 @@ var mouseIntervalFunction = function(event){
             }, function(reply) {
 
             if ( ISDEF(reply.errmsg) ) {
-              hudHandler.MessageAlert(reply.errmsg);
+              hudHandler.messageAlert(reply.errmsg);
               return;
             }
 
@@ -522,7 +522,7 @@ var mouseIntervalFunction = function(event){
                 if ( obj instanceof Mesh ) {
                   // Send a request to destroy this object
 
-                  socketHandler.socket.emit('deleteModel', obj.position.Round(2));
+                  socketHandler.socket.emit('deleteModel', obj.position.round(2));
 
                 }
               }
@@ -591,7 +591,7 @@ var mouseIntervalFunction = function(event){
     if ( event.button === 0 ) {
       if (currentMouseToWorldData) {
         var position = currentMouseToWorldData.point;
-        ironbane.player.AttemptAttack(position);
+        ironbane.player.attemptAttack(position);
       }
     }
     else {
@@ -623,7 +623,7 @@ var mouseIntervalFunction = function(event){
       var side = ironbane.camera.lookAtPosition.clone()
         .subSelf(ironbane.camera.position).normalize()
         .crossSelf(new THREE.Vector3(0, 1, 0)).normalize();
-        //debug.DrawVector(this.position, new THREE.Vector3(), 0xFF0000);
+        //debug.drawVector(this.position, new THREE.Vector3(), 0xFF0000);
 
         //side.copy(ironbane.player.heading);
 

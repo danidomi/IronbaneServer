@@ -34,7 +34,7 @@ var Lootable = Unit.extend({
             if (this.param < 10) {
                 this.loadItems();
             } else {
-                this.Restock();
+                this.restock();
             }
         }
     },
@@ -100,12 +100,12 @@ var Lootable = Unit.extend({
         // Lootbags (<10) are removed while lootable meshes restock
         if (this.param < 10) {
             if (this.lifeTime > 30) {
-                this.Remove();
+                this.remove();
             }
         } else {
             if (this.lifeTime > this.data.respawnTime) {
                 //... restock :)
-                this.Restock();
+                this.restock();
                 this.lifeTime = 0;
             }
         }

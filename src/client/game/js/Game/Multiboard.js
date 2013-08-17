@@ -37,7 +37,7 @@ var Multiboard = Unit.extend({
 	
         //console.warn(this.position.x);
     
-        var directionSpriteIndex = this.GetDirectionSpriteIndex();
+        var directionSpriteIndex = this.getDirectionSpriteIndex();
 
         // Get material
 
@@ -45,7 +45,7 @@ var Multiboard = Unit.extend({
         var texture = multiboardSpritePath + ''+this.param+'.png';
 
 
-        var planeMat = textureHandler.GetTexture( texture );
+        var planeMat = textureHandler.getTexture( texture );
 		
         // Todo: add other layers on top (clothes, weapons)
 		
@@ -94,7 +94,7 @@ var Multiboard = Unit.extend({
 
         this._super(dTime);
 		
-		this.DisplayUVFrame(0, this.GetDirectionSpriteIndex(), 1, 8);		
+		this.displayUVFrame(0, this.getDirectionSpriteIndex(), 1, 8);		
 
     }
 });

@@ -25,7 +25,7 @@ var monsterStateMachines = {
 
 var RatBoss = State.extend({
 	init: function() {
-		this.obstacleToOpenOnDeath = worldHandler.FindUnit(-1242);
+		this.obstacleToOpenOnDeath = worldHandler.findUnit(-1242);
 
 	},
 	handleMessage: function(npc, message, data) {
@@ -34,10 +34,10 @@ var RatBoss = State.extend({
 
 		switch (message) {
 			case "respawned":
-				this.obstacleToOpenOnDeath.Toggle(false);
+				this.obstacleToOpenOnDeath.toggle(false);
 				break;
 			case "killed":
-				this.obstacleToOpenOnDeath.Toggle(true);
+				this.obstacleToOpenOnDeath.toggle(true);
 				break;
 		}
 

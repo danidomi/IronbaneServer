@@ -37,71 +37,71 @@ var MovingObstacle = DynamicMesh.extend({
                       
 
             switch (this.movementType) {
-                case MovingObstacleMovementTypeEnum.SineWaveX:
+                case MovingObstacleMovementTypeEnum.sineWaveX:
                     this.localPosition.x = this.startPosition.x + (Math.sin((time/1000.0)*this.speedMultiplier)*this.distanceMultiplier);
                     break;
-                case MovingObstacleMovementTypeEnum.SineWaveY:
+                case MovingObstacleMovementTypeEnum.sineWaveY:
                     this.localPosition.y = this.startPosition.y + (Math.sin((time/1000.0)*this.speedMultiplier)*this.distanceMultiplier);
                     break;         
-                case MovingObstacleMovementTypeEnum.SineWaveZ:
+                case MovingObstacleMovementTypeEnum.sineWaveZ:
                     this.localPosition.z = this.startPosition.z + (Math.sin((time/1000.0)*this.speedMultiplier)*this.distanceMultiplier);
                     break;            
-                case MovingObstacleMovementTypeEnum.SineWaveXY:
+                case MovingObstacleMovementTypeEnum.sineWaveXY:
                     this.localPosition.x = this.startPosition.x + (Math.sin((time/1000.0)*this.speedMultiplier)*this.distanceMultiplier);
                     this.localPosition.y = this.startPosition.y + (Math.sin((time/1000.0)*this.speedMultiplier)*this.distanceMultiplier);
                     break;   
-                case MovingObstacleMovementTypeEnum.SineWaveXZ:
+                case MovingObstacleMovementTypeEnum.sineWaveXZ:
                     this.localPosition.x = this.startPosition.x + (Math.sin((time/1000.0)*this.speedMultiplier)*this.distanceMultiplier);
                     this.localPosition.z = this.startPosition.z + (Math.sin((time/1000.0)*this.speedMultiplier)*this.distanceMultiplier);
                     break;   
-                case MovingObstacleMovementTypeEnum.SineWaveYZ:
+                case MovingObstacleMovementTypeEnum.sineWaveYZ:
                     this.localPosition.y = this.startPosition.y + (Math.sin((time/1000.0)*this.speedMultiplier)*this.distanceMultiplier);
                     this.localPosition.z = this.startPosition.z + (Math.sin((time/1000.0)*this.speedMultiplier)*this.distanceMultiplier);
                     break;    
-                case MovingObstacleMovementTypeEnum.SineWaveXYZ:
+                case MovingObstacleMovementTypeEnum.sineWaveXYZ:
                     this.localPosition.x = this.startPosition.x + (Math.sin((time/1000.0)*this.speedMultiplier)*this.distanceMultiplier);
                     this.localPosition.y = this.startPosition.y + (Math.sin((time/1000.0)*this.speedMultiplier)*this.distanceMultiplier);
                     this.localPosition.z = this.startPosition.z + (Math.sin((time/1000.0)*this.speedMultiplier)*this.distanceMultiplier);
                     break;        
-                case MovingObstacleMovementTypeEnum.SineWaveXYZ2:
+                case MovingObstacleMovementTypeEnum.sineWaveXYZ2:
                     this.localPosition.x = this.startPosition.x + (Math.sin((time/1000.0)*this.speedMultiplier*0.9)*this.distanceMultiplier);
                     this.localPosition.y = this.startPosition.y + (Math.sin((time/1000.0)*this.speedMultiplier)*this.distanceMultiplier);
                     this.localPosition.z = this.startPosition.z + (Math.sin((time/1000.0)*this.speedMultiplier*1.1)*this.distanceMultiplier);
                     break;
-                case MovingObstacleMovementTypeEnum.RotationX:
+                case MovingObstacleMovementTypeEnum.rotationX:
                     this.changeRotation = true;
                     this.rotation.x = ((time/100.0)*this.speedMultiplier)%360;
                     break;                    
-                case MovingObstacleMovementTypeEnum.RotationY:
+                case MovingObstacleMovementTypeEnum.rotationY:
                     this.changeRotation = true;
                     this.rotation.y = ((time/100.0)*this.speedMultiplier)%360;
                     break;                        
-                case MovingObstacleMovementTypeEnum.RotationZ:
+                case MovingObstacleMovementTypeEnum.rotationZ:
                     this.changeRotation = true;
                     this.rotation.z = ((time/100.0)*this.speedMultiplier)%360;
                     break;    
-                case MovingObstacleMovementTypeEnum.RotationXY:
+                case MovingObstacleMovementTypeEnum.rotationXY:
                     this.changeRotation = true;
                     this.rotation.x = ((time/100.0)*this.speedMultiplier)%360;
                     this.rotation.y = ((time/100.0)*this.speedMultiplier)%360;
                     break;   
-                case MovingObstacleMovementTypeEnum.RotationXZ:
+                case MovingObstacleMovementTypeEnum.rotationXZ:
                     this.changeRotation = true;
                     this.rotation.x = ((time/100.0)*this.speedMultiplier)%360;
                     this.rotation.z = ((time/100.0)*this.speedMultiplier)%360;
                     break;   
-                case MovingObstacleMovementTypeEnum.RotationYZ:
+                case MovingObstacleMovementTypeEnum.rotationYZ:
                     this.changeRotation = true;
                     this.rotation.y = ((time/100.0)*this.speedMultiplier)%360;
                     this.rotation.z = ((time/100.0)*this.speedMultiplier)%360;
                     break;          
-                case MovingObstacleMovementTypeEnum.RotationXYZ:
+                case MovingObstacleMovementTypeEnum.rotationXYZ:
                     this.changeRotation = true;
                     this.rotation.x = ((time/100.0)*this.speedMultiplier)%360;
                     this.rotation.y = ((time/100.0)*this.speedMultiplier)%360;
                     this.rotation.z = ((time/100.0)*this.speedMultiplier)%360;
                     break;  
-                case MovingObstacleMovementTypeEnum.RotationXYZ2:
+                case MovingObstacleMovementTypeEnum.rotationXYZ2:
                     this.changeRotation = true;
                     this.rotation.x = ((time/100.0)*this.speedMultiplier*0.9)%360;
                     this.rotation.y = ((time/100.0)*this.speedMultiplier)%360;
@@ -125,7 +125,7 @@ var MovingObstacle = DynamicMesh.extend({
         
         this._super(dTime);
         
-        //this.UpdateRotation();
+        //this.updateRotation();
         
     }
 });

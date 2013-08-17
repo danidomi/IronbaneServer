@@ -75,14 +75,14 @@ var Server = Class.extend({
 
 
 
-        //setTimeout(function(){server.AutoBackup();}, 3600 * 24 * 1000);
+        //setTimeout(function(){server.autoBackup();}, 3600 * 24 * 1000);
 
     },
     autoBackup: function() {
       log("Creating daily backup...");
-      //chatHandler.Announce("Performing auto-backup...", "blue");
-      worldHandler.DoFullBackup();
-      setTimeout(function(){server.AutoBackup()}, 3600 * 24 * 1000);
+      //chatHandler.announce("Performing auto-backup...", "blue");
+      worldHandler.doFullBackup();
+      setTimeout(function(){server.autoBackup()}, 3600 * 24 * 1000);
     },
     GetAValidNPCID: function() {
         this.npcIDCount++;
@@ -120,7 +120,7 @@ var Server = Class.extend({
 
                 ]);
 
-                chatHandler.Announce(msg);
+                chatHandler.announce(msg);
 
             }
         }
@@ -130,7 +130,7 @@ var Server = Class.extend({
 
         //log(dTime);
 
-        worldHandler.Tick(dTime);
+        worldHandler.tick(dTime);
 
         // Tick and send out snapshot
         // First build the snapshot
@@ -229,14 +229,14 @@ var Server = Class.extend({
 
                                 var packet = {
                                     id:id,
-                                    p:pos.Round(2)
+                                    p:pos.round(2)
                                     };
 
                                 if ( ud.standingOnUnitId ) {
                                     packet.u = ud.standingOnUnitId;
 
                                     // Send our local position instead!
-                                    packet.p = ud.localPosition.Round(2);
+                                    packet.p = ud.localPosition.round(2);
                                 }
 
 
@@ -249,9 +249,9 @@ var Server = Class.extend({
 
                                 }
 
-                                if ( ud.sendRotationPacketX ) packet.rx = ud.rotation.x.Round();
-                                if ( ud.sendRotationPacketY ) packet.ry = ud.rotation.y.Round();
-                                if ( ud.sendRotationPacketZ ) packet.rz = ud.rotation.z.Round();
+                                if ( ud.sendRotationPacketX ) packet.rx = ud.rotation.x.round();
+                                if ( ud.sendRotationPacketY ) packet.ry = ud.rotation.y.round();
+                                if ( ud.sendRotationPacketZ ) packet.rz = ud.rotation.z.round();
                                 snapshot.push(packet);
 
                             }
@@ -266,7 +266,7 @@ var Server = Class.extend({
 
                     }
 
-                //this.SaveCell(z, cx, cz);
+                //this.saveCell(z, cx, cz);
 
 
                 }

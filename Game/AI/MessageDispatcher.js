@@ -27,7 +27,7 @@ var MessageDispatcher = Class.extend({
 	},
 	discharge: function(receiver, telegram) {
 
-            if ( !receiver.HandleMessage(telegram) ) {
+            if ( !receiver.handleMessage(telegram) ) {
                 console.log("Message not handled");
             }
 	
@@ -37,11 +37,11 @@ var MessageDispatcher = Class.extend({
             var telegram = new Telegram(sender, receiver, message, extraInfo);
             
             if ( delay <= 0 ) {
-                this.Discharge(receiver, telegram);
+                this.discharge(receiver, telegram);
             }
             else {
                 (function(receiver, telegram, delay){
-                setTimeout(function(){messageDispatcher.Discharge(receiver, telegram);}, delay*1000);
+                setTimeout(function(){messageDispatcher.discharge(receiver, telegram);}, delay*1000);
                 })(receiver, telegram, delay);
             }
             

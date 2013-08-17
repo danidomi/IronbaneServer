@@ -41,7 +41,7 @@ var Lever = Unit.extend({
 
                 this.data.switchNumber = -Math.abs(this.data.switchNumber);
 
-                this.targetUnit = worldHandler.FindUnit(this.data.switchNumber);
+                this.targetUnit = worldHandler.findUnit(this.data.switchNumber);
                 
                 
             }
@@ -50,8 +50,8 @@ var Lever = Unit.extend({
             if ( !(this.targetUnit instanceof ToggleableObstacle) ) this.targetUnit = null;            
             
             if ( this.targetUnit ) {
-                this.targetUnit.UpdateLeverList();
-                this.Toggle(this.targetUnit.on);
+                this.targetUnit.updateLeverList();
+                this.toggle(this.targetUnit.on);
             }    
             
             
@@ -63,7 +63,7 @@ var Lever = Unit.extend({
             
             this.on = bool;
 
-            this.EmitNearby('toggle', {id:this.id,on:this.on});
+            this.emitNearby('toggle', {id:this.id,on:this.on});
 
             this.useTimeout = 2.0;
     
@@ -84,7 +84,7 @@ var Lever = Unit.extend({
                     if ( units[u].InRangeOfUnit(this, 1) ) {
 
                         if ( this.targetUnit ) {
-                            this.targetUnit.Toggle(!this.on);
+                            this.targetUnit.toggle(!this.on);
                         }
 
 

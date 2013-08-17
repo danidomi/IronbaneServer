@@ -20,7 +20,7 @@ var skyboxPath = 'plugins/game/images/skybox/';
 var Skybox = PhysicsObject.extend({
   init: function(onReady) {
 
-    var p = terrainHandler.GetReferenceLocation();
+    var p = terrainHandler.getReferenceLocation();
 
     this._super(p);
 
@@ -55,7 +55,7 @@ var Skybox = PhysicsObject.extend({
 
     // Add a sun
     geometry = new THREE.PlaneGeometry(600, 600, 1, 1);
-    this.sunMesh = new THREE.Mesh(geometry, textureHandler.GetTexture('plugins/game/images/misc/sun.png', false, {
+    this.sunMesh = new THREE.Mesh(geometry, textureHandler.getTexture('plugins/game/images/misc/sun.png', false, {
       transparent:true,
       alphaTest:0.01
     }));
@@ -86,12 +86,12 @@ var Skybox = PhysicsObject.extend({
     // Add terrain
     //if ( zones[terrainHandler.zone]['type'] == ZoneTypeEnum.WORLD ) {
       var model = skyboxPath + terrainHandler.zone+".js";
-      //this.texture = textureHandler.GetTexture( texture, true);
+      //this.texture = textureHandler.getTexture( texture, true);
 
       var jsonLoader = new THREE.JSONLoader();
       (function(skybox){
         jsonLoader.load( model, function( geometry ) {
-          skybox.BuildMesh( geometry );
+          skybox.buildMesh( geometry );
         }, null, 300);
       })(this);
 
@@ -118,7 +118,7 @@ var Skybox = PhysicsObject.extend({
 
     // Check if there's a map inside the material, and if it contains a sourceFile
     _.each(textures, function(texture) {
-      var mat = textureHandler.GetTexture('plugins/game/'+texture + '.png', false, {
+      var mat = textureHandler.getTexture('plugins/game/'+texture + '.png', false, {
         transparent:false,
         alphaTest:0.1,
         useLighting:true
@@ -146,7 +146,7 @@ var Skybox = PhysicsObject.extend({
     if ( this.onReady ) this.onReady();
 
 
-    terrainHandler.RebuildOctree();
+    terrainHandler.rebuildOctree();
 
   },
   destroy: function() {
@@ -162,7 +162,7 @@ var Skybox = PhysicsObject.extend({
       this.terrainOctree.remove( this.terrainMesh );
       ironbane.scene.remove(this.terrainMesh);
       releaseMesh(this.terrainMesh);
-      terrainHandler.RebuildOctree();
+      terrainHandler.rebuildOctree();
     }
     if ( this.ambientLight ) {
       ironbane.scene.remove(this.ambientLight);
@@ -181,7 +181,7 @@ var Skybox = PhysicsObject.extend({
   },
   tick: function(dTime) {
 
-    var p = terrainHandler.GetReferenceLocationNoClone();
+    var p = terrainHandler.getReferenceLocationNoClone();
 
     this.skyboxMesh.position.copy(p);
     this.skyboxMesh.position.y = 0;
@@ -225,7 +225,7 @@ var Skybox = PhysicsObject.extend({
       this.sunMesh.position.copy(p.clone().addSelf(this.sunVector.clone().multiplyScalar(sunDistance)));
 
 
-      this.sunMesh.LookAt(p);
+      this.sunMesh.lookAt(p);
 
       var al = this.sunMesh.position.y/sunDistance;
 

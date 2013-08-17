@@ -81,21 +81,21 @@ var SteeringBehaviour = Class.extend({
 		var relativeHeading = this.unit.heading.dot(evader.heading);
 
 		if ( toEvader.dot(this.unit.heading) > 0 && relativeHeading < -0.95 ) {
-			return this.Seek(evader.position);
+			return this.seek(evader.position);
 		}
 
 		var lookAheadTime = toEvader.length() / (this.unit.maxSpeed + evader.velocity.length());
 
         var seek = evader.position.clone().addSelf(evader.velocity.clone().multiplyScalar(lookAheadTime));
 
-		return this.Seek(seek);
+		return this.seek(seek);
 	},
 	evade: function(pursuer) {
         var toPursuer = pursuer.position.clone().subSelf(this.unit.position);
 
 		var lookAheadTime = toPursuer.length() / (this.unit.maxSpeed + pursuer.velocity.length());
 
-		return this.Flee(pursuer.position.clone().addSelf(pursuer.velocity.clone().multiplyScalar(lookAheadTime)));
+		return this.flee(pursuer.position.clone().addSelf(pursuer.velocity.clone().multiplyScalar(lookAheadTime)));
 	},
 	turnaroundTime: function(unit, targetPos) {
 		var toTarget = targetPos.clone().subSelf(unit.position);

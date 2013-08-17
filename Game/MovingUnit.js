@@ -39,7 +39,7 @@ var MovingUnit = Unit.extend({
 
         this.velocity.addSelf(acceleration.multiplyScalar(dTime));
 
-        this.velocity.Truncate(this.maxSpeed);
+        this.velocity.truncate(this.maxSpeed);
 
         this.position.addSelf(this.velocity.clone().multiplyScalar(dTime));
 
@@ -53,7 +53,7 @@ var MovingUnit = Unit.extend({
 
         var cellPos = WorldToCellCoordinates(this.position.x, this.position.z, cellSize);
         if ( cellPos.x !== this.cellX || cellPos.z !== this.cellZ ) {
-              this.ChangeCell(cellPos.x, cellPos.z);
+              this.changeCell(cellPos.x, cellPos.z);
         }
 
 

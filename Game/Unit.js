@@ -77,7 +77,7 @@ var Unit = Class.extend({
     this.sendRotationPacketY = false;
     this.sendRotationPacketZ = false;
 
-    this.UpdateCellPosition();
+    this.updateCellPosition();
 
     this.closestNode = null;
 
@@ -85,7 +85,7 @@ var Unit = Class.extend({
 
     this.standingOnUnitId = 0;
 
-    if ( worldHandler.CheckWorldStructure(this.zone, this.cellX, this.cellZ) ) {
+    if ( worldHandler.checkWorldStructure(this.zone, this.cellX, this.cellZ) ) {
       worldHandler.world[this.zone][this.cellX][this.cellZ].units.push(this);
     }
     else {
@@ -94,7 +94,7 @@ var Unit = Class.extend({
 
       if ( this.id > 0 && this.editor ) {
           log("...but I'm generating one because he's an editor.");
-          worldHandler.GenerateCell(this.zone, this.cellX, this.cellZ);
+          worldHandler.generateCell(this.zone, this.cellX, this.cellZ);
           worldHandler.world[this.zone][this.cellX][this.cellZ].units.push(this);
       }
     }
@@ -106,7 +106,7 @@ var Unit = Class.extend({
 
     (function(unit){
       setTimeout(function(){
-        unit.UpdateNearbyUnitsOtherUnitsLists();
+        unit.updateNearbyUnitsOtherUnitsLists();
         }, 0);
     })(this);
 
@@ -117,7 +117,7 @@ var Unit = Class.extend({
     //log(this.id+" is awake!");
   },
   teleportToUnit: function(unit, noEmit) {
-    this.Teleport(unit.zone, unit.position, noEmit);
+    this.teleport(unit.zone, unit.position, noEmit);
   },
   teleport: function(zone, position, noEmit) {
 
@@ -127,17 +127,17 @@ var Unit = Class.extend({
     // Prevent all stuff from spawning under the ground, etc
     this.readyToReceiveUnits = false;
 
-    if ( worldHandler.CheckWorldStructure(this.zone, this.cellX, this.cellZ) ) {
+    if ( worldHandler.checkWorldStructure(this.zone, this.cellX, this.cellZ) ) {
       worldHandler.world[this.zone][this.cellX][this.cellZ].units = _.without(worldHandler.world[this.zone][this.cellX][this.cellZ].units, this);
     }
 
-    this.UpdateNearbyUnitsOtherUnitsLists();
+    this.updateNearbyUnitsOtherUnitsLists();
 
     this.zone = zone;
     this.position = position.clone();
-    this.UpdateCellPosition();
+    this.updateCellPosition();
 
-    if ( worldHandler.CheckWorldStructure(this.zone, this.cellX, this.cellZ) ) {
+    if ( worldHandler.checkWorldStructure(this.zone, this.cellX, this.cellZ) ) {
       worldHandler.world[this.zone][this.cellX][this.cellZ].units.push(this);
     }
     else {
@@ -145,12 +145,12 @@ var Unit = Class.extend({
         this.id+" ("+this.cellX+", "+this.cellZ+")");
       if ( this.id > 0 && this.editor ) {
         log("[Teleport] Generating cell because he's an editor.");
-        worldHandler.GenerateCell(this.zone, this.cellX, this.cellZ);
+        worldHandler.generateCell(this.zone, this.cellX, this.cellZ);
         worldHandler.world[this.zone][this.cellX][this.cellZ].units.push(this);
       }
     }
 
-    this.UpdateNearbyUnitsOtherUnitsLists();
+    this.updateNearbyUnitsOtherUnitsLists();
 
 
     if ( this instanceof Player && !noEmit ) {
@@ -161,7 +161,7 @@ var Unit = Class.extend({
     }
   },
   updateNearbyUnitsOtherUnitsLists: function() {
-    worldHandler.UpdateNearbyUnitsOtherUnitsLists(this.zone, this.cellX, this.cellZ);
+    worldHandler.updateNearbyUnitsOtherUnitsLists(this.zone, this.cellX, this.cellZ);
   },
   updateCellPosition: function() {
 
@@ -185,7 +185,7 @@ var Unit = Class.extend({
       var packet = {
         id:id,
         position:unit.position,
-        rotY:unit.rotation.y.Round(),
+        rotY:unit.rotation.y.round(),
         param:unit.param
       };
 
@@ -213,7 +213,7 @@ var Unit = Class.extend({
           packet.body = unit.body;
           packet.feet = unit.feet;
 
-          var item = unit.GetEquippedWeapon();
+          var item = unit.getEquippedWeapon();
           if ( item ) {
             packet.weapon = item.template;
           }
@@ -239,8 +239,8 @@ var Unit = Class.extend({
         packet.template = unit.template.id;
 
         if ( unit.template.type === UnitTypeEnum.MOVINGOBSTACLE || unit.template.type === UnitTypeEnum.TOGGLEABLEOBSTACLE ) {
-          packet.rotX = unit.rotation.x.Round();
-          packet.rotZ = unit.rotation.z.Round();
+          packet.rotX = unit.rotation.x.round();
+          packet.rotZ = unit.rotation.z.round();
         }
 
         if ( unit.template.type === UnitTypeEnum.LEVER || unit.template.type === UnitTypeEnum.TOGGLEABLEOBSTACLE ) {
@@ -298,7 +298,7 @@ var Unit = Class.extend({
 
     for(var x=cx-1;x<=cx+1;x++){
       for(var z=cz-1;z<=cz+1;z++){
-        if ( worldHandler.CheckWorldStructure(this.zone, x, z) ) {
+        if ( worldHandler.checkWorldStructure(this.zone, x, z) ) {
           _.each(worldHandler.world[this.zone][x][z].units, function(unit) {
             if ( unit !== this ) secondList.push(unit);
           }, this);
@@ -309,13 +309,13 @@ var Unit = Class.extend({
     for(var i=0;i<firstList.length;i++) {
       if ( secondList.indexOf(firstList[i]) == -1 ) {
         // Not found in the second list, so remove it
-        this.RemoveOtherUnit(firstList[i]);
+        this.removeOtherUnit(firstList[i]);
       }
     }
     for(var i=0;i<secondList.length;i++) {
       if ( firstList.indexOf(secondList[i]) == -1 ) {
         // Not found in the first list, so add it
-        this.AddOtherUnit(secondList[i]);
+        this.addOtherUnit(secondList[i]);
       }
     }
 
@@ -327,7 +327,7 @@ var Unit = Class.extend({
 
     for(var x=cx-1;x<=cx+1;x++){
       for(var z=cz-1;z<=cz+1;z++){
-        if ( worldHandler.CheckWorldStructure(this.zone, x, z) ) {
+        if ( worldHandler.checkWorldStructure(this.zone, x, z) ) {
           for(var u=0;u<worldHandler.world[this.zone][x][z].units.length;u++) {
             var unit = worldHandler.world[this.zone][x][z].units.u;
 
@@ -367,7 +367,7 @@ var Unit = Class.extend({
 
       // First, remove us from our world cell and add ourselves to the right cell
       // Remove the unit from the world cells
-      if ( worldHandler.CheckWorldStructure(zone, cx, cz) ) {
+      if ( worldHandler.checkWorldStructure(zone, cx, cz) ) {
         var units = worldHandler.world[zone][cx][cz].units;
         for(var u=0;u<units.length;u++) {
           if ( units[u].id == this.id ) {
@@ -379,7 +379,7 @@ var Unit = Class.extend({
 
       // Add to the new cell
       // What if the cell doesn't exist? Don't add?
-      if ( worldHandler.CheckWorldStructure(zone, cellPos.x, cellPos.z) ) {
+      if ( worldHandler.checkWorldStructure(zone, cellPos.x, cellPos.z) ) {
         worldHandler.world[zone][cellPos.x][cellPos.z].units.push(this);
       }
       else {
@@ -387,7 +387,7 @@ var Unit = Class.extend({
         this.id+" ("+cellPos.x+", "+cellPos.z+")");
         if ( this.id > 0 && this.editor ) {
           log("[ChangeCell] Generating cell because he's an editor.");
-          worldHandler.GenerateCell(zone, cellPos.x, cellPos.z);
+          worldHandler.generateCell(zone, cellPos.x, cellPos.z);
           worldHandler.world[zone][cellPos.x][cellPos.z].units.push(this);
         }
       }
@@ -427,11 +427,11 @@ var Unit = Class.extend({
       for (var c=0;c<firstList.length;c++) {
         if ( secondList.indexOf(firstList[c]) == -1 ) {
           // Not found in the secondlist, so recalculate all units inside
-          if ( !worldHandler.CheckWorldStructure(zone, firstList[c].x, firstList[c].z) ) continue;
+          if ( !worldHandler.checkWorldStructure(zone, firstList[c].x, firstList[c].z) ) continue;
 			var cl = worldHandler.world[zone][firstList[c].x][firstList[c].z].units.length;
           for ( var u=0;u<cl;u++ ) {
             var funit = worldHandler.world[zone][firstList[c].x][firstList[c].z].units[u];
-            funit.UpdateOtherUnitsList();
+            funit.updateOtherUnitsList();
           }
         }
       }
@@ -440,11 +440,11 @@ var Unit = Class.extend({
       for (var c=0;c<secondList.length;c++) {
         if ( firstList.indexOf(secondList[c]) == -1 ) {
           // Not found in the firstlist, so recalculate all units inside
-          if ( !worldHandler.CheckWorldStructure(zone, secondList[c].x, secondList[c].z) ) continue;
+          if ( !worldHandler.checkWorldStructure(zone, secondList[c].x, secondList[c].z) ) continue;
 
           for ( var u=0;u<worldHandler.world[zone][secondList[c].x][secondList[c].z].units.length; u++ ) {
             var funit = worldHandler.world[zone][secondList[c].x][secondList[c].z].units[u];
-            funit.UpdateOtherUnitsList();
+            funit.updateOtherUnitsList();
           }
         }
       }
@@ -453,7 +453,7 @@ var Unit = Class.extend({
 
 
       // Of course, update for ourselves too!
-      this.UpdateOtherUnitsList();
+      this.updateOtherUnitsList();
     }
 
   },
@@ -462,7 +462,7 @@ var Unit = Class.extend({
 
   },
   inRangeOfUnit: function(unit, range) {
-    return this.InRangeOfPosition(unit.position, range);
+    return this.inRangeOfPosition(unit.position, range);
   },
   inRangeOfPosition: function(position, range) {
     return position.clone().subSelf(this.position).lengthSq() < range*range;
@@ -478,7 +478,7 @@ var Unit = Class.extend({
 
     for(var x=cx-1;x<=cx+1;x++){
       for(var z=cz-1;z<=cz+1;z++){
-        if ( worldHandler.CheckWorldStructure(zone, x, z) ) {
+        if ( worldHandler.checkWorldStructure(zone, x, z) ) {
           for(var u=0;u<worldHandler.world[zone][x][z].units.length;u++) {
             worldHandler.world[zone][x][z].units[u].UpdateOtherUnitsList();
           }
@@ -499,7 +499,7 @@ var Unit = Class.extend({
 
     for(var x=cx-1;x<=cx+1;x++){
       for(var z=cz-1;z<=cz+1;z++){
-        if ( !worldHandler.CheckWorldStructure(zone, x, z) ) continue;
+        if ( !worldHandler.checkWorldStructure(zone, x, z) ) continue;
 
         if ( ISDEF(worldHandler.world[zone][x][z].units) ) {
 
@@ -571,23 +571,23 @@ var Unit = Class.extend({
     // If the path is empty, go straight for the target
     if ( paths.length === 0 ) {
       this.targetNodePosition = targetPosition.clone();
-               // log("[CalculatePath] No path found, going straight for the target! new targetNodePosition: "+this.targetNodePosition.ToString());
+               // log("[CalculatePath] No path found, going straight for the target! new targetNodePosition: "+this.targetNodePosition.toString());
     }
     else {
       // Go for the first node in the list
       this.targetNodePosition = ConvertVector3(paths[0].pos);
-               // log("[CalculatePath] Path found, going for the first in the list! new targetNodePosition: "+this.targetNodePosition.ToString());
+               // log("[CalculatePath] Path found, going for the first in the list! new targetNodePosition: "+this.targetNodePosition.toString());
                // log("[CalculatePath] First node ID: "+paths[0].id);
     }
 
   },
   say: function(text) {
-    this.EmitNearby("say", {
+    this.emitNearby("say", {
       id:this.id,
       message:text
     }, 0, true);
   },
   debugLocationString: function() {
-    return "zone "+this.zone+", pos "+this.position.Round().ToString();
+    return "zone "+this.zone+", pos "+this.position.round().ToString();
   }
 });

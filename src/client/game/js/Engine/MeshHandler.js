@@ -111,7 +111,7 @@ var MeshHandler = Class.extend({
       // }
 
       if ( drawNameMesh ) {
-        materials.push(textureHandler.GetTexture('plugins/game/images/'+tiles[i] + '.png', false, {
+        materials.push(textureHandler.getTexture('plugins/game/images/'+tiles[i] + '.png', false, {
           transparent:true,
           opacity:0.5,
           seeThrough:true,
@@ -121,7 +121,7 @@ var MeshHandler = Class.extend({
         }));
       }
       else {
-        materials.push(textureHandler.GetTexture('plugins/game/images/'+tiles[i] + '.png', false, {
+        materials.push(textureHandler.getTexture('plugins/game/images/'+tiles[i] + '.png', false, {
           transparent:meshData["transparent"] === 1,
           alphaTest:0.1,
           useLighting:true

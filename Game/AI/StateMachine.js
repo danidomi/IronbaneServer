@@ -23,47 +23,47 @@ var StateMachine = Class.extend({
 		this.owner = owner;
 
 		this.globalState = globalState;
-        this.globalState.Enter(this.owner);
+        this.globalState.enter(this.owner);
 
 		this.currentState = currentState;
-        this.currentState.Enter(this.owner);
+        this.currentState.enter(this.owner);
 
 		this.previousState = null;
 
 	},
 	update: function(dTime) {
-		if ( this.globalState ) this.globalState.Execute(this.owner, dTime);
+		if ( this.globalState ) this.globalState.execute(this.owner, dTime);
 
-		if ( this.currentState ) this.currentState.Execute(this.owner, dTime);
+		if ( this.currentState ) this.currentState.execute(this.owner, dTime);
 	},
 	setGlobalState: function(globalState) {
 
-		this.globalState.Exit(this.owner);
+		this.globalState.exit(this.owner);
 		this.globalState = globalState;
-    	this.globalState.Enter(this.owner);
+    	this.globalState.enter(this.owner);
 
 	},
 	changeState: function(newState) {
 
 		this.previousState = this.currentState;
 
-		this.currentState.Exit(this.owner);
+		this.currentState.exit(this.owner);
 
 		this.currentState = newState;
 
-		this.currentState.Enter(this.owner);
+		this.currentState.enter(this.owner);
 
 	},
 	revertToPreviousState: function() {
-		this.ChangeState(this.previousState);
+		this.changeState(this.previousState);
 	},
 	isInState: function(state) {
 		return this.currentState instanceof state;
     },
     handleMessage: function(message, data) {
 
-        this.currentState.HandleMessage(this.owner, message, data);
-        this.globalState.HandleMessage(this.owner, message, data);
+        this.currentState.handleMessage(this.owner, message, data);
+        this.globalState.handleMessage(this.owner, message, data);
 
     }
 

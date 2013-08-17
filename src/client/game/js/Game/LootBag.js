@@ -57,10 +57,10 @@ var LootBag = Billboard.extend({
         var texture = itemSpritePath + ''+image+'.png';
 
 
-        this.texture = textureHandler.GetTexture( texture, true);
+        this.texture = textureHandler.getTexture( texture, true);
 
 
-        this.TryToBuildMesh();
+        this.tryToBuildMesh();
 
 
     }

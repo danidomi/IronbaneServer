@@ -28,7 +28,7 @@ var Item = Class.extend({
         }
 
         // todo: deglobalization
-        this.id = server.GetAValidItemID();
+        this.id = server.getAValidItemID();
 
         // reference to the entire template object
         this.$template = template;

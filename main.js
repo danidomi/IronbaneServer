@@ -144,7 +144,7 @@ module.exports = function() {
     // this replaces MainLoop, must go here since server hasn't been defined earlier...
     IronbaneGame.on('tick', function(elapsed) {
         // eventually we wouldn't be accessing the global var here...
-        server.Tick(elapsed);
+        server.tick(elapsed);
     });
 
     // Necessary to prevent 'Mysql has gone away' errors
@@ -165,8 +165,8 @@ module.exports = function() {
             if (results.length) {
                 shuttingDown = true;
 
-                chatHandler.Announce("&lt;Server&gt; New update available!", "red");
-                chatHandler.Announce("&lt;Server&gt; Auto-restarting in 10 seconds...", "red");
+                chatHandler.announce("&lt;Server&gt; New update available!", "red");
+                chatHandler.announce("&lt;Server&gt; Auto-restarting in 10 seconds...", "red");
 
                 // Disconnect all clients first
                 io.sockets.emit("disconnect");
@@ -189,9 +189,9 @@ module.exports = function() {
 
     setInterval(function autoSave() {
         log("Auto-saving all players...");
-        worldHandler.LoopUnits(function(unit) {
+        worldHandler.loopUnits(function(unit) {
             if (unit instanceof Player) {
-                unit.Save();
+                unit.save();
             }
         });
     }, 60 * 1 * 1000);

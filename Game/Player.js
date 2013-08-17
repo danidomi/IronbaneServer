@@ -43,7 +43,7 @@ var Player = Fighter.extend({
   tick: function(dTime) {
 
     // console.log("this.zone: "+this.zone);
-    // console.log("this.position: "+this.position.ToString());
+    // console.log("this.position: "+this.position.toString());
     // console.log("this.respawnTimer: "+this.respawnTimer);
     // console.log("this.health: "+this.health);
 
@@ -52,12 +52,12 @@ var Player = Fighter.extend({
       this.zone === 4 &&
       this.position.y <= 0.1 ) {
 
-        this.SetHealth(0);
+        this.setHealth(0);
 
         // Remove their items
         this.items = [];
 
-        this.EmitNearby("getMeleeHit", {
+        this.emitNearby("getMeleeHit", {
           victim:this.id,
           attacker:0,
           h:0,
@@ -66,7 +66,7 @@ var Player = Fighter.extend({
 
         this.respawnTimer = 10.0;
 
-        chatHandler.DiedSpecial(this, "lava");
+        chatHandler.diedSpecial(this, "lava");
     }
 
     this._super(dTime);
@@ -110,16 +110,16 @@ var Player = Fighter.extend({
   },
   lightWarn: function() {
     var message = this.name + ': Your behaviour is not tolerated. Stop it.';
-    chatHandler.Announce('' + message + '', "yellow");
+    chatHandler.announce('' + message + '', "yellow");
   },
   seriousWarn: function() {
     var message = this.name + ': Continue like this and you will get banned.<br>You have been warned.';
-    chatHandler.Announce('' + message + '', "red");
+    chatHandler.announce('' + message + '', "red");
   },
   kick: function(reason) {
     // Immunity
     if (this.editor) {
-      chatHandler.Announce(this.name + ' has immunity.', "yellow");
+      chatHandler.announce(this.name + ' has immunity.', "yellow");
       return;
     }
 
@@ -128,7 +128,7 @@ var Player = Fighter.extend({
     var me = this;
 
     var message = this.name + ' has been kicked. (' + reason + ')';
-    chatHandler.Announce(message, "yellow");
+    chatHandler.announce(message, "yellow");
 
     setTimeout(function() {
       me.socket.disconnect();
@@ -138,7 +138,7 @@ var Player = Fighter.extend({
   ban: function(hours, reason) {
     // Immunity
     if (this.editor) {
-      chatHandler.Announce(this.name + ' has immunity.', "red");
+      chatHandler.announce(this.name + ' has immunity.', "red");
       return;
     }
 
@@ -154,14 +154,14 @@ var Player = Fighter.extend({
     var how = hours ? "permanently banned" : "banned for " + hours + " hours";
 
     var message = this.name + ' has been ' + how + '. (' + reason + ')';
-    chatHandler.Announce(message, "red");
+    chatHandler.announce(message, "red");
 
     mysql.query('INSERT INTO ib_bans SET ?', {
       ip: me.socket.ip,
       account: this.playerID,
       until: until
     }, function() {
-      socketHandler.UpdateBans();
+      socketHandler.updateBans();
     });
 
     if (!this.isGuest) {
@@ -196,7 +196,7 @@ var Player = Fighter.extend({
                 for (var i = 0; i < unit.items.length; i++) {
                     var item = unit.items[i];
 
-                    // 20/9/12: Removed  server.GetAValidItemID() for id field as it causes duplication errors
+                    // 20/9/12: Removed  server.getAValidItemID() for id field as it causes duplication errors
                     // Normally it doesn't matter which ID the items gets
                     mysql.query('INSERT INTO ib_items (template, attr1, owner, equipped, slot, value, data) ' +
                         'VALUES(?,?,?,?,?,?,?)', [
@@ -214,10 +214,10 @@ var Player = Fighter.extend({
     },
   leaveGame: function() {
 
-    this.Save();
+    this.save();
 
 
-    chatHandler.LeaveGame(this);
+    chatHandler.leaveGame(this);
 
 
 
@@ -226,7 +226,7 @@ var Player = Fighter.extend({
     var zone = this.zone;
     var u = 0;
     // Remove the unit from the world cells
-    if (worldHandler.CheckWorldStructure(zone, cx, cz)) {
+    if (worldHandler.checkWorldStructure(zone, cx, cz)) {
       var newList = [];
       _.each(worldHandler.world[zone][cx][cz].units, function(unit) {
         if (unit.id != this.id) newList.push(unit);
@@ -237,7 +237,7 @@ var Player = Fighter.extend({
     // Update all players that are nearby
     for (var x = cx - 1; x <= cx + 1; x++) {
       for (var z = cz - 1; z <= cz + 1; z++) {
-        if (worldHandler.CheckWorldStructure(zone, x, z)) {
+        if (worldHandler.checkWorldStructure(zone, x, z)) {
           for (u = 0; u < worldHandler.world[zone][x][z].units.length; u++) {
             worldHandler.world[zone][x][z].units[u].UpdateOtherUnitsList();
           }

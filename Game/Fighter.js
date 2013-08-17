@@ -39,8 +39,8 @@ var Fighter = Actor.extend({
             this.armorMax = this.template.armor;
         }
         else {
-            this.CalculateMaxHealth();
-            this.CalculateMaxArmor();
+            this.calculateMaxHealth();
+            this.calculateMaxArmor();
         }
 
         this.health = this.healthMax;
@@ -50,7 +50,7 @@ var Fighter = Actor.extend({
         this.chInvisibleByMonsters = false;
         this.ch999Damage = false;
 
-        this.UpdateAppearance(false);
+        this.updateAppearance(false);
 
         this.healthRegenTimeout = 0.0;
         this.healthRegenInterval = 1.0;
@@ -60,8 +60,8 @@ var Fighter = Actor.extend({
 
         this.lastBattleActionTimer = 0.0;
 
-        if(this.GetEquippedWeapon()) {
-          this.attackTimeout = this.GetEquippedWeapon().$template.delay;
+        if(this.getEquippedWeapon()) {
+          this.attackTimeout = this.getEquippedWeapon().$template.delay;
         }
     },
     isInBattle: function() {
@@ -84,7 +84,7 @@ var Fighter = Actor.extend({
       swingWeapon = ISDEF(swingWeapon) ? swingWeapon : true;
       weaponID = weaponID || this.weapon.id;
 
-      this.EmitNearby("addProjectile", {
+      this.emitNearby("addProjectile", {
         s:this.position.clone().Round(2),
         t:targetPosition.clone().addSelf(offset).Round(2),
         o:this.id,
@@ -94,16 +94,16 @@ var Fighter = Actor.extend({
   },
     attemptAttack: function(victim) {
         // log("attempt attack");
-        this.HandleMessage("attemptAttack", {});
+        this.handleMessage("attemptAttack", {});
         //if ( this.weapon.subtype == "bow" || this.weapon.subtype == "staff" ) {
         //if ( this.weapon.subtype == "bow" || this.weapon.subtype == "staff"  ) {
         // debugger;
         if (this.template.usebashattack) {
-            this.Attack(victim, this.weapon);
-            // this.SwingWeapon(victim.position);
+            this.attack(victim, this.weapon);
+            // this.swingWeapon(victim.position);
         } else {
-            //this.Attack(this.enemy, this.weapon);
-            this.ShootProjectile(victim.position, true, 0, this.template.aimerror);
+            //this.attack(this.enemy, this.weapon);
+            this.shootProjectile(victim.position, true, 0, this.template.aimerror);
         }
     },
   attack: function(victim, weapon) {
@@ -139,7 +139,7 @@ var Fighter = Actor.extend({
         victim.health = Math.max(victim.health, 0);
         victim.armor = Math.max(victim.armor, 0);
 
-        this.HandleMessage("hurtTarget", {damage:damage});
+        this.handleMessage("hurtTarget", {damage:damage});
       }
       else {
         victim.health += Math.abs(damage);
@@ -147,14 +147,14 @@ var Fighter = Actor.extend({
         victim.health = Math.min(victim.healthMax, victim.health);
 
 
-        this.HandleMessage("healTarget", {damage:damage});
+        this.handleMessage("healTarget", {damage:damage});
       }
     }
 
 
-    victim.HandleMessage("attacked", {attacker:this});
+    victim.handleMessage("attacked", {attacker:this});
 
-    victim.EmitNearby("getMeleeHit", {
+    victim.emitNearby("getMeleeHit", {
       victim:victim.id,
       attacker:this.id,
       h:victim.health,
@@ -176,14 +176,14 @@ var Fighter = Actor.extend({
         victim.velocity.set(0,0,0);
       }
 
-      victim.Die(this);
+      victim.die(this);
       victim.respawnTimer = victim.id > 0 ? 10.0 : 30.0;
 
 
       // 22/12/12 Permadeath, no more respawning for players
       // if ( victim.id > 0 )  {
 
-      //   victim.Delete();
+      //   victim.delete();
 
 
 
@@ -205,7 +205,7 @@ var Fighter = Actor.extend({
       if (this.respawnTimer > 0.0) {
         this.respawnTimer -= dTime;
       } else {
-        this.Respawn();
+        this.respawn();
       }
     } else {
       if (this.healthRegenTimeout > 0) {
@@ -215,7 +215,7 @@ var Fighter = Actor.extend({
       if (this.lastBattleActionTimer <= 0) {
         if (this.healthRegenTimeout <= 0) {
           this.healthRegenTimeout = this.healthRegenInterval;
-          this.SetHealth(this.health + 1);
+          this.setHealth(this.health + 1);
         }
       }
 
@@ -226,7 +226,7 @@ var Fighter = Actor.extend({
       if (this.lastBattleActionTimer <= battleStatusTimeout - 3) {
         if (this.armorRegenTimeout <= 0) {
           this.armorRegenTimeout = this.armorRegenInterval;
-          this.SetArmor(this.armor + 1);
+          this.setArmor(this.armor + 1);
         }
       }
 
@@ -255,7 +255,7 @@ var Fighter = Actor.extend({
         h:this.health
         };
         if ( noParticles ) data.np = true;
-      this.EmitNearby("setStat", data, 0, true);
+      this.emitNearby("setStat", data, 0, true);
     }
   },
   setArmor: function(newArmor) {
@@ -267,7 +267,7 @@ var Fighter = Actor.extend({
 
 
     if ( oldArmor != this.armor ) {
-      this.EmitNearby("setStat", {
+      this.emitNearby("setStat", {
         id:this.id,
         s:"a",
         a:this.armor
@@ -277,7 +277,7 @@ var Fighter = Actor.extend({
     die: function(killer) {
         if (this.id < 0) {
             //debugger;
-            this.HandleMessage("killed", {
+            this.handleMessage("killed", {
                 killer: killer
             });
 
@@ -286,7 +286,7 @@ var Fighter = Actor.extend({
 
                 //log("spawning lootbag...");
                 var bag = new Lootable({
-                    id: server.GetAValidNPCID(),
+                    id: server.getAValidNPCID(),
                     x: this.position.x + Math.cos(angle),
                     y: this.position.y,
                     z: this.position.z + Math.sin(angle),
@@ -314,12 +314,12 @@ var Fighter = Actor.extend({
             // Remove their items
             this.items = [];
 
-            chatHandler.Died(this, killer);
+            chatHandler.died(this, killer);
         }
     },
     respawn: function() {
-        this.SetHealth(this.healthMax, true);
-        this.SetArmor(this.armorMax, true);
+        this.setHealth(this.healthMax, true);
+        this.setArmor(this.armorMax, true);
 
         if (this.id > 0) {
             //      this.position = new THREE.Vector3(0, 0, 0);
@@ -328,22 +328,22 @@ var Fighter = Actor.extend({
 
             // People who die in the tutorial need to do it again
             if (this.zone === tutorialSpawnZone) {
-                this.Teleport(tutorialSpawnZone, tutorialSpawnPosition, true);
+                this.teleport(tutorialSpawnZone, tutorialSpawnPosition, true);
             } else {
-                this.Teleport(normalSpawnZone, normalSpawnPosition, true);
+                this.teleport(normalSpawnZone, normalSpawnPosition, true);
             }
         } else {
             if (this instanceof NPC) {
-                this.SetWeaponsAndLoot();
+                this.setWeaponsAndLoot();
             }
             this.position = this.startPosition.clone();
-            this.HandleMessage("respawned", {});
+            this.handleMessage("respawned", {});
         }
 
         // log("Respawned "+this.id);
 
         // Send the client that it's okay to revert back
-        this.EmitNearby("respawn", {
+        this.emitNearby("respawn", {
             id: this.id,
             p: this.position.clone().Round(2),
             z: this.zone,
@@ -380,7 +380,7 @@ var Fighter = Actor.extend({
     this.healthMax = 20;
 
     if ( doEmit && this.healthMax != oldHealthMax ) {
-      this.EmitNearby("setStat", {
+      this.emitNearby("setStat", {
         id:this.id,
         s:"hm",
         hm:this.healthMax
@@ -388,7 +388,7 @@ var Fighter = Actor.extend({
     }
 
     if ( this.health > this.healthMax ) {
-      this.SetHealth(this.healthMax);
+      this.setHealth(this.healthMax);
     }
   },
   // Returns true when the max armor changed
@@ -419,7 +419,7 @@ var Fighter = Actor.extend({
     this.armorMax = armorMax;
 
     if ( doEmit && this.armorMax != oldArmorMax ) {
-      this.EmitNearby("setStat", {
+      this.emitNearby("setStat", {
         id:this.id,
         s:"am",
         am:this.armorMax
@@ -427,7 +427,7 @@ var Fighter = Actor.extend({
     }
 
     if ( this.armor > this.armorMax ) {
-      this.SetArmor(this.armorMax);
+      this.setArmor(this.armorMax);
     }
   },
     giveItem: function(template, config) {
@@ -474,7 +474,7 @@ var Fighter = Actor.extend({
                 return false;
             }
 
-            if(!this.GiveItem(template, {value: amount})) {
+            if(!this.giveItem(template, {value: amount})) {
                 // no room in inventory for coins!
                 return false;
             }
@@ -508,7 +508,7 @@ var Fighter = Actor.extend({
         }
 
         if (sendChanges) {
-            this.EmitNearby("updateClothes", {
+            this.emitNearby("updateClothes", {
                 id: this.id,
                 head: this.head,
                 body: this.body,
@@ -598,7 +598,7 @@ var Fighter = Actor.extend({
 
     for(var x=cx-1;x<=cx+1;x++){
       for(var z=cz-1;z<=cz+1;z++){
-        if ( worldHandler.CheckWorldStructure(this.zone, x, z) ) {
+        if ( worldHandler.checkWorldStructure(this.zone, x, z) ) {
           for(var u=0;u<worldHandler.world[this.zone][x][z].units.length;u++) {
             var unit = worldHandler.world[this.zone][x][z].units[u];
 
@@ -626,7 +626,7 @@ var Fighter = Actor.extend({
               }
 
               // Check if we are looking at the target
-              if ( !this.InLineOfSight(unit, noHeadingCheck) ) {
+              if ( !this.inLineOfSight(unit, noHeadingCheck) ) {
                 //log("not in line of sight!");
                 continue;
               }
@@ -637,12 +637,12 @@ var Fighter = Actor.extend({
               continue;
             }
 
-            if ( maxDistance > 0 && !this.InRangeOfUnit(unit, maxDistance) ) {
+            if ( maxDistance > 0 && !this.inRangeOfUnit(unit, maxDistance) ) {
               //log("too far away!");
               continue;
             }
 
-            //if ( maxDistance > 0 && !unit.InRangeOfPosition(this.startPosition, maxDistance) ) continue;
+            //if ( maxDistance > 0 && !unit.inRangeOfPosition(this.startPosition, maxDistance) ) continue;
 
 
             return unit;

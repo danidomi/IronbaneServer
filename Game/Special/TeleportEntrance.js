@@ -29,7 +29,7 @@ var TeleportEntrance = Unit.extend({
 
       this._super();
 
-      this.FindTargetExit();
+      this.findTargetExit();
 
     },
     findTargetExit: function() {
@@ -38,7 +38,7 @@ var TeleportEntrance = Unit.extend({
 
             this.data.targetExit = -Math.abs(this.data.targetExit);
 
-            this.targetExit = worldHandler.FindUnit(this.data.targetExit);
+            this.targetExit = worldHandler.findUnit(this.data.targetExit);
 
             if ( !(this.targetExit instanceof TeleportExit) ) this.targetExit = null;
         }

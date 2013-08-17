@@ -35,8 +35,8 @@ var ToggleableObstacle = Train.extend({
         
   
 //        (function(unit){
-//            setTimeout(function(){unit.Toggle(true);}, 5000);
-//            setTimeout(function(){unit.Toggle(false);}, 10000);
+//            setTimeout(function(){unit.toggle(true);}, 5000);
+//            setTimeout(function(){unit.toggle(false);}, 10000);
 //        })(this);
 
 
@@ -46,7 +46,7 @@ var ToggleableObstacle = Train.extend({
         
         this._super(geometry);
         
-       this.Toggle(this.on);
+       this.toggle(this.on);
         
         this.targetPosition = this.localPosition.clone();
         this.targetRotation = this.rotation.clone();
@@ -63,13 +63,13 @@ var ToggleableObstacle = Train.extend({
         var mp = this.on ? 1 : 0;
 
         switch (this.movementType) {
-            case ToggleableObstacleMovementTypeEnum.DoorX:
+            case ToggleableObstacleMovementTypeEnum.doorX:
                 this.targetPosition.x = this.startPosition.x + width * mp;
                 break;
-            case ToggleableObstacleMovementTypeEnum.DoorY:
+            case ToggleableObstacleMovementTypeEnum.doorY:
                 this.targetPosition.y = this.startPosition.y + height * mp;
                 break;                
-            case ToggleableObstacleMovementTypeEnum.DoorZ:
+            case ToggleableObstacleMovementTypeEnum.doorZ:
                 this.targetPosition.z = this.startPosition.z + depth * mp;
                 break;                                  
         }
@@ -79,7 +79,7 @@ var ToggleableObstacle = Train.extend({
     tick: function(dTime) {
         
         switch (this.movementType) {            
-            case ToggleableObstacleMovementTypeEnum.SwitchVertical:
+            case ToggleableObstacleMovementTypeEnum.switchVertical:
                 this.changeRotation = true;
                 break;                   
         }        
@@ -89,7 +89,7 @@ var ToggleableObstacle = Train.extend({
         
         this._super(dTime);
         
-        //this.UpdateRotation();
+        //this.updateRotation();
         
     }
 });

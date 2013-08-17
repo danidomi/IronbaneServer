@@ -79,7 +79,7 @@ var ChatHandler = Class.extend({
                 }
 
                 if (template) {
-                    if (!unit.GiveItem(template)) {
+                    if (!unit.giveItem(template)) {
                         errorMessage = 'You have no free space!';
                     }
                 } else {
@@ -92,7 +92,7 @@ var ChatHandler = Class.extend({
                 var moneybag = _.where(dataHandler.items, {type: 'cash'})[0],
                     amount = parseInt(realparams[0], 10);
                 if(moneybag) {
-                    if(!unit.GiveItem(moneybag, {value: amount})) {
+                    if(!unit.giveItem(moneybag, {value: amount})) {
                         errorMessage = 'You have no free space!';
                     }
                 } else {
@@ -106,19 +106,19 @@ var ChatHandler = Class.extend({
             // First check for NPC's without nodes
 
             var errors = "";
-            worldHandler.LoopUnits(function(unit) {
+            worldHandler.loopUnits(function(unit) {
               if ( unit.id < 0 ) {
 
                 // Check for empty nodes
                 if ( unit.connectedNodeList && !unit.connectedNodeList.length ) {
                   errors += "Warning: no nodes found for NPC "+
-                    Math.abs(unit.id)+" at "+unit.DebugLocationString()+"!<br>";
+                    Math.abs(unit.id)+" at "+unit.debugLocationString()+"!<br>";
                 }
 
                 // Check for bad cells
-                if ( !worldHandler.CheckWorldStructure(unit.zone, unit.cellX, unit.cellZ) ) {
+                if ( !worldHandler.checkWorldStructure(unit.zone, unit.cellX, unit.cellZ) ) {
                   errors += "Warning: unexisting cell found for NPC "+
-                    Math.abs(unit.id)+" at "+unit.DebugLocationString()+"!<br>";
+                    Math.abs(unit.id)+" at "+unit.debugLocationString()+"!<br>";
                 }
 
                 // Check for bad loot
@@ -162,24 +162,24 @@ var ChatHandler = Class.extend({
           case "announce":
             var color = realparams[1];
 
-            this.Announce(realparams[0], color);
+            this.announce(realparams[0], color);
 
             break;
           case "warn":
-            var target = worldHandler.FindPlayerByName(realparams[0]);
-            if (target) target.LightWarn();
+            var target = worldHandler.findPlayerByName(realparams[0]);
+            if (target) target.lightWarn();
             break;
           case "seriouswarn":
-            var target = worldHandler.FindPlayerByName(realparams[0]);
-            if (target) target.SeriousWarn();
+            var target = worldHandler.findPlayerByName(realparams[0]);
+            if (target) target.seriousWarn();
             break;
           case "kick":
-            var target = worldHandler.FindPlayerByName(realparams[0]);
-            if (target) target.Kick(realparams[1]);
+            var target = worldHandler.findPlayerByName(realparams[0]);
+            if (target) target.kick(realparams[1]);
             break;
           case "ban":
-            var target = worldHandler.FindPlayerByName(realparams[0]);
-            if (target) target.Ban(realparams[1], realparams[2]);
+            var target = worldHandler.findPlayerByName(realparams[0]);
+            if (target) target.ban(realparams[1], realparams[2]);
             break;
           default:
             errorMessage = "That command does not exist!";
@@ -192,7 +192,7 @@ var ChatHandler = Class.extend({
       }
 
       if (showFeedback) {
-        this.AnnouncePersonally(unit, feedback, errorMessage ? "red" : "#01ff46");
+        this.announcePersonally(unit, feedback, errorMessage ? "red" : "#01ff46");
       }
 
     } else {
@@ -201,8 +201,8 @@ var ChatHandler = Class.extend({
         message = sanitize(message).entityEncode();
       }
 
-      //unit.EmitNearby("say", {id:unit.id,message:message}, 0, true);
-      unit.Say(message);
+      //unit.emitNearby("say", {id:unit.id,message:message}, 0, true);
+      unit.say(message);
 
       var messageData = {
           type: 'say',
@@ -268,7 +268,7 @@ var ChatHandler = Class.extend({
           return;
       }
 
-      this.AnnouncePersonally(nick, message, color);
+      this.announcePersonally(nick, message, color);
   },
   announcePersonally: function(unit, message, color) {
       var messageData = {

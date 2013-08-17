@@ -40,8 +40,8 @@ var TeleportExit = Unit.extend({
 
         (function(unit){
         setTimeout(function(){
-            unit.particleEmittersToMaintain.push(particleHandler.Add(ParticleTypeEnum.TELEPORTEXIT, {followUnit:unit}));
-            unit.particleEmittersToMaintain.push(particleHandler.Add(ParticleTypeEnum.TELEPORTEXITCIRCLES, {followUnit:unit}));
+            unit.particleEmittersToMaintain.push(particleHandler.add(ParticleTypeEnum.TELEPORTEXIT, {followUnit:unit}));
+            unit.particleEmittersToMaintain.push(particleHandler.add(ParticleTypeEnum.TELEPORTEXITCIRCLES, {followUnit:unit}));
         }, 0);
         })(this);
 

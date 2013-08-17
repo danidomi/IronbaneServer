@@ -34,7 +34,7 @@ var TurretStraight = State.extend({
 
     if ( this.attackTimeout > 0 ) this.attackTimeout -= dTime;
 
-    var player = npc.FindNearestTarget(npc.template.aggroradius, true, true);
+    var player = npc.findNearestTarget(npc.template.aggroradius, true, true);
 
 
     if ( player ) {
@@ -48,14 +48,14 @@ var TurretStraight = State.extend({
 
         //log("[Turret] Attempting attack!");
 
-        // npc.AttemptAttack(player);
+        // npc.attemptAttack(player);
 
         // console.log(npc.rotation);
 
-        var angle = npc.rotation.y.ToRadians();
+        var angle = npc.rotation.y.toRadians();
 
 
-        npc.ShootProjectile(npc.position.clone()
+        npc.shootProjectile(npc.position.clone()
           .addSelf(npc.heading.clone().multiplyScalar(5)), false);
 
 

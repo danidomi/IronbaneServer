@@ -396,6 +396,6 @@ function roundNumber(number, digits) {
 }
 
 
-THREE.Vector3.prototype.ToString = function ( ) {
+THREE.Vector3.prototype.toString = function ( ) {
     return "X: "+roundNumber(this.x,2)+", Y: "+roundNumber(this.y,2)+", Z: "+roundNumber(this.z,2)+"";
 };

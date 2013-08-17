@@ -32,7 +32,7 @@ var Turret = State.extend({
 
     if ( this.attackTimeout > 0 ) this.attackTimeout -= dTime;
 
-    var player = npc.FindNearestTarget(npc.template.aggroradius, true, true);
+    var player = npc.findNearestTarget(npc.template.aggroradius, true, true);
 
     if ( player ) {
 
@@ -45,7 +45,7 @@ var Turret = State.extend({
 
         //log("[Turret] Attempting attack!");
 
-        npc.AttemptAttack(player);
+        npc.attemptAttack(player);
 
 
       // Attack!

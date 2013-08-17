@@ -50,13 +50,13 @@ var DynamicMesh = Mesh.extend({
         }
 
 //        this.rotation.copy(this.startRotation);
-//        this.RotateVertices();
+//        this.rotateVertices();
     },
     tick: function(dTime) {
 
         if ( this.changeRotation ) {
 
-            this.RotateVertices();
+            this.rotateVertices();
             this.changeRotation = false;
         }
 
@@ -69,7 +69,7 @@ var DynamicMesh = Mesh.extend({
 
         var rotationMatrix = new THREE.Matrix4();
         var rot = new THREE.Vector3((this.rotation.x).ToRadians(), (this.rotation.y).ToRadians(), (this.rotation.z).ToRadians());
-        // sw("rot", rot.ToString());
+        // sw("rot", rot.toString());
         rotationMatrix.setRotationFromEuler(rot);
 
         for(var v=0;v<this.mesh.geometry.vertices.length;v++) {

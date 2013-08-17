@@ -71,32 +71,32 @@ var ExploreAndLookForEnemies = State.extend({
 
                  //this.targetPosition.set(this.test ? 0 : 25, 0, this.test ? 0 : 10);
 
-                 // log("[ExploreAndLookForEnemies] New target position: "+this.targetPosition.ToString());
-                 // log("[ExploreAndLookForEnemies] Current NPC nodepath: "+npc.targetNodePosition.ToString());
+                 // log("[ExploreAndLookForEnemies] New target position: "+this.targetPosition.toString());
+                 // log("[ExploreAndLookForEnemies] Current NPC nodepath: "+npc.targetNodePosition.toString());
             }
 
-            //npc.steeringForce = npc.steeringBehaviour.Wander();
-            npc.TravelToPosition(this.targetPosition, true);
+            //npc.steeringForce = npc.steeringBehaviour.wander();
+            npc.travelToPosition(this.targetPosition, true);
 
 
             if ( npc.template.spawnguardradius > 0 ) {
                 if ( VectorDistance(npc.startPosition, npc.position) > npc.template.spawnguardradius ) this.walkBackTimeout = 3.0;
 
                 if ( npc.walkBackTimeout > 0.0 ) {
-                    // npc.steeringForce = npc.steeringBehaviour.Seek(npc.startPosition);
-                    npc.TravelToPosition(npc.startPosition);
+                    // npc.steeringForce = npc.steeringBehaviour.seek(npc.startPosition);
+                    npc.travelToPosition(npc.startPosition);
                 }
             }
 
-            var player = npc.FindNearestTarget(npc.template.aggroradius, true);
+            var player = npc.findNearestTarget(npc.template.aggroradius, true);
 
-            if ( player && player.InRangeOfPosition(npc.position, npc.template.spawnguardradius+npc.template.aggroradius) &&
+            if ( player && player.inRangeOfPosition(npc.position, npc.template.spawnguardradius+npc.template.aggroradius) &&
                 this.minimumExploreTime <= 0 &&
-                npc.InLineOfSight(player) ) {
+                npc.inLineOfSight(player) ) {
                 // log("[ExploreAndLookForEnemies] Found enemy!");
-                npc.stateMachine.ChangeState(new ChaseEnemy(player));
-                //this.steeringForce = this.steeringBehaviour.Arrive(this.targetPosition, Deceleration.FAST);
-                //this.steeringForce = this.steeringBehaviour.Pursuit(player);
+                npc.stateMachine.changeState(new ChaseEnemy(player));
+                //this.steeringForce = this.steeringBehaviour.arrive(this.targetPosition, Deceleration.FAST);
+                //this.steeringForce = this.steeringBehaviour.pursuit(player);
             }
             else {
                 // log("[ExploreAndLookForEnemies] No-one in sight!");
@@ -113,7 +113,7 @@ var ExploreAndLookForEnemies = State.extend({
                 // We're attacked!
 
                 // Change state to ChaseEnemy
-                npc.stateMachine.ChangeState(new ChaseEnemy(data.attacker));
+                npc.stateMachine.changeState(new ChaseEnemy(data.attacker));
 
                 break;
             }

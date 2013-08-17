@@ -74,7 +74,7 @@ var HUDHandler = Class.extend({
                 $('#loginContent').show();
             } else {
                 setTimeout(function() {
-                    hudHandler.MessageAlert('The server is currently offline. Please try again later.', 'nobutton');
+                    hudHandler.messageAlert('The server is currently offline. Please try again later.', 'nobutton');
                 }, 1000);
             }
         } else {
@@ -120,18 +120,18 @@ var HUDHandler = Class.extend({
         this.oldButtonClasses = {};
 
         setTimeout(function() {
-            hudHandler.MakeSlotSpace(false);
-            hudHandler.MakeSlotSpace(true);
+            hudHandler.makeSlotSpace(false);
+            hudHandler.makeSlotSpace(true);
 
             $('#gameFrame').droppable({
-                drop: hudHandler.ItemSwitchEvent
+                drop: hudHandler.itemSwitchEvent
             });
 
-            hudHandler.ShowMainMenuHUD();
+            hudHandler.showMainMenuHUD();
         }, 0);
 
         var clickAction = function() {
-            soundHandler.Play("click");
+            soundHandler.play("click");
         };
 
         var handleClick = function(noSound) {
@@ -163,12 +163,12 @@ var HUDHandler = Class.extend({
                 $("#btnToggleSound").html("&#9834;");
                 $("#btnToggleSound").css("color", "");
 
-                soundHandler.Play("music/maintheme");
+                soundHandler.play("music/maintheme");
             } else {
                 $("#btnToggleSound").html("<del>&#9834;</del>");
                 $("#btnToggleSound").css("color", "red");
 
-                soundHandler.StopAll();
+                soundHandler.stopAll();
             }
 
             localStorage.allowSound = value;
@@ -214,20 +214,20 @@ var HUDHandler = Class.extend({
     },
     updateEquippedItems: function() {
         for (var x = 0; x < 10; x++) {
-            var item = hudHandler.FindItemBySlot(x, false);
+            var item = hudHandler.findItemBySlot(x, false);
             if (item) {
                 var template = items[item.template];
                 if (item.equipped) {
                     if (template.type === "consumable") {
-                        this.SetUsed(x);
+                        this.setUsed(x);
                     } else {
-                        this.SetEquipped(x);
+                        this.setEquipped(x);
                     }
                 } else {
-                    this.SetUnequipped(x);
+                    this.setUnequipped(x);
                 }
             } else {
-                this.SetUnoccupied(x);
+                this.setUnoccupied(x);
             }
         }
     },
@@ -260,49 +260,49 @@ var HUDHandler = Class.extend({
         var startItem, switchItem;
 
         if (hudHandler.alertBoxActive) {
-            startItem = hudHandler.FindItemByID(itemNumber, false);
+            startItem = hudHandler.findItemByID(itemNumber, false);
             TeleportElement(itemID, 'is' + startItem.slot);
             return;
         }
 
         if (itemPrefix === 'ii') {
-            startItem = hudHandler.FindItemByID(itemNumber, false);
+            startItem = hudHandler.findItemByID(itemNumber, false);
             if (slotPrefix === 'is') {
                 // Inventory to inventory
                 // First check if the target slot is taken, and switch it first
-                hudHandler.SwitchItem(slotNumber, startItem, itemID, slotID, false);
+                hudHandler.switchItem(slotNumber, startItem, itemID, slotID, false);
             } else if (slotPrefix === 'ls') {
                 // Inventory to loot
-                switchItem = hudHandler.FindItemBySlot(slotNumber, true);
+                switchItem = hudHandler.findItemBySlot(slotNumber, true);
                 if (switchItem) {
                     TeleportElement(itemID, 'is' + startItem.slot);
-                    hudHandler.LootItem(startItem, switchItem, startItem.slot, 'is' + startItem.slot);
+                    hudHandler.lootItem(startItem, switchItem, startItem.slot, 'is' + startItem.slot);
                 } else {
-                    hudHandler.PutItem(startItem, slotNumber, slotID);
+                    hudHandler.putItem(startItem, slotNumber, slotID);
                 }
             } else if (!ironbane.player.canLoot && slotID === 'gameFrame') {
                 // Send a request
-                hudHandler.DropItem(startItem, itemID, itemNumber);
+                hudHandler.dropItem(startItem, itemID, itemNumber);
             } else {
                 // Revert
                 TeleportElement(itemID, 'is' + startItem.slot);
             }
         } else if (itemPrefix === 'li') {
-            startItem = hudHandler.FindItemByID(itemNumber, true);
+            startItem = hudHandler.findItemByID(itemNumber, true);
 
             if (slotPrefix === 'ls') {
                 // loot to loot
                 // First check if the target slot is taken, and switch it first
 
-                hudHandler.SwitchItem(slotNumber, startItem, itemID, slotID, true);
+                hudHandler.switchItem(slotNumber, startItem, itemID, slotID, true);
             } else if (slotPrefix === 'is') {
                 // Loot to inventory
                 // Delete the item from the loot array, and add it to the player items
                 // If there is an item present at the slot, switch it
 
-                switchItem = hudHandler.FindItemBySlot(slotNumber, false);
+                switchItem = hudHandler.findItemBySlot(slotNumber, false);
 
-                hudHandler.LootItem(switchItem, startItem, slotNumber, slotID);
+                hudHandler.lootItem(switchItem, startItem, slotNumber, slotID);
             } else {
                 // Revert
                 TeleportElement(itemID, 'ls' + startItem.slot);
@@ -323,7 +323,7 @@ var HUDHandler = Class.extend({
         socketHandler.socket.emit('putItem', data, function(reply) {
             //console.log('putItem reply', reply);
             if (!_.isUndefined(reply.errmsg)) {
-                hudHandler.MessageAlert(reply.errmsg);
+                hudHandler.messageAlert(reply.errmsg);
                 // Teleport back!
                 TeleportElement('ii' + startItem.id, 'is' + startItem.slot);
                 //if ( switchItem ) TeleportElement('li'+switchItem.id, 'ls'+switchItem.slot);
@@ -332,12 +332,12 @@ var HUDHandler = Class.extend({
 
             if (!_.isUndefined(reply.offeredPrice)) {
 
-                var goldPieces = hudHandler.GetStatContent(1, 'misc/coin_medium', 1, true, true);
+                var goldPieces = hudHandler.getStatContent(1, 'misc/coin_medium', 1, true, true);
 
                 var doReturn = false;
 
-                hudHandler.MessageAlert('I\'d offer <span style="color:rgb(255, 215, 0)">' + reply.offeredPrice + ' x ' + goldPieces + '</span> for yer ' + items[startItem.template].name + '. What do ye think?', 'question', function() {
-                    hudHandler.PutItem(startItem, slotNumber, slotID, true);
+                hudHandler.messageAlert('I\'d offer <span style="color:rgb(255, 215, 0)">' + reply.offeredPrice + ' x ' + goldPieces + '</span> for yer ' + items[startItem.template].name + '. What do ye think?', 'question', function() {
+                    hudHandler.putItem(startItem, slotNumber, slotID, true);
                 }, function() { // Teleport back!
                     TeleportElement('ii' + startItem.id, 'is' + startItem.slot);
                     ironbane.unitList.push(new ChatBubble(ironbane.player.lootUnit, "Then take yer stuff with ye!"));
@@ -350,8 +350,8 @@ var HUDHandler = Class.extend({
             // because money bags may have been adjusted, entire inventory is sync'd up
             if (_.isArray(reply.items)) {
                 socketHandler.playerData.items = reply.items;
-                hudHandler.ReloadInventory();
-                hudHandler.MakeCoinBar(true);
+                hudHandler.reloadInventory();
+                hudHandler.makeCoinBar(true);
 
                 // Remove the loot bag
                 $('#lootBag').hide();
@@ -379,10 +379,10 @@ var HUDHandler = Class.extend({
             // If it was armor, update our appearance
             if (startItem.equipped) {
                 if (items[startItem.template].type === 'armor') {
-                    ironbane.player.UpdateAppearance();
+                    ironbane.player.updateAppearance();
                 }
                 if (items[startItem.template].type === 'weapon') {
-                    ironbane.player.UpdateWeapon(0);
+                    ironbane.player.updateWeapon(0);
                 }
             }
 
@@ -396,9 +396,9 @@ var HUDHandler = Class.extend({
             // Do the UI actions
             TeleportElement('li' + startItem.id, slotID);
 
-            hudHandler.UpdateEquippedItems();
+            hudHandler.updateEquippedItems();
 
-            soundHandler.Play(ChooseRandom(["bag1"]));
+            soundHandler.play(ChooseRandom(["bag1"]));
 
         });
     },
@@ -408,7 +408,7 @@ var HUDHandler = Class.extend({
         }, function(reply) {
 
             if (!_.isUndefined(reply.errmsg)) {
-                hudHandler.MessageAlert(reply.errmsg);
+                hudHandler.messageAlert(reply.errmsg);
 
                 // Teleport back!
                 TeleportElement('li' + startItem.id, 'ls' + startItem.slot);
@@ -422,16 +422,16 @@ var HUDHandler = Class.extend({
             // If it was armor, update our appearance
             if (startItem.equipped) {
                 if (items[startItem.template].type === 'armor') {
-                    ironbane.player.UpdateAppearance();
+                    ironbane.player.updateAppearance();
                 }
                 if (items[startItem.template].type === 'weapon' ||
                     items[startItem.template].type === 'tool') {
-                    ironbane.player.UpdateWeapon(0);
+                    ironbane.player.updateWeapon(0);
                 }
             }
             else {
                 if(items[startItem.template].type === 'cash') {
-                    hudHandler.MakeCoinBar(true);
+                    hudHandler.makeCoinBar(true);
                 }
             }
 
@@ -439,8 +439,8 @@ var HUDHandler = Class.extend({
                 socketHandler.playerData.items = reply.items;
             }
 
-            hudHandler.ReloadInventory();
-            hudHandler.UpdateEquippedItems();
+            hudHandler.reloadInventory();
+            hudHandler.updateEquippedItems();
 
         });
     },
@@ -457,7 +457,7 @@ var HUDHandler = Class.extend({
         socketHandler.socket.emit('switchItem', data, function(reply) {
             //console.log('switchItem reply', reply);
             if (reply.errmsg) {
-                hudHandler.MessageAlert(reply.errmsg);
+                hudHandler.messageAlert(reply.errmsg);
 
                 // Teleport back!
                 if (inLoot) {
@@ -477,9 +477,9 @@ var HUDHandler = Class.extend({
                 ironbane.player.lootItems = reply.loot;
             }
 
-            hudHandler.ReloadInventory();
-            hudHandler.MakeCoinBar(true);
-            hudHandler.UpdateEquippedItems();
+            hudHandler.reloadInventory();
+            hudHandler.makeCoinBar(true);
+            hudHandler.updateEquippedItems();
 
         });
     },
@@ -493,7 +493,7 @@ var HUDHandler = Class.extend({
 
         socketHandler.socket.emit('lootItem', data, function(reply) {
             if (!_.isUndefined(reply.errmsg)) {
-                hudHandler.MessageAlert(reply.errmsg);
+                hudHandler.messageAlert(reply.errmsg);
 
                 // Teleport back!
                 TeleportElement('li' + startItem.id, 'ls' + startItem.slot);
@@ -508,25 +508,25 @@ var HUDHandler = Class.extend({
                 ironbane.player.lootItems = reply.loot;
             }
 
-            hudHandler.ReloadInventory();
-            hudHandler.MakeCoinBar(true);
-            hudHandler.UpdateEquippedItems();
+            hudHandler.reloadInventory();
+            hudHandler.makeCoinBar(true);
+            hudHandler.updateEquippedItems();
 
             if (switchItem) {
                 // If it was armor, update our appearance
                 if (switchItem.equipped) {
                     if (items[switchItem.template].type === 'armor') {
-                        ironbane.player.UpdateAppearance();
+                        ironbane.player.updateAppearance();
                     }
                     if (items[switchItem.template].type === 'weapon') {
-                        ironbane.player.UpdateWeapon(0);
+                        ironbane.player.updateWeapon(0);
                     }
                 }
             }
 
 
 
-            soundHandler.Play(ChooseRandom(["bag1"]));
+            soundHandler.play(ChooseRandom(["bag1"]));
 
         });
     },
@@ -580,14 +580,14 @@ var HUDHandler = Class.extend({
         // info section
         switch (template.type) {
             case 'weapon':
-                itemInfo += infoRow((item.attr1 > 0 ? 'Damage' : 'Heals'), this.GetStatContent(Math.abs(item.attr1), "misc/heart", 0, false, true));
+                itemInfo += infoRow((item.attr1 > 0 ? 'Damage' : 'Heals'), this.getStatContent(Math.abs(item.attr1), "misc/heart", 0, false, true));
                 break;
             case 'armor':
-                itemInfo += infoRow('Armor', this.GetStatContent(item.attr1, "misc/armor", 0, false, true));
+                itemInfo += infoRow('Armor', this.getStatContent(item.attr1, "misc/armor", 0, false, true));
                 break;
             case 'consumable':
                 if (template.subtype === 'restorative') {
-                    itemInfo += infoRow('Restores', this.GetStatContent(item.attr1, "misc/heart", 0, false, true));
+                    itemInfo += infoRow('Restores', this.getStatContent(item.attr1, "misc/heart", 0, false, true));
                 }
                 break;
         }
@@ -655,7 +655,7 @@ var HUDHandler = Class.extend({
 
             var targetName = isLoot ? 'ls' + item.slot : 'is' + item.slot;
             TeleportElement(name, targetName);
-            this.MakeItemHover(name, item);
+            this.makeItemHover(name, item);
 
             //bm("item:"+item.id+",slot"+item.slot+"");
 
@@ -685,7 +685,7 @@ var HUDHandler = Class.extend({
                             if(e.shiftKey) {
                                 ironbane.player.splitItem(item.slot);
                             } else {
-                                ironbane.player.UseItem(item.slot);
+                                ironbane.player.useItem(item.slot);
                             }
                         }
                     }
@@ -700,13 +700,13 @@ var HUDHandler = Class.extend({
             });
         }
 
-        hudHandler.UpdateEquippedItems();
+        hudHandler.updateEquippedItems();
     },
     reloadInventory: function() {
         if (ironbane.player) {
-            this.MakeSlotItems(false);
+            this.makeSlotItems(false);
             if (ironbane.player.canLoot) {
-                this.MakeSlotItems(true);
+                this.makeSlotItems(true);
             }
         }
     },
@@ -716,10 +716,10 @@ var HUDHandler = Class.extend({
         $('#gameFrame').css('width', frameWidth);
         $('#gameFrame').css('height', frameHeight);
 
-        this.PositionHud();
+        this.positionHud();
 
-        this.ReloadInventory();
-        //this.MakeSlotItems(true);
+        this.reloadInventory();
+        //this.makeSlotItems(true);
 
         if (ironbane.stats && ironbane.stats.domElement) {
             ironbane.stats.domElement.style.top = ($(window).height() - 55) + 'px';
@@ -840,27 +840,27 @@ var HUDHandler = Class.extend({
         // if this was a "flash" run again without flash
         if (flash) {
             setTimeout(function() {
-                self.MakeCoinBar(false);
+                self.makeCoinBar(false);
             }, 50);
         }
     },
     makeHealthBar: function(doFlash) {
         doFlash = doFlash || false;
-        var content = this.GetStatContent(ironbane.player.health, doFlash ? 'misc/heart_medium_flash' : 'misc/heart_medium', ironbane.player.healthMax);
-        //var content = this.GetStatContent(1, 'misc/heart_medium', 6);
+        var content = this.getStatContent(ironbane.player.health, doFlash ? 'misc/heart_medium_flash' : 'misc/heart_medium', ironbane.player.healthMax);
+        //var content = this.getStatContent(1, 'misc/heart_medium', 6);
         $('#healthBar').html(content);
         if (doFlash) {
             setTimeout(function() {
-                hudHandler.MakeHealthBar();
+                hudHandler.makeHealthBar();
             }, 50);
         }
     },
     makeArmorBar: function(doFlash) {
         doFlash = doFlash || false;
-        var content = this.GetStatContent(ironbane.player.armor, doFlash ? 'misc/armor_medium_flash' : 'misc/armor_medium', ironbane.player.armorMax);
+        var content = this.getStatContent(ironbane.player.armor, doFlash ? 'misc/armor_medium_flash' : 'misc/armor_medium', ironbane.player.armorMax);
         $('#armorBar').html(content);
         if (doFlash) setTimeout(function() {
-                hudHandler.MakeArmorBar()
+                hudHandler.makeArmorBar()
             }, 50);
     },
     hideAlert: function() {
@@ -962,12 +962,12 @@ var HUDHandler = Class.extend({
     hideMenuScreen: function() {
         $('#loginBox, #devNews, #sideMenu, #soundToggleBox').hide();
         $('#chatBox, #itemBar, #coinBar, #statBar').show();
-        soundHandler.FadeOut("music/maintheme", 5000);
+        soundHandler.fadeOut("music/maintheme", 5000);
     },
     showMenuScreen: function() {
         $('#sideMenu, #loginBox, #devNews, #soundToggleBox').show();
         $('#chatBox, #itemBar, #lootBag, #coinBar, #statBar').hide();
-        soundHandler.FadeIn("music/maintheme", 5000);
+        soundHandler.fadeIn("music/maintheme", 5000);
     },
     makeCharSelectionScreen: function() {
         var slotsLeft = slotsAvailable - charCount;
@@ -1103,7 +1103,7 @@ var HUDHandler = Class.extend({
                     }
                 }
             }
-            hudHandler.MakeCharSelectionScreen();
+            hudHandler.makeCharSelectionScreen();
         });
 
         $('#btnNextChar').click(function() {
@@ -1127,19 +1127,19 @@ var HUDHandler = Class.extend({
                 }
             }
 
-            hudHandler.MakeCharSelectionScreen();
+            hudHandler.makeCharSelectionScreen();
         });
 
         var enterChar = function() {
 
             if (!socketHandler.serverOnline) return;
 
-            hudHandler.DisableButtons(['btnLogOut', 'btnEnterChar',
+            hudHandler.disableButtons(['btnLogOut', 'btnEnterChar',
                     'btnNextChar', 'btnPrevChar', 'btnDelChar'
             ]);
 
             function abortConnect() {
-                hudHandler.EnableButtons(['btnLogOut', 'btnEnterChar',
+                hudHandler.enableButtons(['btnLogOut', 'btnEnterChar',
                         'btnNextChar', 'btnPrevChar', 'btnDelChar'
                 ]);
                 $('#gameFrame').animate({
@@ -1151,10 +1151,10 @@ var HUDHandler = Class.extend({
             $('#gameFrame').animate({
                 opacity: 0.00
             }, 1000, function() {
-                hudHandler.HideMenuScreen();
+                hudHandler.hideMenuScreen();
 
                 var tryConnect = function() {
-                    socketHandler.Connect(abortConnect);
+                    socketHandler.connect(abortConnect);
                 };
 
                 if (startdata.loggedIn) {
@@ -1163,7 +1163,7 @@ var HUDHandler = Class.extend({
                     // Quickly make a character as a guest
                     $.get('/api/guest/characters', function(response) {
                         // should have a more global error handler...
-                        // hudHandler.MessageAlert(data.errmsg);
+                        // hudHandler.messageAlert(data.errmsg);
 
                         window.chars = [response];
                         window.charCount = window.chars.length;
@@ -1180,7 +1180,7 @@ var HUDHandler = Class.extend({
         $('#btnEnterChar').click(enterChar);
 
         $('#btnLogOut').click(function() {
-            hudHandler.DisableButtons(['btnLogOut']);
+            hudHandler.disableButtons(['btnLogOut']);
 
             $.get('/logout')
                 .done(function(response) {
@@ -1189,10 +1189,10 @@ var HUDHandler = Class.extend({
                         startdata.loggedIn = false;
                         startdata.characterUsed = 0;
 
-                        hudHandler.MakeCharSelectionScreen();
+                        hudHandler.makeCharSelectionScreen();
                     } else {
-                        hudHandler.EnableButtons(['btnLogOut']);
-                        hudHandler.MessageAlert(response);
+                        hudHandler.enableButtons(['btnLogOut']);
+                        hudHandler.messageAlert(response);
                     }
                 });
         });
@@ -1215,12 +1215,12 @@ var HUDHandler = Class.extend({
             });
 
             var confirmDeletion = function() {
-                hudHandler.DisableButtons(['btnConfirmDeletion', 'btnBack']);
+                hudHandler.disableButtons(['btnConfirmDeletion', 'btnBack']);
 
                 var confirm = $('#charName').val();
                 if(confirm !== delChar.name) {
-                    hudHandler.MessageAlert('Name does not match character name!');
-                    hudHandler.EnableButtons(['btnConfirmDeletion', 'btnBack']);
+                    hudHandler.messageAlert('Name does not match character name!');
+                    hudHandler.enableButtons(['btnConfirmDeletion', 'btnBack']);
                 } else {
                     $.ajax({
                         url: '/api/user/' + startdata.user + '/characters/' + startdata.characterUsed,
@@ -1229,11 +1229,11 @@ var HUDHandler = Class.extend({
                         startdata.characterUsed = 0;
                         window.chars = _.without(window.chars, delChar);
                         window.charCount = window.chars.length;
-                        hudHandler.MakeCharSelectionScreen();
+                        hudHandler.makeCharSelectionScreen();
                     }).fail(function(error) {
                         //console.error('error deleting character!', error);
-                        hudHandler.MessageAlert(error.responseText);
-                        hudHandler.EnableButtons(['btnConfirmDeletion', 'btnBack']);
+                        hudHandler.messageAlert(error.responseText);
+                        hudHandler.enableButtons(['btnConfirmDeletion', 'btnBack']);
                     });
                 }
             };
@@ -1247,7 +1247,7 @@ var HUDHandler = Class.extend({
             $('#btnConfirmDeletion').click(confirmDeletion);
 
             $('#btnBack').click(function() {
-                hudHandler.MakeCharSelectionScreen();
+                hudHandler.makeCharSelectionScreen();
             });
         });
 
@@ -1266,7 +1266,7 @@ var HUDHandler = Class.extend({
                 var username = $('#username').val();
                 var password = $('#password').val();
 
-                hudHandler.DisableButtons(['btnConfirmLogin', 'btnBack']);
+                hudHandler.disableButtons(['btnConfirmLogin', 'btnBack']);
 
                 $.post('/login', {
                     username: username,
@@ -1287,15 +1287,15 @@ var HUDHandler = Class.extend({
 
                             // window.chars = data;
                             // window.charCount = window.chars.length;
-                            // hudHandler.MakeCharSelectionScreen();
+                            // hudHandler.makeCharSelectionScreen();
                         })
                         .fail(function(err) {
                             console.error('error getting chars...', err);
                         });
                 })
                 .fail(function(err) {
-                    hudHandler.MessageAlert(err.responseText);
-                    hudHandler.EnableButtons(['btnConfirmLogin', 'btnBack']);
+                    hudHandler.messageAlert(err.responseText);
+                    hudHandler.enableButtons(['btnConfirmLogin', 'btnBack']);
                     if(err.responseText === "Invalid username or password!") {
                         $('#password').val("");
                     }
@@ -1313,7 +1313,7 @@ var HUDHandler = Class.extend({
             $('#btnConfirmLogin').click(doLogin);
 
             $('#btnBack').click(function() {
-                hudHandler.MakeCharSelectionScreen();
+                hudHandler.makeCharSelectionScreen();
             });
         })
 
@@ -1349,7 +1349,7 @@ var HUDHandler = Class.extend({
                 var email = $('#email').val();
                 var url = $('#url').val();
 
-                hudHandler.DisableButtons(['btnConfirmRegister', 'btnBack']);
+                hudHandler.disableButtons(['btnConfirmRegister', 'btnBack']);
 
                 $.post('/api/user', {
                     Ux466hj8: username,
@@ -1358,7 +1358,7 @@ var HUDHandler = Class.extend({
                     url: url
                 })
                 .done(function(response) {
-                    hudHandler.MessageAlert('Registration successful! Please check your e-mail and click the activation link inside so we know you are a real human!', {}, function () {
+                    hudHandler.messageAlert('Registration successful! Please check your e-mail and click the activation link inside so we know you are a real human!', {}, function () {
                         location.reload();
                     });
 
@@ -1370,13 +1370,13 @@ var HUDHandler = Class.extend({
                     // window.charCount = 0;
                     // window.isEditor = response.editor === 1;
 
-                    // hudHandler.MakeCharSelectionScreen();
+                    // hudHandler.makeCharSelectionScreen();
 
 
                 })
                 .fail(function(err) {
-                    hudHandler.EnableButtons(['btnConfirmRegister', 'btnBack']);
-                    hudHandler.MessageAlert(err.responseText);
+                    hudHandler.enableButtons(['btnConfirmRegister', 'btnBack']);
+                    hudHandler.messageAlert(err.responseText);
                 });
             });
 
@@ -1388,7 +1388,7 @@ var HUDHandler = Class.extend({
             $('#btnConfirmRegister').click(confirmRegister);
 
             $('#btnBack').click(function() {
-                hudHandler.MakeCharSelectionScreen();
+                hudHandler.makeCharSelectionScreen();
             });
         });
 
@@ -1499,7 +1499,7 @@ var HUDHandler = Class.extend({
             refreshChar();
 
             var confirmNewChar = (function() {
-                hudHandler.DisableButtons(['btnConfirmNewChar', 'btnBackMainChar']);
+                hudHandler.disableButtons(['btnConfirmNewChar', 'btnBackMainChar']);
 
                 var ncname = $('#ncname').val();
 
@@ -1520,11 +1520,11 @@ var HUDHandler = Class.extend({
                     charCount = chars.length;
                     startdata.characterUsed = response.id;
 
-                    hudHandler.MakeCharSelectionScreen();
+                    hudHandler.makeCharSelectionScreen();
                 })
                 .fail(function(err) {
-                    hudHandler.MessageAlert(err.responseText);
-                    hudHandler.EnableButtons(['btnConfirmNewChar', 'btnBackMainChar']);
+                    hudHandler.messageAlert(err.responseText);
+                    hudHandler.enableButtons(['btnConfirmNewChar', 'btnBackMainChar']);
                 });
             });
 
@@ -1536,7 +1536,7 @@ var HUDHandler = Class.extend({
             $('#btnConfirmNewChar').click(confirmNewChar);
 
             $('#btnBackMainChar').click(function() {
-                hudHandler.MakeCharSelectionScreen();
+                hudHandler.makeCharSelectionScreen();
             });
         });
 
@@ -1548,7 +1548,7 @@ var HUDHandler = Class.extend({
         for (var m = 0; m < this.bigMessages.length; m++) {
             var msg = this.bigMessages[m];
 
-            msg.Tick(dTime);
+            msg.tick(dTime);
 
             if (msg.timeLeft <= 0) {
                 this.bigMessages.splice(m, 0);
@@ -1602,7 +1602,7 @@ var HUDHandler = Class.extend({
         if (!_.isUndefined(textArray[page - 2])) {
             $("#bookFooterLeft").html('<button id="bookPrevPage" class="ibutton_book" style="width:150px">Previous Page</button>');
             $("#bookPrevPage").click(function() {
-                hudHandler.ShowBook(text, page - 2);
+                hudHandler.showBook(text, page - 2);
             });
         } else {
             $("#bookFooterLeft").empty();
@@ -1610,7 +1610,7 @@ var HUDHandler = Class.extend({
         if (!_.isUndefined(textArray[page + 2])) {
             $("#bookFooterRight").html('<button id="bookNextPage" class="ibutton_book" style="width:150px">Next Page</button>');
             $("#bookNextPage").click(function() {
-                hudHandler.ShowBook(text, page + 2);
+                hudHandler.showBook(text, page + 2);
             });
         } else {
             $("#bookFooterRight").empty();
@@ -1632,6 +1632,6 @@ var HUDHandler = Class.extend({
 
 
 
-//setTimeout(function(){hudHandler.ShowBook('Saturn is the sixth planet from the Sun and the second largest planet in the Solar System, after Jupiter. Named after the Roman god Saturn, its astronomical symbol (?) represents the god\'s sickle.|Saturn is a gas giant with an average radius about nine times that of Earth.[12][13] While only one-eighth the average density of Earth, with its larger volume Saturn is just over 95 times as massive as Earth.[14][15][16] Saturn\'s interior is probably composed of a core of iron, nickel and rock (silicon and oxygen compounds), surrounded by a deep layer of metallic hydrogen, an intermediate layer of liquid hydrogen and liquid helium and an outer gaseous layer.[17]| The planet exhibits a pale yellow hue due to ammonia crystals in its upper atmosphere. Electrical current within the metallic hydrogen layer is thought to give rise to Saturn\'s planetary magnetic field, which is slightly weaker than Earth\'s and around one-twentieth the strength of Jupiter\'s.[18]| The outer atmosphere is generally bland and lacking in contrast, although long-lived features can appear. Wind speeds on Saturn can reach 1,800 km/h (1,100 mph), faster than on Jupiter, but not as fast as those on Neptune.[19] Saturn has a prominent ring system that consists of nine continuous main rings and three discontinuous arcs, composed mostly of ice particles with a smaller amount of rocky debris and dust. |Sixty-two[20] known moons orbit the planet; fifty-three are officially named. This does not include the hundreds of "moonlets" within the rings.| Titan, Saturn\'s largest and the Solar System\'s second largest moon, is larger than the planet Mercury and is the only moon in the Solar System to retain a substantial atmosphere.[21]')}, 1000);
+//setTimeout(function(){hudHandler.showBook('Saturn is the sixth planet from the Sun and the second largest planet in the Solar System, after Jupiter. Named after the Roman god Saturn, its astronomical symbol (?) represents the god\'s sickle.|Saturn is a gas giant with an average radius about nine times that of Earth.[12][13] While only one-eighth the average density of Earth, with its larger volume Saturn is just over 95 times as massive as Earth.[14][15][16] Saturn\'s interior is probably composed of a core of iron, nickel and rock (silicon and oxygen compounds), surrounded by a deep layer of metallic hydrogen, an intermediate layer of liquid hydrogen and liquid helium and an outer gaseous layer.[17]| The planet exhibits a pale yellow hue due to ammonia crystals in its upper atmosphere. Electrical current within the metallic hydrogen layer is thought to give rise to Saturn\'s planetary magnetic field, which is slightly weaker than Earth\'s and around one-twentieth the strength of Jupiter\'s.[18]| The outer atmosphere is generally bland and lacking in contrast, although long-lived features can appear. Wind speeds on Saturn can reach 1,800 km/h (1,100 mph), faster than on Jupiter, but not as fast as those on Neptune.[19] Saturn has a prominent ring system that consists of nine continuous main rings and three discontinuous arcs, composed mostly of ice particles with a smaller amount of rocky debris and dust. |Sixty-two[20] known moons orbit the planet; fifty-three are officially named. This does not include the hundreds of "moonlets" within the rings.| Titan, Saturn\'s largest and the Solar System\'s second largest moon, is larger than the planet Mercury and is the only moon in the Solar System to retain a substantial atmosphere.[21]')}, 1000);
 
 var hudHandler = new HUDHandler();

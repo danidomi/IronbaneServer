@@ -23,7 +23,7 @@ var SocketHandler = Class.extend({
     init: function() {
         var me = this;
 
-        this.UpdateBans();
+        this.updateBans();
 
         // temp until service implemented
         function loadCharItems(chardata, callback) {
@@ -83,7 +83,7 @@ var SocketHandler = Class.extend({
             // In addition, we need the units that are near this unit, to add this unit to their otherUnits list
             // They will in turn tell their socket to add the unit
 
-            chatHandler.JoinGame(unit);
+            chatHandler.joinGame(unit);
 
             req.io.respond({
                 id: unit.id,
@@ -184,7 +184,7 @@ var SocketHandler = Class.extend({
                     }
 
                     // Check if the character is already being used in the server (since they bypassed the member check)
-                    var gu = worldHandler.FindUnit(character.id);
+                    var gu = worldHandler.findUnit(character.id);
                     if (gu) {
                         reply({
                             errmsg: "There is already a guest playing under your credentials!"
@@ -231,13 +231,13 @@ var SocketHandler = Class.extend({
                             }
 
                             // Check if the character is already being used in the server
-                            var gu = worldHandler.FindUnit(character.id);
+                            var gu = worldHandler.findUnit(character.id);
                             if (gu) {
                                 // duplicate, remove them from online list and force disconnect
                                 socketHandler.onlinePlayers = _.without(socketHandler.onlinePlayers, _.find(socketHandler.onlinePlayers, function(p) {
                                     return p.id === gu.id;
                                 }));
-                                gu.LeaveGame();
+                                gu.leaveGame();
                                 reply({
                                     errmsg: "This character is already logged in!"
                                 });
@@ -273,7 +273,7 @@ var SocketHandler = Class.extend({
                     socketHandler.onlinePlayers = _.without(socketHandler.onlinePlayers, _.find(socketHandler.onlinePlayers, function(p) {
                         return p.id === socket.unit.id;
                     }));
-                    socket.unit.LeaveGame();
+                    socket.unit.leaveGame();
                     reply("OK");
 
                     log(socket.unit.name + " is back at the Main Menu.");
@@ -287,7 +287,7 @@ var SocketHandler = Class.extend({
                 if ( !socket.unit ) return;
 
                 if ( !_.isString(data.message) ) {
-                    chatHandler.AnnounceNick("Warning: Hacked client in "+
+                    chatHandler.announceNick("Warning: Hacked client in "+
                         "[chatMessage]<br>User "+socket.unit.name+"", "red");
                     return;
                 }
@@ -298,7 +298,7 @@ var SocketHandler = Class.extend({
                 if ( !data.message ) return;
 
                 if ( !socket.unit.editor && socket.unit.lastChatTime > (new Date()).getTime()-2000 ) {
-                    chatHandler.AnnouncePersonally(socket.unit,
+                    chatHandler.announcePersonally(socket.unit,
                         "Please don't spam the server.", "yellow");
                     return;
                 }
@@ -310,13 +310,13 @@ var SocketHandler = Class.extend({
 
                 log(socket.unit.name + ': '+data.message);
 
-                chatHandler.Say(socket.unit, data.message);
+                chatHandler.say(socket.unit, data.message);
             });
 
             socket.on("doJump", function (data) {
                 if ( !socket.unit ) return;
 
-                socket.unit.EmitNearby("doJump", {
+                socket.unit.emitNearby("doJump", {
                     id:socket.unit.id
                 });
             });
@@ -329,7 +329,7 @@ var SocketHandler = Class.extend({
 
                 if ( socket.unit ) {
                     socket.unit.readyToReceiveUnits = bool;
-                    socket.unit.UpdateOtherUnitsList();
+                    socket.unit.updateOtherUnitsList();
 
                     if ( bool ) {
                         // Check for new players
@@ -340,7 +340,7 @@ var SocketHandler = Class.extend({
                             && !socket.unit.hasSeenStartCutscene ) {
                             socket.unit.hasSeenStartCutscene = true;
 
-                            //socket.unit.Cutscene("FindIronbane");
+                            //socket.unit.cutscene("FindIronbane");
                         }
                     }
 
@@ -360,7 +360,7 @@ var SocketHandler = Class.extend({
 
                 if (data.o > 0) { // only for players
                     // check server's attack timeout not client
-                    var weapon = socket.unit.GetEquippedWeapon();
+                    var weapon = socket.unit.getEquippedWeapon();
                     if (!weapon) {
                         reply({
                             errmsg: 'No Equipped Weapon!'
@@ -406,10 +406,10 @@ var SocketHandler = Class.extend({
                 }
 
                 data.s = ConvertVector3(data.s);
-                data.s = data.s.Round(2);
+                data.s = data.s.round(2);
 
                 data.t = ConvertVector3(data.t);
-                data.t = data.t.Round(2);
+                data.t = data.t.round(2);
 
                 data.sw = data.sw ? true : false;
 
@@ -426,7 +426,7 @@ var SocketHandler = Class.extend({
                     return;
                 }
 
-                var unit = worldHandler.FindUnitNear(data.o, socket.unit);
+                var unit = worldHandler.findUnitNear(data.o, socket.unit);
 
                 if (!unit) {
                     reply({
@@ -436,7 +436,7 @@ var SocketHandler = Class.extend({
                 }
 
                 if (socket.unit) {
-                    socket.unit.EmitNearby("addProjectile", {
+                    socket.unit.emitNearby("addProjectile", {
                         s: data.s,
                         t: data.t,
                         w: item.template,
@@ -486,10 +486,10 @@ var SocketHandler = Class.extend({
                         switch (item.getSubType()) {
                             case 'restorative':
                                 // Increase our health
-                                player.SetHealth(player.health + item.attr1);
+                                player.setHealth(player.health + item.attr1);
 
                                 // Spawn particles
-                                player.EmitNearby("addParticle", {
+                                player.emitNearby("addParticle", {
                                     p: item.$template.particle,
                                     fu: player.id
                                 }, 0, true);
@@ -498,7 +498,7 @@ var SocketHandler = Class.extend({
                         }
 
                         // It's possible that item increases the maximum health
-                        player.CalculateMaxHealth(true);
+                        player.calculateMaxHealth(true);
 
                         // Client should automatically remove the item
 
@@ -516,13 +516,13 @@ var SocketHandler = Class.extend({
 
                         // Send a request to equipment
                         // Other players will update the view
-                        player.UpdateAppearance(true);
+                        player.updateAppearance(true);
 
                         // It's possible that armor increases the maximum health
-                        player.CalculateMaxHealth(true);
+                        player.calculateMaxHealth(true);
 
                         // And obviously, the armor itself
-                        player.CalculateMaxArmor(true);
+                        player.calculateMaxArmor(true);
 
                         break;
                     case 'weapon':
@@ -538,7 +538,7 @@ var SocketHandler = Class.extend({
                         // Set to equipped
                         item.equipped = +!item.equipped;
 
-                        player.EmitNearby("updateWeapon", {
+                        player.emitNearby("updateWeapon", {
                             id: player.id,
                             // should weapon really be template id?
                             weapon: item.equipped ? item.template : 0
@@ -581,16 +581,16 @@ var SocketHandler = Class.extend({
                 // If it was equipped and type was armor/weapon, update the appearance
                 if (item.equipped) {
                     if (item.getType() === 'armor') {
-                        player.UpdateAppearance(true);
+                        player.updateAppearance(true);
 
                         // It's possible that armor increases the maximum health
-                        player.CalculateMaxHealth(true);
+                        player.calculateMaxHealth(true);
 
                         // And obviously, the armor itself
-                        player.CalculateMaxArmor(true);
+                        player.calculateMaxArmor(true);
                     }
                     if (item.getType() === 'weapon' || item.getType() === 'tool') {
-                        player.EmitNearby("updateWeapon", {
+                        player.emitNearby("updateWeapon", {
                             id: player.id,
                             weapon: 0
                         });
@@ -601,7 +601,7 @@ var SocketHandler = Class.extend({
                 var spawnPos = player.position.clone().addSelf(player.heading);
                 // todo: add to existing bag if near one?
                 var bag = new Lootable({
-                    id: server.GetAValidNPCID(),
+                    id: server.getAValidNPCID(),
                     x: spawnPos.x,
                     y: spawnPos.y,
                     z: spawnPos.z,
@@ -636,7 +636,7 @@ var SocketHandler = Class.extend({
                     return;
                 }
 
-                var bag = worldHandler.FindUnitNear(data.npcID, socket.unit);
+                var bag = worldHandler.findUnitNear(data.npcID, socket.unit);
                 if (!bag) {
                     reply({
                         errmsg: "Bag not found (too far?)"
@@ -733,7 +733,7 @@ var SocketHandler = Class.extend({
                 if (bag.template.type === UnitTypeEnum.LOOTABLE) {
                     if (bag.loot.length === 0 && !switchItem) {
                         if (bag.param < 10) {
-                            bag.Remove();
+                            bag.remove();
                         }
                     } else {
                         // Renew the lifetimer so it doesn't suddenly disappear
@@ -759,10 +759,10 @@ var SocketHandler = Class.extend({
                     // If it was equipped and type was armor/weapon, update the appearance
                     if (switchItem.equipped) {
                         if (switchItem.getType() === 'armor') {
-                            player.UpdateAppearance(true);
+                            player.updateAppearance(true);
                         }
                         if (switchItem.getType()  === 'weapon' || switchItem.getType() === 'tool') {
-                            player.EmitNearby("updateWeapon", {
+                            player.emitNearby("updateWeapon", {
                                 id: player.id,
                                 weapon: 0
                             });
@@ -774,14 +774,14 @@ var SocketHandler = Class.extend({
                 // No need to refresh if the bag is not empty anymore, since it'll get deleted anyway on the client
                 // They will receive a BAG NOT FOUND error otherwise
                 if (bag.loot.length > 0) {
-                    player.EmitNearby("lootFromBag", {bag: data.npcID, loot: bag.loot}, 20, true);
+                    player.emitNearby("lootFromBag", {bag: data.npcID, loot: bag.loot}, 20, true);
                 }
 
                 if (bag.template.type === UnitTypeEnum.VENDOR) {
                     // Update the money
                     player.purchase(item);
 
-                    bag.Say(ChooseRandom(["Another satisfied customer!", "Hope ye kick some butt!", "Come again soon!", "Is that all ye buyin'?"]));
+                    bag.say(ChooseRandom(["Another satisfied customer!", "Hope ye kick some butt!", "Come again soon!", "Is that all ye buyin'?"]));
 
                     // It's now our property, so remove the price tag
                     delete item.price;
@@ -806,7 +806,7 @@ var SocketHandler = Class.extend({
                     return;
                 }
 
-                var bag = worldHandler.FindUnitNear(data.npcID, socket.unit);
+                var bag = worldHandler.findUnitNear(data.npcID, socket.unit);
 
                 if (!bag) {
                     reply({
@@ -883,7 +883,7 @@ var SocketHandler = Class.extend({
                         // Give the player the original price
                         player.addCoins(offeredPrice);
 
-                        bag.Say(ChooseRandom(["A pleasure doing business!", "Ye got a good deal!", "'Tis most splendid!"]));
+                        bag.say(ChooseRandom(["A pleasure doing business!", "Ye got a good deal!", "'Tis most splendid!"]));
                     }
                 }
 
@@ -904,10 +904,10 @@ var SocketHandler = Class.extend({
                 // If it was equipped and type was armor/weapon, update the appearance
                 if (item.equipped) {
                     if (item.getType() === 'armor') {
-                        player.UpdateAppearance(true);
+                        player.updateAppearance(true);
                     }
                     if (item.getType() === 'weapon' || item.getType() === 'tool') {
-                        player.EmitNearby("updateWeapon", {
+                        player.emitNearby("updateWeapon", {
                             id: player.id,
                             weapon: 0
                         });
@@ -915,7 +915,7 @@ var SocketHandler = Class.extend({
                 }
                 item.equipped = 0;
 
-                player.EmitNearby("lootFromBag", {bag: data.npcID, loot: bag.loot}, 20, true);
+                player.emitNearby("lootFromBag", {bag: data.npcID, loot: bag.loot}, 20, true);
 
 
                 reply({
@@ -994,7 +994,7 @@ var SocketHandler = Class.extend({
 
                 } else {
 
-                    var bag = worldHandler.FindUnitNear(data.npcID, player);
+                    var bag = worldHandler.findUnitNear(data.npcID, player);
 
                     if (!bag) {
                         reply({
@@ -1049,7 +1049,7 @@ var SocketHandler = Class.extend({
                     }
                     item.slot = data.slotNumber;
 
-                    socket.unit.EmitNearby("lootFromBag", {bag: data.npcID, loot: bag.loot}, 20, true);
+                    socket.unit.emitNearby("lootFromBag", {bag: data.npcID, loot: bag.loot}, 20, true);
 
                     reply({
                         items: player.items,
@@ -1076,7 +1076,7 @@ var SocketHandler = Class.extend({
                 var player = socket.unit;
 
                 // todo: check if NPC is nearby
-                var bag = worldHandler.FindUnitNear(npcID, player);
+                var bag = worldHandler.findUnitNear(npcID, player);
 
                 if (!bag) {
                     reply({
@@ -1167,7 +1167,7 @@ var SocketHandler = Class.extend({
                     // Not ourselves!
                     if ( id === socket.unit.id ) return;
 
-                    var targetUnit = worldHandler.FindUnitNear(id, socket.unit);
+                    var targetUnit = worldHandler.findUnitNear(id, socket.unit);
 
                     if ( !targetUnit ) {
                         reply({
@@ -1181,7 +1181,7 @@ var SocketHandler = Class.extend({
                         return;
                     }
 
-                    socket.unit.Attack(targetUnit, weapon);
+                    socket.unit.attack(targetUnit, weapon);
 
                 });
 
@@ -1208,7 +1208,7 @@ var SocketHandler = Class.extend({
                     return;
                 }
 
-                var owner = worldHandler.FindUnitNear(data.o, socket.unit);
+                var owner = worldHandler.findUnitNear(data.o, socket.unit);
                 if ( !owner || !(owner instanceof NPC) ) {
                     reply({
                         errmsg:"Bad unit type for ghit"
@@ -1237,7 +1237,7 @@ var SocketHandler = Class.extend({
                     return;
                 }
 
-                owner.Attack(socket.unit, weapon);
+                owner.attack(socket.unit, weapon);
 
             });
 
@@ -1257,7 +1257,7 @@ var SocketHandler = Class.extend({
 
                 log("Shutting down by user request ("+socket.unit.id+")");
 
-                chatHandler.Announce("Server will restart in 5 seconds...", "red");
+                chatHandler.announce("Server will restart in 5 seconds...", "red");
 
                 setTimeout(function() {process.exit();}, 5000);
             });
@@ -1267,7 +1267,7 @@ var SocketHandler = Class.extend({
 
                 log("Backing up server by user request ("+socket.unit.id+")");
 
-                worldHandler.DoFullBackup();
+                worldHandler.doFullBackup();
             });
 
             socket.on("chGodMode", function (value) {
@@ -1286,10 +1286,10 @@ var SocketHandler = Class.extend({
             socket.on("opReloadData", function (data) {
                 if ( !socket.unit || socket.unit.editor === false ) return;
 
-                dataHandler.Load();
+                dataHandler.load();
 
                 setTimeout(function(){
-                    chatHandler.Announce("Reloaded NPC & Item templates", "white");
+                    chatHandler.announce("Reloaded NPC & Item templates", "white");
                 }, 1000);
             });
 
@@ -1305,7 +1305,7 @@ var SocketHandler = Class.extend({
 
                 // Check that the user exists
                 var foundUnit = null;
-                worldHandler.LoopUnits(function(unit) {
+                worldHandler.loopUnits(function(unit) {
                     if ( unit instanceof Player && unit.name === data.characterName ) {
                         foundUnit = unit;
                     }
@@ -1322,16 +1322,16 @@ var SocketHandler = Class.extend({
 
                 switch (parseInt(data.action)) {
                     case UserManagementTypeEnum.LIGHTWARN:
-                        foundUnit.LightWarn();
+                        foundUnit.lightWarn();
                         break;
                     case UserManagementTypeEnum.SERIOUSWARN:
-                        foundUnit.SeriousWarn();
+                        foundUnit.seriousWarn();
                         break;
                     case UserManagementTypeEnum.KICK:
-                        foundUnit.Kick(reason);
+                        foundUnit.kick(reason);
                         break;
                     case UserManagementTypeEnum.BAN:
-                        foundUnit.Ban(data.hours, reason);
+                        foundUnit.ban(data.hours, reason);
                         break;
                 }
 
@@ -1349,19 +1349,19 @@ var SocketHandler = Class.extend({
                 }
 
 
-                var unit = worldHandler.FindPlayerByName(data.name);
+                var unit = worldHandler.findPlayerByName(data.name);
 
-                var targetUnit = worldHandler.FindPlayerByName(data.targetName);
+                var targetUnit = worldHandler.findPlayerByName(data.targetName);
 
                 var zone = parseInt(data.zone, 10);
                 var pos = targetUnit ? targetUnit.position : ConvertVector3(data.pos);
 
 
                 if ( unit ) {
-                    unit.Teleport(zone, pos);
+                    unit.teleport(zone, pos);
                 }
                 else {
-                    chatHandler.AnnouncePersonally(socket.unit, "Could not find player "+data.name+"!", "red");
+                    chatHandler.announcePersonally(socket.unit, "Could not find player "+data.name+"!", "red");
                 }
 
             });
@@ -1371,7 +1371,7 @@ var SocketHandler = Class.extend({
                 // Later report them!
                 if ( !socket.unit || socket.unit.editor === false ) return;
 
-                var unit = worldHandler.FindUnit(id);
+                var unit = worldHandler.findUnit(id);
 
                 var zone = socket.unit.zone;
 
@@ -1387,8 +1387,8 @@ var SocketHandler = Class.extend({
                 worldHandler.world[zone][cx][cz].units =
                     _.without(worldHandler.world[zone][cx][cz].units, unit);
 
-                worldHandler.LoopUnitsNear(zone, cx, cz, function(unit) {
-                    unit.UpdateOtherUnitsList();
+                worldHandler.loopUnitsNear(zone, cx, cz, function(unit) {
+                    unit.updateOtherUnitsList();
                 });
 
                 mysql.query('DELETE FROM ib_units WHERE ?',
@@ -1409,10 +1409,10 @@ var SocketHandler = Class.extend({
 
                 var cellPos = WorldToCellCoordinates(data.pos.x, data.pos.z, cellSize);
 
-                socket.unit.UpdateCellPosition();
+                socket.unit.updateCellPosition();
 
 
-                worldHandler.GenerateCell( socket.unit.zone, cellPos.x, cellPos.z, parseInt(data.octaves, 10), parseInt(data.persistence, 10), parseFloat(data.scale), parseInt(data.tile, 10), parseInt(data.heightOffset, 10));
+                worldHandler.generateCell( socket.unit.zone, cellPos.x, cellPos.z, parseInt(data.octaves, 10), parseInt(data.persistence, 10), parseFloat(data.scale), parseInt(data.tile, 10), parseInt(data.heightOffset, 10));
 
                 reply("OK");
 
@@ -1424,7 +1424,7 @@ var SocketHandler = Class.extend({
                 if ( !socket.unit || socket.unit.editor === false ) return;
 
                 data.position = ConvertVector3(data.position);
-                data.position = data.position.Round(2);
+                data.position = data.position.round(2);
 
                 var zone = socket.unit.zone;
 
@@ -1454,7 +1454,7 @@ var SocketHandler = Class.extend({
                 }
 
 
-                data.id = -server.GetAValidNPCID();
+                data.id = -server.getAValidNPCID();
 
                 mysql.query('INSERT INTO ib_units SET ?',
                 {
@@ -1472,8 +1472,8 @@ var SocketHandler = Class.extend({
 
                     if (err) throw err;
 
-                    var unit = worldHandler.MakeUnitFromData(data);
-                    if ( unit ) unit.Awake();
+                    var unit = worldHandler.makeUnitFromData(data);
+                    if ( unit ) unit.awake();
 
                 });
 
@@ -1491,7 +1491,7 @@ var SocketHandler = Class.extend({
 
 
                 var pos = ConvertVector3(data.pos);
-                pos = pos.Round(2);
+                pos = pos.round(2);
 
                 var zone = socket.unit.zone;
 
@@ -1523,7 +1523,7 @@ var SocketHandler = Class.extend({
 
                 // Set a timer to auto save this cell
                 // If we set the height again, reset the timer
-                worldHandler.AutoSaveCell(zone, cellPos.x, cellPos.z);
+                worldHandler.autoSaveCell(zone, cellPos.x, cellPos.z);
 
                 if ( data.global ) {
                     _.each(data.metadata, function(value, key, list) {
@@ -1533,13 +1533,13 @@ var SocketHandler = Class.extend({
                     });
 
 
-                    chatHandler.AnnouncePersonally(socket.unit,
+                    chatHandler.announcePersonally(socket.unit,
                         "The server needs to restart before you will see that texture change applied to all models!.", "cyan");
                 }
 
 
 
-                socket.unit.EmitNearby("paintModel", data, 0, true);
+                socket.unit.emitNearby("paintModel", data, 0, true);
 
             });
 
@@ -1551,7 +1551,7 @@ var SocketHandler = Class.extend({
 
 
                 data = ConvertVector3(data);
-                data = data.Round(2);
+                data = data.round(2);
 
 
                 var zone = socket.unit.zone;
@@ -1569,7 +1569,7 @@ var SocketHandler = Class.extend({
                     var obj = worldHandler.world[zone][cellPos.x][cellPos.z].objects[o];
 
                     obj = ConvertVector3(obj);
-                    obj = obj.Round(2);
+                    obj = obj.round(2);
 
                     if ( data.x === obj.x && data.y === obj.y && data.z === obj.z ) {
                         // Found it on the buffer, so we added something and deleted it back before the save
@@ -1590,10 +1590,10 @@ var SocketHandler = Class.extend({
 
                 // Set a timer to auto save this cell
                 // If we set the height again, reset the timer
-                worldHandler.AutoSaveCell(zone, cellPos.x, cellPos.z);
+                worldHandler.autoSaveCell(zone, cellPos.x, cellPos.z);
 
 
-                socket.unit.EmitNearby("deleteModel", data, 0, true);
+                socket.unit.emitNearby("deleteModel", data, 0, true);
 
             });
 
@@ -1603,14 +1603,14 @@ var SocketHandler = Class.extend({
                 if ( !socket.unit || socket.unit.editor === false ) return;
 
                 data.position = ConvertVector3(data.position);
-                data.position = data.position.Round(2);
+                data.position = data.position.round(2);
 
                 var zone = socket.unit.zone;
 
                 var cellPos = WorldToCellCoordinates(data.position.x, data.position.z, cellSize);
 
-                if ( !worldHandler.CheckWorldStructure(zone, cellPos.x, cellPos.z) ) {
-                    worldHandler.GenerateCell(zone, cellPos.x, cellPos.z);
+                if ( !worldHandler.checkWorldStructure(zone, cellPos.x, cellPos.z) ) {
+                    worldHandler.generateCell(zone, cellPos.x, cellPos.z);
                 }
 
                 if ( !ISDEF(worldHandler.world[zone]) ) return;
@@ -1631,9 +1631,9 @@ var SocketHandler = Class.extend({
 
                 // Set a timer to auto save this cell
                 // If we set the height again, reset the timer
-                worldHandler.AutoSaveCell(zone, cellPos.x, cellPos.z);
+                worldHandler.autoSaveCell(zone, cellPos.x, cellPos.z);
 
-                socket.unit.EmitNearby("addModel", data, 0, true);
+                socket.unit.emitNearby("addModel", data, 0, true);
             });
 
             socket.on("ppAddNode", function (position, reply) {
@@ -1661,14 +1661,14 @@ var SocketHandler = Class.extend({
                 if ( existingNode ) return;
 
 
-                var newNodeID = worldHandler.GetWaypointID(zone);
+                var newNodeID = worldHandler.getWaypointID(zone);
 
-                nodeHandler.AddNode(zone, newNodeID, position);
+                nodeHandler.addNode(zone, newNodeID, position);
 
                 var cellPos = WorldToCellCoordinates(position.x, position.z, cellSize);
-                worldHandler.AutoSaveCell(zone, cellPos.x, cellPos.z);
+                worldHandler.autoSaveCell(zone, cellPos.x, cellPos.z);
 
-                socket.unit.EmitNearby("ppAddNode", {
+                socket.unit.emitNearby("ppAddNode", {
                     id: newNodeID,
                     pos: position
                 }, 0, true);
@@ -1692,14 +1692,14 @@ var SocketHandler = Class.extend({
 
                 var zone = socket.unit.zone;
 
-                nodeHandler.AddEdge(zone, data.from, data.to, data.twoway);
+                nodeHandler.addEdge(zone, data.from, data.to, data.twoway);
 
-                var position = nodeHandler.GetNodePosition(zone, data.from);
+                var position = nodeHandler.getNodePosition(zone, data.from);
 
                 var cellPos = WorldToCellCoordinates(position.x, position.z, cellSize);
-                worldHandler.AutoSaveCell(zone, cellPos.x, cellPos.z);
+                worldHandler.autoSaveCell(zone, cellPos.x, cellPos.z);
 
-                socket.unit.EmitNearby("ppAddEdge", data, 0, true);
+                socket.unit.emitNearby("ppAddEdge", data, 0, true);
 
             });
 
@@ -1719,22 +1719,22 @@ var SocketHandler = Class.extend({
                 var zone = socket.unit.zone;
 
                 // Check if the node is there
-                var nodeInfo = nodeHandler.GetNodeArrayIndex(zone, data.id);
+                var nodeInfo = nodeHandler.getNodeArrayIndex(zone, data.id);
                 if ( !nodeInfo ) return;
 
-                var position = nodeHandler.GetNodePosition(zone, data.id);
+                var position = nodeHandler.getNodePosition(zone, data.id);
 
                 var cellPos = WorldToCellCoordinates(position.x, position.z, cellSize);
-                worldHandler.AutoSaveCell(zone, cellPos.x, cellPos.z);
+                worldHandler.autoSaveCell(zone, cellPos.x, cellPos.z);
 
 
-                nodeHandler.DeleteNode(zone, data.id);
+                nodeHandler.deleteNode(zone, data.id);
 
 
 
 
 
-                socket.unit.EmitNearby("ppDeleteNode", data, 0, true);
+                socket.unit.emitNearby("ppDeleteNode", data, 0, true);
             });
 
             socket.on("addGameObject", function (data) {
@@ -1743,7 +1743,7 @@ var SocketHandler = Class.extend({
                 if ( !socket.unit || socket.unit.editor === false ) return;
 
                 data.position = ConvertVector3(data.position);
-                data.position = data.position.Round(2);
+                data.position = data.position.round(2);
 
                 var zone = socket.unit.zone;
 
@@ -1763,7 +1763,7 @@ var SocketHandler = Class.extend({
                     p:data.param
                 });
 
-                worldHandler.AutoSaveCell(zone, cellPos.x, cellPos.z);
+                worldHandler.autoSaveCell(zone, cellPos.x, cellPos.z);
 
             });
 
@@ -1773,7 +1773,7 @@ var SocketHandler = Class.extend({
                     socketHandler.onlinePlayers = _.without(socketHandler.onlinePlayers, _.find(socketHandler.onlinePlayers, function(p) {
                         return p.id === socket.unit.id;
                     }));
-                    socket.unit.LeaveGame();
+                    socket.unit.leaveGame();
                 }
             });
 
@@ -1806,14 +1806,14 @@ var SocketHandler = Class.extend({
                     socket.unit.heading.normalize();
 
                     if ( !_.isArray(data.los) ) {
-                        socket.unit.Kick(KickReason.CHEAT);
+                        socket.unit.kick(KickReason.CHEAT);
                         return;
                     }
 
                     for(var u=0;u<data.los.length;u++) {
                         var n = data.los[u];
                         if ( !_.isNumber(n) || n >= 0 ) {
-                            socket.unit.Kick(KickReason.CHEAT);
+                            socket.unit.kick(KickReason.CHEAT);
                             return;
                         }
                     }
@@ -1835,12 +1835,12 @@ var SocketHandler = Class.extend({
                         // Find the unit, and get their position
                         // THIS will be our real position, otherwise we will give them false
                         // information, like who is around us
-                        var train = worldHandler.FindUnit(data.u);
+                        var train = worldHandler.findUnit(data.u);
 
                         socket.unit.position.copy(train.position);
                     }
                     else {
-                        if ( !socket.unit.InRangeOfPosition(p, errorMargin) ) {
+                        if ( !socket.unit.inRangeOfPosition(p, errorMargin) ) {
                             return;
                         }
 
@@ -1854,7 +1854,7 @@ var SocketHandler = Class.extend({
                     // Which ones?
                     var cellPos = WorldToCellCoordinates(socket.unit.position.x, socket.unit.position.z, cellSize);
                     if ( cellPos.x !== socket.unit.cellX || cellPos.z !== socket.unit.cellZ ) {
-                        socket.unit.ChangeCell(cellPos.x, cellPos.z);
+                        socket.unit.changeCell(cellPos.x, cellPos.z);
                     }
 
                 }

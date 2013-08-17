@@ -34,7 +34,7 @@ var ChaseEnemy = State.extend({
 
 
 
-    npc.EmitNearby("addParticle", {
+    npc.emitNearby("addParticle", {
       p:"ENEMYINSIGHT",
       pfu:npc.id
       });
@@ -78,14 +78,14 @@ var ChaseEnemy = State.extend({
       //                log("this.enemy.health: "+this.enemy.health)
       //                log("distance: "+distance+" > "+Math.pow(npc.template.aggroradius, 2))
 
-      npc.stateMachine.ChangeState(new ExploreAndLookForEnemies());
+      npc.stateMachine.changeState(new ExploreAndLookForEnemies());
     }
     else if ( distance < Math.pow(WeaponRanges[npc.weapon.subtype], 2) ) {
     // else if ( distance < 9 ) {
 
       this.chaseTimeBeforeGivingUp = 8;
 
-      if ( npc.InLineOfSight(this.enemy) ) {
+      if ( npc.inLineOfSight(this.enemy) ) {
         // log("[ChaseEnemy] Attacking!");
 
         if ( this.attackTimeout <= 0 ) {
@@ -93,9 +93,9 @@ var ChaseEnemy = State.extend({
           this.attackTimeout = npc.weapon.delay;
 
 
-          //if ( getRandomInt(0, 10) == 1 ) npc.Say(ChooseRandom(["Show me what you got!","Eat this!","I love a good fight!"]));
+          //if ( getRandomInt(0, 10) == 1 ) npc.say(ChooseRandom(["Show me what you got!","Eat this!","I love a good fight!"]));
 
-          npc.AttemptAttack(this.enemy);
+          npc.attemptAttack(this.enemy);
 
 
         // Attack!
@@ -107,7 +107,7 @@ var ChaseEnemy = State.extend({
 
 
       // log("[ChaseEnemy] Moving towards enemy!");
-      // npc.TravelToPosition(this.enemy.position);
+      // npc.travelToPosition(this.enemy.position);
       var direction = npc.position.clone().subSelf(this.enemy.position).normalize().multiplyScalar(1);
       var target = this.enemy.position.clone().addSelf(direction);
 
@@ -120,9 +120,9 @@ var ChaseEnemy = State.extend({
         npc.heading.copy(direction.clone().multiplyScalar(-1));
       }
 
-      npc.steeringForce = npc.steeringBehaviour.Arrive(target, Deceleration.FAST);
+      npc.steeringForce = npc.steeringBehaviour.arrive(target, Deceleration.FAST);
 
-    //if ( this.jumpTimeout <= 0 && getRandomInt(0, 50) == 1 ) this.Jump();
+    //if ( this.jumpTimeout <= 0 && getRandomInt(0, 50) == 1 ) this.jump();
     }
     else {
 
@@ -131,7 +131,7 @@ var ChaseEnemy = State.extend({
       // log("[ChaseEnemy] Within aggro range, moving closer...");
 
       var direction = npc.position.clone().subSelf(this.enemy.position).normalize().multiplyScalar(2);
-      npc.TravelToPosition(this.enemy.position.clone().addSelf(direction), true);
+      npc.travelToPosition(this.enemy.position.clone().addSelf(direction), true);
 
     }
 
@@ -139,7 +139,7 @@ var ChaseEnemy = State.extend({
   exit: function(npc) {
 
     if ( this.enemy.health > 0 ) {
-      npc.EmitNearby("addParticle", {
+      npc.emitNearby("addParticle", {
         p:"ENEMYOUTOFSIGHT",
         pfu:npc.id
         });
@@ -148,13 +148,13 @@ var ChaseEnemy = State.extend({
 
 //      switch(getRandomInt(0,2)){
 //        case 0:
-//          npc.Say("Got you, "+this.enemy.name+"!");
+//          npc.say("Got you, "+this.enemy.name+"!");
 //          break;
 //        case 1:
-//          npc.Say("Is that all you got?");
+//          npc.say("Is that all you got?");
 //          break;
 //        case 2:
-//          npc.Say("Whahahaha! Rookie!");
+//          npc.say("Whahahaha! Rookie!");
 //          break;
 //      }
 

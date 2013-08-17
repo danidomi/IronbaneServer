@@ -70,7 +70,7 @@ var ParticleTypeEnum = {
         particleStartVelocity: new THREE.Vector3(0, 2, 0),
         particleLifeTime: 2.0,
         particleStartScale: new THREE.Vector2(1,1),
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.0, 0.9);}
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.0, 0.9);}
     },
     DAMAGE2: {
         texture: 'misc/heart_full_sub',
@@ -87,7 +87,7 @@ var ParticleTypeEnum = {
         particleStartVelocity: new THREE.Vector3(0, 2, 0),
         particleLifeTime: 3.0,
         particleStartScale: new THREE.Vector2(1,1),
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.0, 0.9);}
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.0, 0.9);}
     },
     HEAL1: {
         texture: 'misc/heart_half_add',
@@ -104,7 +104,7 @@ var ParticleTypeEnum = {
         particleStartVelocity: new THREE.Vector3(0, 2, 0),
         particleLifeTime: 2.0,
         particleStartScale: new THREE.Vector2(1,1),
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.0, 0.9);}
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.0, 0.9);}
     },
     HEAL2: {
         texture: 'misc/heart_full_add',
@@ -121,7 +121,7 @@ var ParticleTypeEnum = {
         particleStartVelocity: new THREE.Vector3(0, 2, 0),
         particleLifeTime: 3.0,
         particleStartScale: new THREE.Vector2(1,1),
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.0, 0.9);}
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.0, 0.9);}
     },
     ARMORHIT1: {
         texture: 'misc/armor_half_sub',
@@ -138,7 +138,7 @@ var ParticleTypeEnum = {
         particleStartVelocity: new THREE.Vector3(0, 2, 0),
         particleLifeTime: 2.0,
         particleStartScale: new THREE.Vector2(1,1),
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.0, 0.9);}
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.0, 0.9);}
     },
     ARMORHIT2: {
         texture: 'misc/armor_full_sub',
@@ -155,7 +155,7 @@ var ParticleTypeEnum = {
         particleStartVelocity: new THREE.Vector3(0, 2, 0),
         particleLifeTime: 3.0,
         particleStartScale: new THREE.Vector2(1,1),
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.0, 0.9);}
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.0, 0.9);}
     },
     ARMORHEAL1: {
         texture: 'misc/armor_half_add',
@@ -172,7 +172,7 @@ var ParticleTypeEnum = {
         particleStartVelocity: new THREE.Vector3(0, 2, 0),
         particleLifeTime: 2.0,
         particleStartScale: new THREE.Vector2(1,1),
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.0, 0.9);}
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.0, 0.9);}
     },
     ARMORHEAL2: {
         texture: 'misc/armor_full_add',
@@ -189,7 +189,7 @@ var ParticleTypeEnum = {
         particleStartVelocity: new THREE.Vector3(0, 2, 0),
         particleLifeTime: 3.0,
         particleStartScale: new THREE.Vector2(1,1),
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.0, 0.9);}
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.0, 0.9);}
     },
     DEATH: {
         texture: function(emitter) {
@@ -264,7 +264,7 @@ var ParticleTypeEnum = {
         lifeTime: -1,
         particleLifeTime: 1.0,
         particleEnableGravity: true,
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.0, 0.9);}
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.0, 0.9);}
     },
     ENEMYINSIGHT: {
         texture: 'misc/em_red',
@@ -278,7 +278,7 @@ var ParticleTypeEnum = {
         lifeTime: -1,
         particleLifeTime: 3.0,
         particleStartScale: new THREE.Vector2(1.5,1.5),
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.1, 0.9);}
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.1, 0.9);}
     },
     ENEMYOUTOFSIGHT: {
         texture: 'misc/qm_green',
@@ -292,7 +292,7 @@ var ParticleTypeEnum = {
         lifeTime: -1,
         particleLifeTime: 3.0,
         particleStartScale: new THREE.Vector2(1.5,1.5),
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.1, 0.9);}
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.1, 0.9);}
     },
     SPLASH: {
         texture: function(){
@@ -313,7 +313,7 @@ var ParticleTypeEnum = {
         lifeTime: -1,
         particleLifeTime: 2.0,
         particleStartScale: new THREE.Vector2(1.5,1.5),
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.1, 0.9);}
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.1, 0.9);}
     },
     LAVABURN: {
         texture: function(){
@@ -334,7 +334,7 @@ var ParticleTypeEnum = {
         lifeTime: -1,
         particleLifeTime: 2.0,
         particleStartScale: new THREE.Vector2(1.5,1.5),
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.1, 0.9);}
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.1, 0.9);}
     },
     ACIDBALL: {
         texture: 'projectiles/acidball',
@@ -352,7 +352,7 @@ var ParticleTypeEnum = {
         lifeTime: -1,
         particleLifeTime: 1.0,
         particleStartScale: new THREE.Vector2(1.5,1.5),
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.1, 0.9);}
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.1, 0.9);}
     },
     SLIMEBALL: {
         texture: 'projectiles/acidball',
@@ -386,7 +386,7 @@ var ParticleTypeEnum = {
         lifeTime: -1,
         particleLifeTime: 2.0,
         particleStartScale: new THREE.Vector2(2.0,2.0),
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.2, 0.8);}
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.2, 0.8);}
     },
     FIREBALL: {
         texture: 'projectiles/fireball',
@@ -404,7 +404,7 @@ var ParticleTypeEnum = {
         lifeTime: -1,
         particleLifeTime: 1.0,
         particleStartScale: new THREE.Vector2(2.0,2.0),
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.1, 0.9);},
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.1, 0.9);},
         children:["FIREBALLTRAIL"]
     },
     FIREBALLTRAIL: {
@@ -423,7 +423,7 @@ var ParticleTypeEnum = {
         particleLifeTime: 0.1,
         particleStartScale: new THREE.Vector2(2.0,2.0),
         particleScaleVelocity : new THREE.Vector2(-0.1,0.1),
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.1, 0.9);}
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.1, 0.9);}
     },
     GREENBLOBIMPACT: {
         texture: function(){
@@ -449,7 +449,7 @@ var ParticleTypeEnum = {
         lifeTime: -1,
         particleLifeTime: 2.0,
         particleStartScale: new THREE.Vector2(1.5,1.5),
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.1, 0.9);}
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.1, 0.9);}
     },
 	ROCK: {
         texture: 'projectiles/rock',
@@ -467,7 +467,7 @@ var ParticleTypeEnum = {
         lifeTime: -1,
         particleLifeTime: 2.0,
         particleStartScale: new THREE.Vector2(1.0,1.0),
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.2, 0.8);}
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.2, 0.8);}
 	},
     ROCKSHATTER: {
         texture: function(){
@@ -493,7 +493,7 @@ var ParticleTypeEnum = {
         lifeTime: -1,
         particleLifeTime: 2.0,
         particleStartScale: new THREE.Vector2(1.5,1.5),
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.1, 0.9);}
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.1, 0.9);}
     },
     MELEEHIT: {
         texture: function(){
@@ -510,7 +510,7 @@ var ParticleTypeEnum = {
         lifeTime: -1,
         particleLifeTime: 0.15,
         particleStartScale: new THREE.Vector2(2.0,2.0)
-        // particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.1, 0.9);}
+        // particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.1, 0.9);}
     },
     CLOUD: {
         texture: function(){
@@ -538,10 +538,10 @@ var ParticleTypeEnum = {
         },
         particleStartScale: function(p){
             var scale = getRandomFloat(3, 2);
-            var tex = textureHandler.GetTexture('plugins/game/images/' + p.texture + '.png', true);
+            var tex = textureHandler.getTexture('plugins/game/images/' + p.texture + '.png', true);
             return new THREE.Vector2((tex.image.width/16)*scale, (tex.image.height/16)*scale);
         },
-        particleOpacity: function(p){return (ParticleFunctions.OpacityLifeTime(p, 0.02, 0.98))*0.5;}
+        particleOpacity: function(p){return (ParticleFunctions.opacityLifeTime(p, 0.02, 0.98))*0.5;}
     },
     TELEPORTENTRANCE: {
         texture: function(){
@@ -559,7 +559,7 @@ var ParticleTypeEnum = {
         lifeTime: -1,
         particleLifeTime: 0.3,
         particleStartScale: new THREE.Vector2(1.5,1.5),
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.1, 0.9);}
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.1, 0.9);}
     },
     TELEPORTEXIT: {
         texture: function(){
@@ -577,7 +577,7 @@ var ParticleTypeEnum = {
         lifeTime: -1,
         particleLifeTime: 0.3,
         particleStartScale: new THREE.Vector2(1.5,1.5),
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.1, 0.9);}
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.1, 0.9);}
     },
     TELEPORTENTRANCECIRCLES: {
         texture: function(p){
@@ -590,7 +590,7 @@ var ParticleTypeEnum = {
         lifeTime: -1,
         particleLifeTime: 1.0,
         particleStartScale: new THREE.Vector2(2.5,2.5),
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.5, 0.5);},
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.5, 0.5);},
         particleScaleVelocity : new THREE.Vector2(-0.05,-0.05)
     },
     TELEPORTEXITCIRCLES: {
@@ -604,7 +604,7 @@ var ParticleTypeEnum = {
         lifeTime: -1,
         particleLifeTime: 1.0,
         particleStartScale: new THREE.Vector2(0.5,0.5),
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.5, 0.5);},
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.5, 0.5);},
         particleScaleVelocity : new THREE.Vector2(0.05,0.05)
     },
     FIRESMALL: {
@@ -627,7 +627,7 @@ var ParticleTypeEnum = {
         particleScaleVelocity : function(p){
             return new THREE.Vector2(getRandomFloat(0.0, 0.03), getRandomFloat(0.0, 0.03));
         },
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.2, 0.8);}
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.2, 0.8);}
     },
     HEALSPARKS: {
         texture: function(){
@@ -645,7 +645,7 @@ var ParticleTypeEnum = {
         particleDelay: 0.05,
         particleLifeTime: 0.3,
         particleStartScale: new THREE.Vector2(1.5,1.5),
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.1, 0.9);}
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.1, 0.9);}
     },
     HEALHEART: {
         texture: 'particles/healheart',
@@ -661,6 +661,6 @@ var ParticleTypeEnum = {
         count:1,
         particleLifeTime: 1.0,
         particleStartScale: new THREE.Vector2(1.5,1.5),
-        particleOpacity: function(p){return ParticleFunctions.OpacityLifeTime(p, 0.3, 0.7);}
+        particleOpacity: function(p){return ParticleFunctions.opacityLifeTime(p, 0.3, 0.7);}
     }
 };

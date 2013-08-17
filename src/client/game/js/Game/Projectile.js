@@ -118,7 +118,7 @@ var Projectile = Unit.extend({
 
         this.weapon = null;
         if ( this.owner == ironbane.player ) {
-            this.weapon = ironbane.player.GetEquippedWeapon();
+            this.weapon = ironbane.player.getEquippedWeapon();
             this.weaponTemplate = items[this.weapon.template];
         }
         else if ( this.owner.id < 0 ) {
@@ -234,7 +234,7 @@ var Projectile = Unit.extend({
 
             launchVelocity.y = 0;
 
-            var angle = this.CalculateFiringAngle(targetPosition, false);
+            var angle = this.calculateFiringAngle(targetPosition, false);
             this.heading = launchVelocity.clone().normalize();
             this.side = this.heading.clone().Perp();
             var matrix = new THREE.Matrix4().makeRotationAxis( this.side, angle );
@@ -263,7 +263,7 @@ var Projectile = Unit.extend({
 
 
 
-//        this.TryToBuildMesh();
+//        this.tryToBuildMesh();
 
 
 
@@ -273,12 +273,12 @@ var Projectile = Unit.extend({
 //        if ( this.texture.image.width == 0 ) {
 //            (function(unit){
 //                setTimeout(function(){
-//                    unit.TryToBuildMesh()
+//                    unit.tryToBuildMesh()
 //                    }, 1000)
 //                })(this);
 //        }
 //        else {
-//            this.BuildMesh();
+//            this.buildMesh();
 //        }
 //    },
 //    buildMesh: function() {
@@ -291,7 +291,7 @@ var Projectile = Unit.extend({
         this.mesh.add(this.meshChild);
 
         if ( this.type.meshType == ProjectileMeshTypeEnum.ARROW ) {
-            var mat = textureHandler.GetTexture( 'plugins/game/images/projectiles/arrow_single.png', false, {transparent:true, doubleSided:true});
+            var mat = textureHandler.getTexture( 'plugins/game/images/projectiles/arrow_single.png', false, {transparent:true, doubleSided:true});
 
 
             var mesh;
@@ -313,7 +313,7 @@ var Projectile = Unit.extend({
             this.meshChild.add(mesh);
 
             var texture = 'plugins/game/images/projectiles/arrowback.png';
-            var mesh = new THREE.Mesh(planeGeo, textureHandler.GetTexture( texture, false, {transparent:true}));
+            var mesh = new THREE.Mesh(planeGeo, textureHandler.getTexture( texture, false, {transparent:true}));
             mesh.scale.x = 0.25;
             mesh.scale.y = 0.25;
             mesh.position.z -= 0.4;
@@ -323,7 +323,7 @@ var Projectile = Unit.extend({
             this.meshChild.add(mesh);
 
             var texture = 'plugins/game/images/projectiles/arrowhead.png';
-            var mesh = new THREE.Mesh(planeGeo, textureHandler.GetTexture( texture, false, {transparent:true}));
+            var mesh = new THREE.Mesh(planeGeo, textureHandler.getTexture( texture, false, {transparent:true}));
             mesh.scale.x = 0.25;
             mesh.scale.y = 0.25;
             mesh.position.z += 0.3;
@@ -335,7 +335,7 @@ var Projectile = Unit.extend({
         }
 
         if ( this.type.meshType == ProjectileMeshTypeEnum.BONE ) {
-            var mat = textureHandler.GetTexture( 'plugins/game/images/projectiles/bone.png', false, {transparent:true, doubleSided:true});
+            var mat = textureHandler.getTexture( 'plugins/game/images/projectiles/bone.png', false, {transparent:true, doubleSided:true});
 
 
             var mesh;
@@ -358,7 +358,7 @@ var Projectile = Unit.extend({
 
 
             var texture = 'plugins/game/images/projectiles/bonehead.png';
-            var mesh = new THREE.Mesh(planeGeo, textureHandler.GetTexture( texture, false, {transparent:true}));
+            var mesh = new THREE.Mesh(planeGeo, textureHandler.getTexture( texture, false, {transparent:true}));
             mesh.scale.x = 0.25;
             mesh.scale.y = 0.25;
             mesh.position.z -= 0.4;
@@ -367,7 +367,7 @@ var Projectile = Unit.extend({
             mesh.rotation.z = Math.PI;
             this.meshChild.add(mesh);
 
-            var mesh = new THREE.Mesh(planeGeo, textureHandler.GetTexture( texture, false, {transparent:true}));
+            var mesh = new THREE.Mesh(planeGeo, textureHandler.getTexture( texture, false, {transparent:true}));
             mesh.scale.x = 0.25;
             mesh.scale.y = 0.25;
             mesh.position.z += 0.3;
@@ -384,7 +384,7 @@ var Projectile = Unit.extend({
 
             var texture = 'plugins/game/images/items/'+weaponImage+'.png';
 
-            var mat = textureHandler.GetTexture(texture, false, {transparent:true, doubleSided:true});
+            var mat = textureHandler.getTexture(texture, false, {transparent:true, doubleSided:true});
 
 
             var mesh;
@@ -417,7 +417,7 @@ var Projectile = Unit.extend({
 
 
         if ( this.type.particle ) {
-            this.particle = particleHandler.Add(this.type.particle, {particleFollowUnit:this});
+            this.particle = particleHandler.add(this.type.particle, {particleFollowUnit:this});
         }
 
 
@@ -432,12 +432,12 @@ var Projectile = Unit.extend({
 
 
         //this.velocity = this.targetPosition.clone().subSelf(this.position).normalize().multiplyScalar(this.type.speed);
-        //this.steeringForce = this.steeringBehaviour.Seek(this.targetPosition);
+        //this.steeringForce = this.steeringBehaviour.seek(this.targetPosition);
 
 
         this._super(dTime);
 
-        var spriteIndex = this.GetDirectionSpriteIndex();
+        var spriteIndex = this.getDirectionSpriteIndex();
 
 
         if ( this.meshChild ) {
@@ -482,7 +482,7 @@ var Projectile = Unit.extend({
                     _.each(ironbane.unitList, function(u){
                         if ( u instanceof Fighter
                             && u != ironbane.player
-                            && unit.InRangeOfUnit(u, 1)
+                            && unit.inRangeOfUnit(u, 1)
                             && u.health > 0
                             && (u.id < 0 || (u.id > 0 && unit.weapon.attr1 <= 0))
                             && (u.id > 0 || !u.template.friendly) ){
@@ -495,7 +495,7 @@ var Projectile = Unit.extend({
                         socketHandler.socket.emit('hit', {w:unit.weapon.id,l:list}, function (reply) {
 
                             if ( ISDEF(reply.errmsg) ) {
-                                hudHandler.MessageAlert(reply.errmsg);
+                                hudHandler.messageAlert(reply.errmsg);
                                 return;
                             }
 
@@ -508,7 +508,7 @@ var Projectile = Unit.extend({
 //                        unit.dynamic = false;
 //                        unit.unitStandingOn = unitList[0];
 
-                        unit.Impact();
+                        unit.impact();
 
 
 
@@ -526,7 +526,7 @@ var Projectile = Unit.extend({
                     (function(unit){
                     var list = [];
 
-                    if ( unit.InRangeOfUnit(ironbane.player, 1) ) {
+                    if ( unit.inRangeOfUnit(ironbane.player, 1) ) {
                         list.push(ironbane.player);
                     }
 
@@ -534,7 +534,7 @@ var Projectile = Unit.extend({
                         socketHandler.socket.emit('ghit', {w:unit.weapon.id,o:unit.owner.id}, function (reply) {
 
                             if ( ISDEF(reply.errmsg) ) {
-                                hudHandler.MessageAlert(reply.errmsg);
+                                hudHandler.messageAlert(reply.errmsg);
                                 return;
                             }
 
@@ -547,7 +547,7 @@ var Projectile = Unit.extend({
 //                        unit.dynamic = false;
 //                        unit.unitStandingOn = ironbane.player;
 
-                        unit.Impact();
+                        unit.impact();
                     }
                     })(this);
 
@@ -565,7 +565,7 @@ var Projectile = Unit.extend({
                     _.each(ironbane.unitList, function(u){
                         if ( u instanceof Fighter
                             && u != unit.owner
-                            && unit.InRangeOfUnit(u, 1)
+                            && unit.inRangeOfUnit(u, 1)
                             && u.health > 0
                             && unit.weapon.attr1 <= 0){
                             list.push(u);
@@ -580,7 +580,7 @@ var Projectile = Unit.extend({
 //                        unit.dynamic = false;
 //                        unit.unitStandingOn = u;
 
-                        unit.Impact();
+                        unit.impact();
 
                     }
 
@@ -603,19 +603,19 @@ var Projectile = Unit.extend({
                 this.particle = null;
             }
 
-            this.FullDestroy();
+            this.fullDestroy();
             return;
         }
 
         if ( this.type.has8Textures ) {
-            this.DisplayUVFrame(0, spriteIndex, 1, 8);
+            this.displayUVFrame(0, spriteIndex, 1, 8);
         }
 
         if ( this.mesh ) {
             if ( this.type.meshType ) {
 
               //if ( this.type.meshType == ProjectileMeshTypeEnum.ARROW ) {
-                this.mesh.LookAt(this.position.clone().addSelf(this.heading), 0, 0, 0);
+                this.mesh.lookAt(this.position.clone().addSelf(this.heading), 0, 0, 0);
               //}
 
                 if ( !this.impactDone ) {
@@ -644,14 +644,14 @@ var Projectile = Unit.extend({
 
         if ( ISDEF(this.type.impactParticle) ) {
             if ( !(this.type.impactParticleOnUnitsOnly && hasHitTerrain) ) {
-                particleHandler.Add(this.type.impactParticle, {
+                particleHandler.add(this.type.impactParticle, {
                     position:this.position.clone()
                 });
             }
         }
 
         if ( ISDEF(this.type.impactSound) && !this.damageDone ) {
-            soundHandler.Play(CheckForFunctionReturnValue(this.type.impactSound), this.position);
+            soundHandler.play(CheckForFunctionReturnValue(this.type.impactSound), this.position);
         }
 
     },
@@ -697,7 +697,7 @@ var Projectile = Unit.extend({
 
         }
 
-        //bm('x: '+(x).Round(2)+', y: '+(y).Round(2)+', result: '+result.Round(2).ToDegrees());
+        //bm('x: '+(x).Round(2)+', y: '+(y).Round(2)+', result: '+result.round(2).ToDegrees());
 
         return result;
     }

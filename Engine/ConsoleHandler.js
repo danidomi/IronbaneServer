@@ -17,34 +17,34 @@
 
 var ConsoleHandler = Class.extend({
   init: function() {
-    this.AccessLevel = {
+    this.accessLevel = {
       GUEST : 0,
       PLAYER : 1,
       EDITOR : 2,
       ADMIN : 3
     };
 
-    this.ResetAccess();
+    this.resetAccess();
 
     this.commands = {};
 
-    this.InitCommands();
+    this.initCommands();
   },
   initCommands: function() {
-    this.AddCommand(this.AccessLevel.GUEST, ["generatecell","gc"], "Generates a cell inside a zone", "zone cellX cellZ", "1 0 0", function (params) {
+    this.addCommand(this.accessLevel.GUEST, ["generatecell","gc"], "Generates a cell inside a zone", "zone cellX cellZ", "1 0 0", function (params) {
 
-      worldHandler.GenerateCell(params[0], params[1], params[2]);
+      worldHandler.generateCell(params[0], params[1], params[2]);
     });
-    this.AddCommand(this.AccessLevel.GUEST, ["sw","saveworld"], "Save the world", "", "", function (params) {
+    this.addCommand(this.accessLevel.GUEST, ["sw","saveworld"], "Save the world", "", "", function (params) {
 
-      worldHandler.SaveWorld();
+      worldHandler.saveWorld();
     });
-    this.AddCommand(this.AccessLevel.GUEST, ["generatecellrange","gcr"], "Generates a cell range inside a zone, starting from (0,0)", "zone range octaves persistence scale", "1 0 2 5 1.0", function (params) {
+    this.addCommand(this.accessLevel.GUEST, ["generatecellrange","gcr"], "Generates a cell range inside a zone, starting from (0,0)", "zone range octaves persistence scale", "1 0 2 5 1.0", function (params) {
       var startTime = (new Date()).getTime();
 
       for(var x=-params[1];x<=params[1];x++){
         for(var z=-params[1];z<=params[1];z++){
-          worldHandler.GenerateCell(params[0], x, z, params[2], params[3], params[4]);
+          worldHandler.generateCell(params[0], x, z, params[2], params[3], params[4]);
         }
       }
 
@@ -55,7 +55,7 @@ var ConsoleHandler = Class.extend({
 
     });
 
-    this.AddCommand(this.AccessLevel.GUEST, ["clearcharacterimages","cci"], "Clear character images", "", "", function (params) {
+    this.addCommand(this.accessLevel.GUEST, ["clearcharacterimages","cci"], "Clear character images", "", "", function (params) {
 
       log("Starting characters cleanup...");
       var charPath = clientDir+'plugins/game/images/characters';
@@ -92,7 +92,7 @@ var ConsoleHandler = Class.extend({
       log("All characters cleared!");
     });
 
-    this.AddCommand(this.AccessLevel.GUEST, ["clearzonedata","czd"], "Clear zone data", "", "", function (params) {
+    this.addCommand(this.accessLevel.GUEST, ["clearzonedata","czd"], "Clear zone data", "", "", function (params) {
 
       if ( !params[0] ) {
         log("Need zone!");
@@ -128,7 +128,7 @@ var ConsoleHandler = Class.extend({
     });
 
 
-    this.AddCommand(this.AccessLevel.GUEST, ["log"], "Log variable", "string", "", function(params) {
+    this.addCommand(this.accessLevel.GUEST, ["log"], "Log variable", "string", "", function(params) {
       if (!params) {
         log('log what?');
       } else {
@@ -136,7 +136,7 @@ var ConsoleHandler = Class.extend({
       }
     });
 
-    this.AddCommand(this.AccessLevel.GUEST, ["items"], "Log variable", "string", "", function (params) {
+    this.addCommand(this.accessLevel.GUEST, ["items"], "Log variable", "string", "", function (params) {
 
       for(var z in worldHandler.world) {
         for(var cx in worldHandler.world[z]) {
@@ -167,7 +167,7 @@ var ConsoleHandler = Class.extend({
 
     });
 
-    this.AddCommand(this.AccessLevel.GUEST, ["uss"], "Unit stress test", "", "", function (params) {
+    this.addCommand(this.accessLevel.GUEST, ["uss"], "Unit stress test", "", "", function (params) {
 
       // Stress unit test ;)
 
@@ -200,7 +200,7 @@ var ConsoleHandler = Class.extend({
     // Forum & site maintenance
     //
 
-    this.AddCommand(this.AccessLevel.GUEST, ["cfb"], "Clear forum board", "boardId time", "", function (params) {
+    this.addCommand(this.accessLevel.GUEST, ["cfb"], "Clear forum board", "boardId time", "", function (params) {
 
       console.log(params);
       mysql.query('SELECT * FROM forum_boards WHERE id = ?', [params[0]],
@@ -241,7 +241,7 @@ var ConsoleHandler = Class.extend({
     });
 
 
-    this.AddCommand(this.AccessLevel.GUEST, ["status"], "Server status", "string", "", function (params) {
+    this.addCommand(this.accessLevel.GUEST, ["status"], "Server status", "string", "", function (params) {
 
       var sockets = io.sockets.clients();
       log("Players connected: "+sockets.length);
@@ -294,7 +294,7 @@ var ConsoleHandler = Class.extend({
     this.accessLevel = level;
   },
   resetAccess: function() {
-    this.accessLevel = this.AccessLevel.GUEST;
+    this.accessLevel = this.accessLevel.GUEST;
   },
   exec: function(string) {
     var params = string.split(/(".*?")/);
@@ -326,7 +326,7 @@ var ConsoleHandler = Class.extend({
       console.log("That command does not exist!");
     }
 
-    this.ResetAccess();
+    this.resetAccess();
   }
 });
 
