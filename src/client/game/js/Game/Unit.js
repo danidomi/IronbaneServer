@@ -379,9 +379,9 @@ var Unit = PhysicsObject.extend({
     this._super();
 
   },
-  DisplayUVFrame: function(indexH, indexV, numberOfSpritesH, numberOfSpritesV, mirror) {
+  displayUVFrame: function(indexH, indexV, numberOfSpritesH, numberOfSpritesV, mirror) {
     if  ( !this.mesh ) return;
-    DisplayUVFrame(this.mesh, indexH, indexV, numberOfSpritesH, numberOfSpritesV, mirror);
+    displayUVFrame(this.mesh, indexH, indexV, numberOfSpritesH, numberOfSpritesV, mirror);
   },
   tick: function(dTime) {
 

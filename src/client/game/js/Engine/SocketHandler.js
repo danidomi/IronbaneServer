@@ -69,7 +69,7 @@ var SocketHandler = Class.extend({
             });
 
             this.socket.on('say', function(data) {
-                var unit = FindUnit(data.id);
+                var unit = findUnit(data.id);
 
                 if (unit) {
                     ironbane.unitList.push(new ChatBubble(unit, data['message']));
@@ -285,7 +285,7 @@ var SocketHandler = Class.extend({
         this.socket.on('doJump', function(data) {
             //if ( !socketHandler.loggedIn ) return;
 
-            var unit = FindUnit(data.id);
+            var unit = findUnit(data.id);
 
             unit.jump();
 
@@ -296,7 +296,7 @@ var SocketHandler = Class.extend({
         // this.socket.on('foundHeartPiece', function (data) {
         //     //if ( !socketHandler.loggedIn ) return;
 
-        //     var unit = FindUnit(data.id);
+        //     var unit = findUnit(data.id);
 
         //     if ( unit == ironbane.player ) {
 
@@ -313,7 +313,7 @@ var SocketHandler = Class.extend({
         this.socket.on('toggle', function(data) {
             //if ( !socketHandler.loggedIn ) return;
 
-            var unit = FindUnit(data.id);
+            var unit = findUnit(data.id);
 
             if (unit && unit instanceof ToggleableObstacle) {
                 unit.toggle(data['on']);
@@ -328,12 +328,12 @@ var SocketHandler = Class.extend({
 
 
             if (!_.isUndefined(data['fu'])) {
-                var unit = FindUnit(data['fu']);
+                var unit = findUnit(data['fu']);
                 particleHandler.add(ParticleTypeEnum[data['p']], {
                     followUnit: unit
                 });
             } else if (!_.isUndefined(data['pfu'])) {
-                var unit = FindUnit(data['pfu']);
+                var unit = findUnit(data['pfu']);
                 particleHandler.add(ParticleTypeEnum[data['p']], {
                     particleFollowUnit: unit
                 });
@@ -349,7 +349,7 @@ var SocketHandler = Class.extend({
         this.socket.on('addProjectile', function(data) {
             //if ( !socketHandler.loggedIn ) return;
 
-            var unit = FindUnit(data['o']);
+            var unit = findUnit(data['o']);
 
             // if ( !data['p'] || _.isUndefined(ProjectileTypeEnum[data['p']]) ) ba('Bad projectile type');
 
@@ -381,7 +381,7 @@ var SocketHandler = Class.extend({
         this.socket.on('updateClothes', function(data) {
             //if ( !socketHandler.loggedIn ) return;
 
-            var unit = FindUnit(data.id);
+            var unit = findUnit(data.id);
 
             unit.appearance.head = data['head'];
             unit.appearance.body = data['body'];
@@ -394,7 +394,7 @@ var SocketHandler = Class.extend({
         this.socket.on('updateWeapon', function(data) {
             //if ( !socketHandler.loggedIn ) return;
 
-            var unit = FindUnit(data.id);
+            var unit = findUnit(data.id);
 
             unit.updateWeapon(data['weapon']);
 
@@ -422,7 +422,7 @@ var SocketHandler = Class.extend({
 
         this.socket.on('respawn', function(data) {
 
-            var unit = FindUnit(data.id);
+            var unit = findUnit(data.id);
 
             if (unit) {
 
@@ -476,12 +476,12 @@ var SocketHandler = Class.extend({
         //        this.socket.on('doSwing', function (data) {
         //            //if ( !socketHandler.loggedIn ) return;
         //
-        //            var unit = FindUnit(data.id);
+        //            var unit = findUnit(data.id);
         //
         //            unit.swingWeapon();
         //        });
         // this.socket.on('swingWeapon', function (data) {
-        //     var attacker = FindUnit(data.id);
+        //     var attacker = findUnit(data.id);
 
         //     var weapon = !_.isUndefined(data.w) ? items[data.w] : null;
 
@@ -498,7 +498,7 @@ var SocketHandler = Class.extend({
         // });
 
         this.socket.on('setStat', function(data) {
-            var unit = FindUnit(data.id);
+            var unit = findUnit(data.id);
 
             if (unit) {
                 if (data['s'] == 'h') {
@@ -566,8 +566,8 @@ var SocketHandler = Class.extend({
         this.socket.on('getMeleeHit', function(data) {
             //if ( !socketHandler.loggedIn ) return;
 
-            var victim = FindUnit(data['victim']);
-            var attacker = FindUnit(data['attacker']);
+            var victim = findUnit(data['victim']);
+            var attacker = findUnit(data['attacker']);
 
             victim.setHealth(data['h']);
 
@@ -782,7 +782,7 @@ var SocketHandler = Class.extend({
 
             for (var x = 0; x < snapshot.length; x++) {
                 var unitdata = snapshot[x];
-                var unit = FindUnit(unitdata.id);
+                var unit = findUnit(unitdata.id);
                 if (unit) {
                     if (unit != ironbane.player) {
 
@@ -803,7 +803,7 @@ var SocketHandler = Class.extend({
 
 
                         if (!_.isUndefined(unitdata.u)) {
-                            unit.unitStandingOn = FindUnit(unitdata.u);
+                            unit.unitStandingOn = findUnit(unitdata.u);
                         } else {
                             unit.unitStandingOn = null;
                         }

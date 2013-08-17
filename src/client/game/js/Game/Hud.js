@@ -179,7 +179,7 @@ var HUDHandler = Class.extend({
             checkSoundToggle(!hudHandler.allowSound);
         });
     },
-    ShowMainMenuHUD: function() {
+    showMainMenuHUD: function() {
         $("#versionNumber, #devNews, #logo, #loadingBar").show();
     },
     makeSlotSpace: function(isLoot) {

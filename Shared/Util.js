@@ -268,7 +268,7 @@ if ( !SERVER ) {
     return new THREE.Vector3(x,y,z);
   }
 
-  function FindUnit(id) {
+  function findUnit(id) {
     if ( !id ) return null;
 
     if ( ironbane.player && ironbane.player.id == id ) return ironbane.player;
@@ -352,7 +352,7 @@ if ( !SERVER ) {
   //            return false;
   //        }
 
-  function DisplayUVFrame(mesh, indexH, indexV, numberOfSpritesH, numberOfSpritesV, mirror) {
+  function displayUVFrame(mesh, indexH, indexV, numberOfSpritesH, numberOfSpritesV, mirror) {
 
     mirror = mirror || false;
 

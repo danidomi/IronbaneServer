@@ -83,7 +83,7 @@ IronbaneApp
                 return;
             }
 
-            var bgcolor = $window.colorEnum.LIGHTBLUE;
+            var bgcolor = $window.ColorEnum.LIGHTBLUE;
             this.scene = new $window.THREE.Scene();
             this.octree = new $window.THREE.Octree();
             this.camera = new $window.THREE.PerspectiveCamera(75, $window.innerWidth / $window.innerHeight, 0.1, 100000);

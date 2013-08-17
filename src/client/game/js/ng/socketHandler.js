@@ -30,7 +30,7 @@ IronbaneApp
         });
 
         socket.on('say', function(data) {
-            var unit = FindUnit(data.id);
+            var unit = findUnit(data.id);
 
             if (unit) {
                 ironbane.unitList.push(new ChatBubble(unit, data.message));
@@ -54,12 +54,12 @@ IronbaneApp
         });
 
         socket.on('doJump', function(data) {
-            var unit = FindUnit(data.id);
+            var unit = findUnit(data.id);
             unit.jump();
         });
 
         socket.on('toggle', function(data) {
-            var unit = FindUnit(data.id);
+            var unit = findUnit(data.id);
             if (unit && unit instanceof ToggleableObstacle) {
                 unit.toggle(data['on']);
             }
@@ -69,12 +69,12 @@ IronbaneApp
             var unit;
 
             if (angular.isDefined(data.fu)) {
-                unit = FindUnit(data.fu);
+                unit = findUnit(data.fu);
                 particleHandler.add(ParticleTypeEnum[data.p], {
                     followUnit: unit
                 });
             } else if (angular.isDefined(data.pfu)) {
-                unit = FindUnit(data.pfu);
+                unit = findUnit(data.pfu);
                 particleHandler.add(ParticleTypeEnum[data.p], {
                     particleFollowUnit: unit
                 });
@@ -86,7 +86,7 @@ IronbaneApp
         });
 
         socket.on('addProjectile', function(data) {
-            var unit = FindUnit(data.o);
+            var unit = findUnit(data.o);
 
             if (unit) {
                 // Alter the start position to cope with lag
@@ -110,7 +110,7 @@ IronbaneApp
         });
 
         socket.on('updateClothes', function(data) {
-            var unit = FindUnit(data.id);
+            var unit = findUnit(data.id);
 
             unit.appearance.head = data.head;
             unit.appearance.body = data.body;
@@ -120,7 +120,7 @@ IronbaneApp
         });
 
         socket.on('updateWeapon', function(data) {
-            var unit = FindUnit(data.id);
+            var unit = findUnit(data.id);
             unit.updateWeapon(data.weapon);
         });
 
@@ -142,7 +142,7 @@ IronbaneApp
         });
 
         socket.on('respawn', function(data) {
-            var unit = FindUnit(data.id);
+            var unit = findUnit(data.id);
 
             if (unit) {
                 unit.health = data.h;
@@ -179,7 +179,7 @@ IronbaneApp
         });
 
         socket.on('setStat', function(data) {
-            var unit = FindUnit(data.id);
+            var unit = findUnit(data.id);
 
             if (unit) {
                 if (data.s === 'h') {
@@ -235,8 +235,8 @@ IronbaneApp
         });
 
         socket.on('getMeleeHit', function(data) {
-            var victim = FindUnit(data.victim);
-            var attacker = FindUnit(data.attacker);
+            var victim = findUnit(data.victim);
+            var attacker = findUnit(data.attacker);
 
             victim.setHealth(data.h);
             victim.setArmor(data.a);
@@ -406,7 +406,7 @@ IronbaneApp
         socket.on('snapshot', function(snapshot) {
             for (var x = 0; x < snapshot.length; x++) {
                 var unitdata = snapshot[x];
-                var unit = FindUnit(unitdata.id);
+                var unit = findUnit(unitdata.id);
                 if (unit) {
                     if (unit !== ironbane.player) {
                         if (angular.isDefined(unitdata.p)) {
@@ -428,7 +428,7 @@ IronbaneApp
                         }
 
                         if (angular.isDefined(unitdata.u)) {
-                            unit.unitStandingOn = FindUnit(unitdata.u);
+                            unit.unitStandingOn = findUnit(unitdata.u);
                         } else {
                             unit.unitStandingOn = null;
                         }
