@@ -18,7 +18,7 @@ IronbaneApp
     .factory('socketHandler', ['$log', 'socket', function($log, socket) {
         // this factory function should be a singleton, the returned object however wouldn't be
         socket.on('chatMessage', function(data) {
-            hudHandler.AddChatMessage(data);
+            hudHandler.addChatMessage(data);
         });
 
         socket.on('bigMessage', function(data) {
@@ -26,7 +26,7 @@ IronbaneApp
         });
 
         socket.on('cutscene', function(id) {
-            cinema.PlayCutscene(id);
+            cinema.playCutscene(id);
         });
 
         socket.on('say', function(data) {
@@ -43,25 +43,25 @@ IronbaneApp
                 ironbane.unitList[u].Destroy();
             }
             ironbane.unitList = [];
-            terrainHandler.Destroy();
+            terrainHandler.destroy();
             ironbane.player = null;
             //socketHandler.loggedIn = false;
 
             if (!noDisconnectTrigger) {
                 //socketHandler.serverOnline = false;
-                hudHandler.MessageAlert('It appears the server crashed! Either that, or there is something wrong with your internet connection. I\'m terribly sorry about that.<br><br>In case the server crashed, an auto-restart will most-likely occur. Please refresh the page in a few seconds.', 'nobutton');
+                hudHandler.messageAlert('It appears the server crashed! Either that, or there is something wrong with your internet connection. I\'m terribly sorry about that.<br><br>In case the server crashed, an auto-restart will most-likely occur. Please refresh the page in a few seconds.', 'nobutton');
             }
         });
 
         socket.on('doJump', function(data) {
             var unit = FindUnit(data.id);
-            unit.Jump();
+            unit.jump();
         });
 
         socket.on('toggle', function(data) {
             var unit = FindUnit(data.id);
             if (unit && unit instanceof ToggleableObstacle) {
-                unit.Toggle(data['on']);
+                unit.toggle(data['on']);
             }
         });
 
@@ -70,16 +70,16 @@ IronbaneApp
 
             if (angular.isDefined(data.fu)) {
                 unit = FindUnit(data.fu);
-                particleHandler.Add(ParticleTypeEnum[data.p], {
+                particleHandler.add(ParticleTypeEnum[data.p], {
                     followUnit: unit
                 });
             } else if (angular.isDefined(data.pfu)) {
                 unit = FindUnit(data.pfu);
-                particleHandler.Add(ParticleTypeEnum[data.p], {
+                particleHandler.add(ParticleTypeEnum[data.p], {
                     particleFollowUnit: unit
                 });
             } else if (angular.isDefined(data.pos)) {
-                particleHandler.Add(ParticleTypeEnum[data.p], {
+                particleHandler.add(ParticleTypeEnum[data.p], {
                     position: convertVector3(data.pos)
                 });
             }
@@ -100,7 +100,7 @@ IronbaneApp
             var target = convertVector3(data.t);
 
             if (data.sw) {
-                unit.SwingWeapon(target, weapon);
+                unit.swingWeapon(target, weapon);
             }
 
             var particle = new Projectile(convertVector3(data.s), target, unit, data.w);
@@ -116,26 +116,26 @@ IronbaneApp
             unit.appearance.body = data.body;
             unit.appearance.feet = data.feet;
 
-            unit.UpdateClothes();
+            unit.updateClothes();
         });
 
         socket.on('updateWeapon', function(data) {
             var unit = FindUnit(data.id);
-            unit.UpdateWeapon(data.weapon);
+            unit.updateWeapon(data.weapon);
         });
 
         socket.on('receiveItem', function(data) {
             // todo: reference this...
             socketHandler.playerData.items.push(data);
 
-            hudHandler.ReloadInventory();
+            hudHandler.reloadInventory();
         });
 
         socket.on('lootFromBag', function(data) {
             // occurs when someone nearby loots from a bag
             // refresh the bag
             //$log.log('lootFromBag REPLY:', data);
-            hudHandler.ReloadInventory();
+            hudHandler.reloadInventory();
             if (ironbane.player.canLoot) {
                 ironbane.player.lootItems = data.loot;
             }
@@ -161,20 +161,20 @@ IronbaneApp
                         }, 100);
 
                         socketHandler.readyToReceiveUnits = false;
-                        terrainHandler.ChangeZone(data.z);
+                        terrainHandler.changeZone(data.z);
                         ironbane.player.unitStandingOn = null;
 
-                        hudHandler.ShowHUD();
-                        hudHandler.MakeHealthBar(true);
+                        hudHandler.showHUD();
+                        hudHandler.makeHealthBar(true);
 
-                        hudHandler.ReloadInventory();
+                        hudHandler.reloadInventory();
                     });
                 }
 
                 unit.canMove = true;
                 unit.dead = false;
 
-                unit.Respawn();
+                unit.respawn();
             }
         });
 
@@ -184,28 +184,28 @@ IronbaneApp
             if (unit) {
                 if (data.s === 'h') {
                     //unit.health = data['h'];
-                    unit.SetHealth(data.h, data.np);
+                    unit.setHealth(data.h, data.np);
                     if (unit === ironbane.player) {
-                        hudHandler.MakeHealthBar(true);
+                        hudHandler.makeHealthBar(true);
                     }
                 }
                 if (data.s === 'a') {
                     //unit.armor = data['a'];
-                    unit.SetArmor(data.a, data.np);
+                    unit.setArmor(data.a, data.np);
                     if (unit === ironbane.player) {
-                        hudHandler.MakeArmorBar(true);
+                        hudHandler.makeArmorBar(true);
                     }
                 }
                 if (data.s === 'hm') {
                     unit.healthMax = data.hm;
                     if (unit === ironbane.player) {
-                        hudHandler.MakeHealthBar(true);
+                        hudHandler.makeHealthBar(true);
                     }
                 }
                 if (data.s === 'am') {
                     unit.armorMax = data.am;
                     if (unit === ironbane.player) {
-                        hudHandler.MakeArmorBar(true);
+                        hudHandler.makeArmorBar(true);
                     }
                 }
             }
@@ -227,7 +227,7 @@ IronbaneApp
 
                 socketHandler.readyToReceiveUnits = false;
 
-                terrainHandler.ChangeZone(data.zone);
+                terrainHandler.changeZone(data.zone);
 
                 ironbane.player.localPosition.copy(data.pos);
                 ironbane.player.unitStandingOn = null;
@@ -238,9 +238,9 @@ IronbaneApp
             var victim = FindUnit(data.victim);
             var attacker = FindUnit(data.attacker);
 
-            victim.SetHealth(data.h);
-            victim.SetArmor(data.a);
-            victim.GetMeleeHit(attacker);
+            victim.setHealth(data.h);
+            victim.setArmor(data.a);
+            victim.getMeleeHit(attacker);
         });
 
         socket.on('setTileHeight', function(array) {
@@ -250,7 +250,7 @@ IronbaneApp
 
             for (var d = 0; d < array.length; d++) {
                 var data = array[d];
-                levelEditor.SetTileHeight(data.tx, data.tz, data.height, false, false, true);
+                levelEditor.setTileHeight(data.tx, data.tz, data.height, false, false, true);
             }
         });
 
@@ -259,7 +259,7 @@ IronbaneApp
                 return;
             }
 
-            levelEditor.SetTileImage(data.tx, data.tz, data.image, false, true);
+            levelEditor.setTileImage(data.tx, data.tz, data.image, false, true);
         });
 
         socket.on('removeUnit', function(data) {
@@ -274,9 +274,9 @@ IronbaneApp
         });
 
         socket.on('addModel', function(data) {
-            hudHandler.AddChatMessage('Adding model...');
+            hudHandler.addChatMessage('Adding model...');
 
-            levelEditor.PlaceModel(convertVector3(data.position),
+            levelEditor.placeModel(convertVector3(data.position),
                 data.rX,
                 data.rY,
                 data.rZ,
@@ -291,19 +291,19 @@ IronbaneApp
                 _.extend(preMeshes[data.id], data.metadata);
 
                 cellPos = WorldToCellCoordinates(data.pos.x, data.pos.z, cellSize);
-                _.each(terrainHandler.GetCellByGridPosition(cellPos.x, cellPos.z).objectData, function(obj) {
+                _.each(terrainHandler.getCellByGridPosition(cellPos.x, cellPos.z).objectData, function(obj) {
                     if (obj.metadata && convertVector3(obj).equals(convertVector3(data.pos).Round())) {
                         _.extend(obj.metadata, data.metadata);
                     }
                 });
 
                 _.each(terrainHandler.cells, function(cell) {
-                    cell.ReloadObjectsOnly();
+                    cell.reloadObjectsOnly();
                 });
             } else {
                 cellPos = WorldToCellCoordinates(data.pos.x, data.pos.z, cellSize);
 
-                _.each(terrainHandler.GetCellByGridPosition(cellPos.x, cellPos.z).objectData, function(obj) {
+                _.each(terrainHandler.getCellByGridPosition(cellPos.x, cellPos.z).objectData, function(obj) {
                     if (_.isEmpty(data.metadata)) {
                         delete obj.metadata;
                     }
@@ -323,7 +323,7 @@ IronbaneApp
 
                             cell.objects = _.without(cell.objects, obj);
 
-                            obj.Destroy();
+                            obj.destroy();
 
                             setTimeout(function() {
                                 var unit = new Mesh(convertVector3(data.pos), rotation, 0, param, data.metadata);
@@ -338,7 +338,7 @@ IronbaneApp
 
         socket.on('deleteModel', function(pos) {
             pos = convertVector3(pos).Round(2);
-            hudHandler.AddChatMessage("Removing model...");
+            hudHandler.addChatMessage("Removing model...");
 
             // Check
             _.each(terrainHandler.cells, function(cell) {
@@ -346,17 +346,17 @@ IronbaneApp
                     if (obj.position.clone().Round(2).equals(pos)) {
                         cell.objects = _.without(cell.objects, obj);
                         var cellPos = WorldToCellCoordinates(obj.position.x, obj.position.z, cellSize);
-                        var objInList = _.find(terrainHandler.GetCellByGridPosition(cellPos.x, cellPos.z).objectData, function(otherObj) {
+                        var objInList = _.find(terrainHandler.getCellByGridPosition(cellPos.x, cellPos.z).objectData, function(otherObj) {
                             return obj.position.clone().Round(2).equals(convertVector3(otherObj));
                         });
 
                         if (objInList) {
-                            var temp = terrainHandler.GetCellByGridPosition(cellPos.x, cellPos.z).objectData;
+                            var temp = terrainHandler.getCellByGridPosition(cellPos.x, cellPos.z).objectData;
                             temp =
                                 _.without(temp, objInList);
                         }
 
-                        obj.Destroy();
+                        obj.destroy();
                     }
                 });
 
@@ -372,10 +372,10 @@ IronbaneApp
             });
 
             if (!le("globalEnable")) {
-                terrainHandler.GetCellByWorldPosition(pos).Reload();
+                terrainHandler.getCellByWorldPosition(pos).Reload();
             }
 
-            terrainHandler.RebuildOctree();
+            terrainHandler.rebuildOctree();
         });
 
         // Pathfinding
@@ -384,7 +384,7 @@ IronbaneApp
                 return;
             }
 
-            nodeHandler.AddNode(0, data.id, convertVector3(data.pos));
+            nodeHandler.addNode(0, data.id, convertVector3(data.pos));
         });
 
         socket.on('ppAddEdge', function(data) {
@@ -392,7 +392,7 @@ IronbaneApp
                 return;
             }
 
-            nodeHandler.AddEdge(0, data.from, data.to, data.twoway);
+            nodeHandler.addEdge(0, data.from, data.to, data.twoway);
         });
 
         socket.on('ppDeleteNode', function(data) {
@@ -400,7 +400,7 @@ IronbaneApp
                 return;
             }
 
-            nodeHandler.DeleteNode(0, data.id);
+            nodeHandler.deleteNode(0, data.id);
         });
 
         socket.on('snapshot', function(snapshot) {
@@ -486,16 +486,16 @@ IronbaneApp
                     ironbane.showingGame = false;
                 }, 100);
 
-                terrainHandler.ChangeZone(reply.zone);
+                terrainHandler.changeZone(reply.zone);
 
                 self.inGame = true;
 
                 if (reply.editor) {
                     showEditor = true;
-                    levelEditor.Start();
+                    levelEditor.start();
                 }
 
-                hudHandler.MakeSlotItems(false);
+                hudHandler.makeSlotItems(false);
             });
         };
 
