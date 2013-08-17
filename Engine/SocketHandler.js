@@ -1431,9 +1431,9 @@ var SocketHandler = Class.extend({
                 var cellPos = WorldToCellCoordinates(data.position.x, data.position.z, cellSize);
 
 
-                if ( !ISDEF(worldHandler.world[zone]) ) return;
-                if ( !ISDEF(worldHandler.world[zone][cellPos.x]) ) return;
-                if ( !ISDEF(worldHandler.world[zone][cellPos.x][cellPos.z]) ) return;
+                if ( _.isUndefined(worldHandler.world[zone]) ) return;
+                if ( _.isUndefined(worldHandler.world[zone][cellPos.x]) ) return;
+                if ( _.isUndefined(worldHandler.world[zone][cellPos.x][cellPos.z]) ) return;
 
 
                 data.x = data.position.x;
@@ -1443,13 +1443,13 @@ var SocketHandler = Class.extend({
 
 
 
-                if ( !ISDEF(data.param) ) data.param = 0;
+                if ( _.isUndefined(data.param) ) data.param = 0;
 
 
                 data.param = parseInt(data.param, 10);
 
 
-                if ( !ISDEF(data.data) ) {
+                if ( _.isUndefined(data.data) ) {
                     data.data = null;
                 }
 
@@ -1498,11 +1498,11 @@ var SocketHandler = Class.extend({
                 var cellPos = WorldToCellCoordinates(pos.x, pos.z, cellSize);
 
 
-                if ( !ISDEF(worldHandler.world[zone]) ) return;
-                if ( !ISDEF(worldHandler.world[zone][cellPos.x]) ) return;
-                if ( !ISDEF(worldHandler.world[zone][cellPos.x][cellPos.z]) ) return;
+                if ( _.isUndefined(worldHandler.world[zone]) ) return;
+                if ( _.isUndefined(worldHandler.world[zone][cellPos.x]) ) return;
+                if ( _.isUndefined(worldHandler.world[zone][cellPos.x][cellPos.z]) ) return;
 
-                if ( !ISDEF(worldHandler.world[zone][cellPos.x][cellPos.z].changeBuffer) ) {
+                if ( _.isUndefined(worldHandler.world[zone][cellPos.x][cellPos.z].changeBuffer) ) {
                     worldHandler.world[zone][cellPos.x][cellPos.z].changeBuffer = [];
                 }
 
@@ -1559,9 +1559,9 @@ var SocketHandler = Class.extend({
                 var cellPos = WorldToCellCoordinates(data.x, data.z, cellSize);
 
 
-                if ( !ISDEF(worldHandler.world[zone]) ) return;
-                if ( !ISDEF(worldHandler.world[zone][cellPos.x]) ) return;
-                if ( !ISDEF(worldHandler.world[zone][cellPos.x][cellPos.z]) ) return;
+                if ( _.isUndefined(worldHandler.world[zone]) ) return;
+                if ( _.isUndefined(worldHandler.world[zone][cellPos.x]) ) return;
+                if ( _.isUndefined(worldHandler.world[zone][cellPos.x][cellPos.z]) ) return;
 
 
                 var foundOnBuffer = false;
@@ -1581,7 +1581,7 @@ var SocketHandler = Class.extend({
                 }
 
                 if ( !foundOnBuffer ) {
-                    if ( !ISDEF(worldHandler.world[zone][cellPos.x][cellPos.z].deleteBuffer) ) {
+                    if ( _.isUndefined(worldHandler.world[zone][cellPos.x][cellPos.z].deleteBuffer) ) {
                         worldHandler.world[zone][cellPos.x][cellPos.z].deleteBuffer = [];
                     }
                     worldHandler.world[zone][cellPos.x][cellPos.z].deleteBuffer.push(data);
@@ -1613,9 +1613,9 @@ var SocketHandler = Class.extend({
                     worldHandler.generateCell(zone, cellPos.x, cellPos.z);
                 }
 
-                if ( !ISDEF(worldHandler.world[zone]) ) return;
-                if ( !ISDEF(worldHandler.world[zone][cellPos.x]) ) return;
-                if ( !ISDEF(worldHandler.world[zone][cellPos.x][cellPos.z]) ) return;
+                if ( _.isUndefined(worldHandler.world[zone]) ) return;
+                if ( _.isUndefined(worldHandler.world[zone][cellPos.x]) ) return;
+                if ( _.isUndefined(worldHandler.world[zone][cellPos.x][cellPos.z]) ) return;
 
                 // Just add the object, and save it. Clients should automatically add it
                 worldHandler.world[zone][cellPos.x][cellPos.z].objects.push({
@@ -1651,7 +1651,7 @@ var SocketHandler = Class.extend({
                         if ( cz.graph === undefined ) return;
                         if ( cz.graph.nodes === undefined ) return;
                         _.each(cz.graph.nodes, function(node) {
-                            if ( VectorDistanceSq(convertVector3(node.pos), position) < 1 ) {
+                            if ( vectorDistanceSq(convertVector3(node.pos), position) < 1 ) {
                                 existingNode = true;
                             }
                         });
@@ -1750,9 +1750,9 @@ var SocketHandler = Class.extend({
                 var cellPos = WorldToCellCoordinates(data.position.x, data.position.z, cellSize);
 
 
-                if ( !ISDEF(worldHandler.world[zone]) ) return;
-                if ( !ISDEF(worldHandler.world[zone][cellPos.x]) ) return;
-                if ( !ISDEF(worldHandler.world[zone][cellPos.x][cellPos.z]) ) return;
+                if ( _.isUndefined(worldHandler.world[zone]) ) return;
+                if ( _.isUndefined(worldHandler.world[zone][cellPos.x]) ) return;
+                if ( _.isUndefined(worldHandler.world[zone][cellPos.x][cellPos.z]) ) return;
 
                 // Just add the object, and save it. Clients should automatically add it
                 worldHandler.world[zone][cellPos.x][cellPos.z].objects.push({
@@ -1828,7 +1828,7 @@ var SocketHandler = Class.extend({
                     // Check if the teleports are way off
                     var errorMargin = 10;
 
-                    if ( ISDEF(data.u) ) {
+                    if ( !_.isUndefined(data.u) ) {
                         socket.unit.localPosition.copy(p);
                         socket.unit.standingOnUnitId = data.u;
 
@@ -1870,7 +1870,7 @@ var SocketHandler = Class.extend({
     },
     isLoggedIn: function(socket) {
 
-        return ISDEF(socket.unit);
+        return !_.isUndefined(socket.unit);
 
     }
 });

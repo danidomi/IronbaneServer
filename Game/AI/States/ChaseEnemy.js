@@ -68,7 +68,7 @@ var ChaseEnemy = State.extend({
 
     if ( (((this.enemy.id > 0 && (this.enemy.socket.disconnected || this.enemy.chInvisibleByMonsters) ) ||
       this.enemy.health <= 0 ||
-      this.chaseTimeBeforeGivingUp <= 0 || (npc.template.spawnguardradius > 0 && VectorDistance(npc.startPosition, npc.position) > npc.template.spawnguardradius))
+      this.chaseTimeBeforeGivingUp <= 0 || (npc.template.spawnguardradius > 0 && vectorDistance(npc.startPosition, npc.position) > npc.template.spawnguardradius))
       && this.minimumChaseTime <= 0)
        ) {
 

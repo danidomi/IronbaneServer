@@ -501,7 +501,7 @@ var Unit = Class.extend({
       for(var z=cz-1;z<=cz+1;z++){
         if ( !worldHandler.checkWorldStructure(zone, x, z) ) continue;
 
-        if ( ISDEF(worldHandler.world[zone][x][z].units) ) {
+        if ( !_.isUndefined(worldHandler.world[zone][x][z].units) ) {
 
           var units = worldHandler.world[zone][x][z].units;
 

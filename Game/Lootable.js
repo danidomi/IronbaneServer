@@ -22,7 +22,7 @@ var Lootable = Unit.extend({
 
         // HACKY HACKY!!! See NPC
         // Set to the default template values
-        if (!ISDEF(this.param)) {
+        if (_.isUndefined(this.param)) {
           this.param = this.template.param;
         }
         // END HACKY
@@ -78,12 +78,12 @@ var Lootable = Unit.extend({
                 var templateId = null;
                 var chanceSplit = lootSplit[l].split(":");
 
-                if (WasLucky100(parseInt(chanceSplit[0], 10))) {
+                if (wasLucky100(parseInt(chanceSplit[0], 10))) {
                     templateId = parseInt(chanceSplit[1], 10);
                 }
 
                 if (templateId) {
-                    if (!ISDEF(dataHandler.items[templateId])) {
+                    if (_.isUndefined(dataHandler.items[templateId])) {
                         log("Warning! item " + templateId + " not found for Lootable " + this.id + "!");
                         continue;
                     }

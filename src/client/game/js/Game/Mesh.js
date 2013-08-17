@@ -134,11 +134,11 @@ var Mesh = Unit.extend({
 
           if ( me.inRangeOfPosition(obj.position, light.distance) ) {
             if ( obj.mesh ) {
-              if ( ISDEF(obj.mesh.material.needsUpdate) ) {
+              if ( !_.isUndefined(obj.mesh.material.needsUpdate) ) {
                 obj.mesh.material.needsUpdate = true;
               }
 
-              if ( ISDEF(obj.mesh.geometry.materials) ) {
+              if ( !_.isUndefined(obj.mesh.geometry.materials) ) {
                 _.each(obj.mesh.geometry.materials, function(material) {
                   material.needsUpdate = true;
                 });
@@ -235,10 +235,10 @@ var Mesh = Unit.extend({
 
     var tiles = [];
     for(var x=1;x<=10;x++){
-      if ( ISDEF(this.metadata["t"+x]) ) {
+      if ( !_.isUndefined(this.metadata["t"+x]) ) {
         tiles.push("tiles/"+this.metadata["t"+x]);
       }
-      else if ( ISDEF(this.meshData["t"+x]) ) {
+      else if ( !_.isUndefined(this.meshData["t"+x]) ) {
         tiles.push(this.meshData["t"+x]);
       }
       else {
@@ -248,10 +248,10 @@ var Mesh = Unit.extend({
 
     var uvscale = [];
     for(var x=1;x<=10;x++){
-      if ( ISDEF(this.metadata["ts"+x]) ) {
+      if ( !_.isUndefined(this.metadata["ts"+x]) ) {
         uvscale.push(new THREE.Vector2(parseFloat(this.metadata["ts"+x]),parseFloat(this.metadata["ts"+x])));
       }
-      else if ( ISDEF(this.meshData["ts"+x]) ) {
+      else if ( !_.isUndefined(this.meshData["ts"+x]) ) {
         uvscale.push(new THREE.Vector2(parseFloat(this.meshData["ts"+x]),parseFloat(this.meshData["ts"+x])));
       }
       else {
@@ -369,7 +369,7 @@ var Mesh = Unit.extend({
 
 
 
-    if ( !ISDEF(this.startVertices) ) {
+    if ( _.isUndefined(this.startVertices) ) {
       this.startVertices = [];
 
       _.each(this.mesh.geometry.vertices, function(vertex) {

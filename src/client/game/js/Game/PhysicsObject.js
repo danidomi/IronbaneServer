@@ -297,7 +297,7 @@ var PhysicsObject = Class.extend({
     getCellStandingOn: function() {
       var cp = WorldToCellCoordinates(this.position.x, this.position.z, cellSize);
 
-      var cellStandingOn = ISDEF(terrainHandler.cells[cp.x+"-"+cp.z]) ? terrainHandler.cells[cp.x+"-"+cp.z] : null;
+      var cellStandingOn = !_.isUndefined(terrainHandler.cells[cp.x+"-"+cp.z]) ? terrainHandler.cells[cp.x+"-"+cp.z] : null;
 
       return cellStandingOn;
     }

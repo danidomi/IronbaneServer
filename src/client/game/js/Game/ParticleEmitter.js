@@ -33,14 +33,14 @@ var ParticleEmitter = Class.extend({
         this.type = type;
         this.data = data;
 
-        this.delay = CheckForFunctionReturnValue(type.delay) || 0.0;
-        this.particleDelay = CheckForFunctionReturnValue(type.particleDelay) || 1.0;
-        this.count = CheckForFunctionReturnValue(type.count) || -1;
+        this.delay = checkForFunctionReturnValue(type.delay) || 0.0;
+        this.particleDelay = checkForFunctionReturnValue(type.particleDelay) || 1.0;
+        this.count = checkForFunctionReturnValue(type.count) || -1;
 
         // Used for keeping time between particle spawns
         this.spawnTimer = 0.0;
         this.spawnWaitTime = 0.0;
-        this.lifeTime = CheckForFunctionReturnValue(type.lifeTime) || -1;
+        this.lifeTime = checkForFunctionReturnValue(type.lifeTime) || -1;
         this.lifeTimer = 0.0;
 
         // System with empty geometry (we add it later)
@@ -48,7 +48,7 @@ var ParticleEmitter = Class.extend({
         this.particles = [];
 
         // Optional: addiitonal emitters to spawn when spawning this one (e.g. trails for a fireball)
-        this.children = CheckForFunctionReturnValue(type.children) || [];
+        this.children = checkForFunctionReturnValue(type.children) || [];
 
         // this.particleSystem.sortParticles = true;
 
@@ -76,28 +76,28 @@ var ParticleEmitter = Class.extend({
 
         this.count--;
 
-        //var particle = new THREE.Vertex(CheckForFunctionReturnValue(this.type.particleStartPosition).clone().addSelf(this.position));
+        //var particle = new THREE.Vertex(checkForFunctionReturnValue(this.type.particleStartPosition).clone().addSelf(this.position));
         var particle = {};
 
         particle.emitter = this;
 
-        var spawnOffset = CheckForFunctionReturnValue(this.type.particleSpawnOffset, this);
+        var spawnOffset = checkForFunctionReturnValue(this.type.particleSpawnOffset, this);
         particle.spawnOffset = spawnOffset ? spawnOffset.clone() : new THREE.Vector3();
 
 
         // Add spawnOffset unique to this instance
         particle.spawnOffset.addSelf(this.spawnOffset);
 
-        particle.localStartPosition = (CheckForFunctionReturnValue(this.type.particleStartPosition, this) || new THREE.Vector3());
+        particle.localStartPosition = (checkForFunctionReturnValue(this.type.particleStartPosition, this) || new THREE.Vector3());
         particle.startPosition = particle.localStartPosition.clone().addSelf(this.position).addSelf(particle.spawnOffset);
         particle.position = particle.startPosition.clone();
 
-        particle.rotation = CheckForFunctionReturnValue(this.type.particleStartRotation, this) || 0.0;
+        particle.rotation = checkForFunctionReturnValue(this.type.particleStartRotation, this) || 0.0;
 
-        var texture = CheckForFunctionReturnValue(this.type.texture, this);
+        var texture = checkForFunctionReturnValue(this.type.texture, this);
         particle.texture = texture;
 
-        particle.scale = (CheckForFunctionReturnValue(this.type.particleStartScale, particle) || new THREE.Vector2(1.0, 1.0)).clone().multiplyScalar(0.02);
+        particle.scale = (checkForFunctionReturnValue(this.type.particleStartScale, particle) || new THREE.Vector2(1.0, 1.0)).clone().multiplyScalar(0.02);
 
         if ( this.particleFollowUnit ) {
             if ( this.particleFollowUnit.size > 2 ) {
@@ -106,15 +106,15 @@ var ParticleEmitter = Class.extend({
         }
 
 
-        particle.velocity = (CheckForFunctionReturnValue(this.type.particleStartVelocity, particle) || new THREE.Vector3()).clone();
+        particle.velocity = (checkForFunctionReturnValue(this.type.particleStartVelocity, particle) || new THREE.Vector3()).clone();
 
-        particle.mass = CheckForFunctionReturnValue(this.type.particleMass, this) || 1.0;
+        particle.mass = checkForFunctionReturnValue(this.type.particleMass, this) || 1.0;
         particle.heading = new THREE.Vector3();
         particle.side = new THREE.Vector3();
-        particle.maxSpeed = CheckForFunctionReturnValue(this.type.particleMaxSpeed, this) || 5.0;
-        particle.maxForce = CheckForFunctionReturnValue(this.type.particleMaxForce, this) || 10.0;
-        particle.maxTurnRate = CheckForFunctionReturnValue(this.type.particleMaxTurnRate, this) || 0.5;
-        particle.enableGravity = CheckForFunctionReturnValue(this.type.particleEnableGravity, this) || false;
+        particle.maxSpeed = checkForFunctionReturnValue(this.type.particleMaxSpeed, this) || 5.0;
+        particle.maxForce = checkForFunctionReturnValue(this.type.particleMaxForce, this) || 10.0;
+        particle.maxTurnRate = checkForFunctionReturnValue(this.type.particleMaxTurnRate, this) || 0.5;
+        particle.enableGravity = checkForFunctionReturnValue(this.type.particleEnableGravity, this) || false;
 
 
 
@@ -124,11 +124,11 @@ var ParticleEmitter = Class.extend({
             //particle.followUnitPosition = particle.position.clone();
         }
 
-        particle.particleRotationSpeed = CheckForFunctionReturnValue(this.type.particleRotationSpeed, this) || 0.0;
-        particle.lifeTime = CheckForFunctionReturnValue(this.type.particleLifeTime, this) || 5.0;
+        particle.particleRotationSpeed = checkForFunctionReturnValue(this.type.particleRotationSpeed, this) || 0.0;
+        particle.lifeTime = checkForFunctionReturnValue(this.type.particleLifeTime, this) || 5.0;
         particle.lifeTimer = 0.0;
 
-        particle.particleScaleVelocity = (CheckForFunctionReturnValue(this.type.particleScaleVelocity, this) || new THREE.Vector2()).clone();
+        particle.particleScaleVelocity = (checkForFunctionReturnValue(this.type.particleScaleVelocity, this) || new THREE.Vector2()).clone();
 
 
 
@@ -206,7 +206,7 @@ var ParticleEmitter = Class.extend({
             this.spawnTimer = 0.0;
 
             // Set a new timelimit depending on the delay spawn time (which can be random)
-            this.spawnWaitTime = CheckForFunctionReturnValue(this.type.particleDelay, this) || 1.0;
+            this.spawnWaitTime = checkForFunctionReturnValue(this.type.particleDelay, this) || 1.0;
 
             // And add a particle
             this.addParticle();
@@ -220,7 +220,7 @@ var ParticleEmitter = Class.extend({
             //var particle = this.particleSystem.geometry.vertices[i];
             var particle = this.particles[i];
 
-            var steeringForce = (CheckForFunctionReturnValue(this.type.particleSteeringForce, particle) || new THREE.Vector3()).clone();
+            var steeringForce = (checkForFunctionReturnValue(this.type.particleSteeringForce, particle) || new THREE.Vector3()).clone();
 
             var acceleration = steeringForce.multiplyScalar(particle.mass);
             particle.velocity.addSelf(acceleration.multiplyScalar(dTime));
@@ -249,12 +249,12 @@ var ParticleEmitter = Class.extend({
 
 
 
-            particle.particleScaleSpeed = CheckForFunctionReturnValue(this.type.particleScaleSpeed, particle) || 0.0;
+            particle.particleScaleSpeed = checkForFunctionReturnValue(this.type.particleScaleSpeed, particle) || 0.0;
 
 
 
 
-            if ( !ISDEF(particle.opacityHack) ) {
+            if ( _.isUndefined(particle.opacityHack) ) {
                 particle.opacityHack = true;
             }
             else {
@@ -262,7 +262,7 @@ var ParticleEmitter = Class.extend({
                 particle.scale.addSelf(particle.particleScaleVelocity.clone().multiplyScalar(dTime));
             }
 
-            particle.sprite.opacity = CheckForFunctionReturnValue(this.type.particleOpacity, particle) || 1.0;
+            particle.sprite.opacity = checkForFunctionReturnValue(this.type.particleOpacity, particle) || 1.0;
 
 
             particle.sprite.rotation += particle.particleRotationSpeed * dTime;
@@ -284,7 +284,7 @@ var ParticleEmitter = Class.extend({
             }
 
 
-            var onTick = ISDEF(this.type.onTick) ? this.type.onTick : null;
+            var onTick = !_.isUndefined(this.type.onTick) ? this.type.onTick : null;
 
             if ( onTick ) onTick(dTime, particle, this);
 

@@ -225,7 +225,7 @@ var Player = Fighter.extend({
 
 
 
-          if ( ISDEF(reply.errmsg) ) {
+          if ( !_.isUndefined(reply.errmsg) ) {
             hudHandler.messageAlert(reply.errmsg);
             return;
           }
@@ -625,7 +625,7 @@ var Player = Fighter.extend({
 
 
 
-    //        if ( ISDEF(ironbane.unitList[0]) ) {
+    //        if ( !_.isUndefined(ironbane.unitList[0]) ) {
     //            var npc = ironbane.unitList[0];
     //
     //            this.position = npc.position;
@@ -900,7 +900,7 @@ var Player = Fighter.extend({
           sw: true
         }, function(reply) {
           //console.log('addProjectile reply', reply);
-          if (ISDEF(reply.errmsg)) {
+          if (!_.isUndefined(reply.errmsg)) {
             hudHandler.messageAlert(reply.errmsg);
             // hudHandler.showMenuScreen();
             return;
@@ -1084,7 +1084,7 @@ var Player = Fighter.extend({
 
       socketHandler.socket.emit('useItem', barIndex, function (reply) {
 
-        if ( ISDEF(reply.errmsg) ) {
+        if ( !_.isUndefined(reply.errmsg) ) {
           hudHandler.reloadInventory();
           hudHandler.messageAlert(reply.errmsg);
           return;

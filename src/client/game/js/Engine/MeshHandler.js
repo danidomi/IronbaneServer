@@ -72,10 +72,10 @@ var MeshHandler = Class.extend({
 
     var tiles = [];
     for(var x=1;x<=10;x++){
-      if ( ISDEF(metadata["t"+x]) ) {
+      if ( !_.isUndefined(metadata["t"+x]) ) {
         tiles.push("tiles/"+metadata["t"+x]);
       }
-      else if ( ISDEF(meshData["t"+x]) ) {
+      else if ( !_.isUndefined(meshData["t"+x]) ) {
         tiles.push(meshData["t"+x]);
       }
       else {
@@ -85,11 +85,11 @@ var MeshHandler = Class.extend({
 
     var uvscale = [];
     for(var x=1;x<=10;x++){
-      if ( ISDEF(metadata["ts"+x]) ) {
+      if ( !_.isUndefined(metadata["ts"+x]) ) {
         uvscale.push(new THREE.Vector2(
           parseFloat(metadata["ts"+x]),parseFloat(metadata["ts"+x])));
       }
-      else if ( ISDEF(meshData["ts"+x]) ) {
+      else if ( !_.isUndefined(meshData["ts"+x]) ) {
         uvscale.push(new THREE.Vector2(
           parseFloat(meshData["ts"+x]),parseFloat(meshData["ts"+x])));
       }

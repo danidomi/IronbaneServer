@@ -101,14 +101,14 @@ var NPC = Fighter.extend({
                 } else {
                     var chanceSplit = lootSplit[l].split(":");
 
-                    if (WasLucky100(parseInt(chanceSplit[0], 10))) {
+                    if (wasLucky100(parseInt(chanceSplit[0], 10))) {
                         item = parseInt(chanceSplit[1], 10);
                     }
                 }
 
                 if (item) {
 
-                    if (!ISDEF(dataHandler.items[item])) {
+                    if (_.isUndefined(dataHandler.items[item])) {
                         log("Warning! item " + item + " not found for NPC " + this.id + "!");
                         continue;
                     }

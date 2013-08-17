@@ -69,7 +69,7 @@ var Fighter = Actor.extend({
     },
   shootProjectile: function(targetPosition, swingWeapon, weaponID, aimError) {
 
-      aimError = ISDEF(aimError) ? aimError : 0;
+      aimError = !_.isUndefined(aimError) ? aimError : 0;
 
       // var offset = victim.velocity.clone().multiplyScalar(0.6);
       // var angle = getRandomFloat(0,getRandomFloat(0,1)) * Math.PI * 2;
@@ -81,7 +81,7 @@ var Fighter = Actor.extend({
       // offset.addSelf(new THREE.Vector3(Math.cos(angle)*aimError,
       //  0, Math.sin(angle)*aimError));
 
-      swingWeapon = ISDEF(swingWeapon) ? swingWeapon : true;
+      swingWeapon = !_.isUndefined(swingWeapon) ? swingWeapon : true;
       weaponID = weaponID || this.weapon.id;
 
       this.emitNearby("addProjectile", {

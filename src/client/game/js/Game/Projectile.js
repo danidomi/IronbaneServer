@@ -494,7 +494,7 @@ var Projectile = Unit.extend({
                     if ( list.length > 0 ) {
                         socketHandler.socket.emit('hit', {w:unit.weapon.id,l:list}, function (reply) {
 
-                            if ( ISDEF(reply.errmsg) ) {
+                            if ( !_.isUndefined(reply.errmsg) ) {
                                 hudHandler.messageAlert(reply.errmsg);
                                 return;
                             }
@@ -533,7 +533,7 @@ var Projectile = Unit.extend({
                     if ( list.length > 0 ) {
                         socketHandler.socket.emit('ghit', {w:unit.weapon.id,o:unit.owner.id}, function (reply) {
 
-                            if ( ISDEF(reply.errmsg) ) {
+                            if ( !_.isUndefined(reply.errmsg) ) {
                                 hudHandler.messageAlert(reply.errmsg);
                                 return;
                             }
@@ -642,7 +642,7 @@ var Projectile = Unit.extend({
             this.lifeTime = 0;
         }
 
-        if ( ISDEF(this.type.impactParticle) ) {
+        if ( !_.isUndefined(this.type.impactParticle) ) {
             if ( !(this.type.impactParticleOnUnitsOnly && hasHitTerrain) ) {
                 particleHandler.add(this.type.impactParticle, {
                     position:this.position.clone()
@@ -650,8 +650,8 @@ var Projectile = Unit.extend({
             }
         }
 
-        if ( ISDEF(this.type.impactSound) && !this.damageDone ) {
-            soundHandler.play(CheckForFunctionReturnValue(this.type.impactSound), this.position);
+        if ( !_.isUndefined(this.type.impactSound) && !this.damageDone ) {
+            soundHandler.play(checkForFunctionReturnValue(this.type.impactSound), this.position);
         }
 
     },

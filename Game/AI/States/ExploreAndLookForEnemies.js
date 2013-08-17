@@ -80,7 +80,7 @@ var ExploreAndLookForEnemies = State.extend({
 
 
             if ( npc.template.spawnguardradius > 0 ) {
-                if ( VectorDistance(npc.startPosition, npc.position) > npc.template.spawnguardradius ) this.walkBackTimeout = 3.0;
+                if ( vectorDistance(npc.startPosition, npc.position) > npc.template.spawnguardradius ) this.walkBackTimeout = 3.0;
 
                 if ( npc.walkBackTimeout > 0.0 ) {
                     // npc.steeringForce = npc.steeringBehaviour.seek(npc.startPosition);

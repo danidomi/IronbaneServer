@@ -296,7 +296,7 @@ if ( !SERVER ) {
   }
 
   function GetZoneConfig(string) {
-    if ( !ISDEF(zoneTypeConfig[zones[terrainHandler.zone]['type']][string]) ) {
+    if ( _.isUndefined(zoneTypeConfig[zones[terrainHandler.zone]['type']][string]) ) {
       bm('Error: \''+string+'\' not defined for zone '+zones[terrainHandler.zone].name+'!');
       return 0;
     }
@@ -446,12 +446,12 @@ function SetDataAll(obj, data) {
 }
 
 function CheckData(obj, names) {
-  if ( !ISDEF(obj) ) return false;
+  if ( _.isUndefined(obj) ) return false;
   if ( !obj ) return false;
 
   //for(var n in names) {
   for(var n=0;n<names.length;n++){
-    if ( !ISDEF(obj[names[n]]) ) return false;
+    if ( _.isUndefined(obj[names[n]]) ) return false;
   }
   return true;
 }
@@ -640,7 +640,7 @@ var sequencedTimers = {};
 function chooseSequenced(a) {
   var uid = "";
   for (var b in a) uid += b;
-  if ( !ISDEF(sequencedTimers[uid]) ) sequencedTimers[uid] = 0;
+  if ( _.isUndefined(sequencedTimers[uid]) ) sequencedTimers[uid] = 0;
   var value = a[sequencedTimers[uid]];
   sequencedTimers[uid]++;
   if ( sequencedTimers[uid] >= a.length ) sequencedTimers[uid] = 0;
@@ -650,21 +650,15 @@ function chooseSequenced(a) {
 function convertVector3(vec) {
   return new THREE.Vector3(vec.x, vec.y, vec.z);
 }
-function RawVector3(vec) {
+function rawVector3(vec) {
   return {x:vec.x, y:vec.y, z:vec.z};
 }
-
-
-function ISDEF(o) {
-  return typeof o !== "undefined";
-};
-
 
 function isNumber(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
-function CheckForFunctionReturnValue(v, data) {
+function checkForFunctionReturnValue(v, data) {
   return typeof(v)=="function"?v(data):v;
 }
 
@@ -697,25 +691,7 @@ THREE.Vector3.prototype.toDegrees = function(n) {
   return this;
 };
 
-function RoundVector(vec, n) {
-  vec.x = roundNumber(vec.x, n);
-  vec.y = roundNumber(vec.y, n);
-  vec.z = roundNumber(vec.z, n);
-  return vec;
-}
 
-/*
-Number.prototype.toBig = function() {
-  return this * 100;
-};
-THREE.Vector3.prototype.toBig = function(n) {
-  this.x = this.x * 100;
-  this.y = this.y * 100;
-  this.z = this.z * 100;
-
-  return this;
-};
-*/
 THREE.Vector3.prototype.truncate = function(n) {
   if ( this.length() > n ) {
     return this.normalize().multiplyScalar(n);
@@ -727,19 +703,19 @@ THREE.Vector3.prototype.perp = function() {
   return this.crossSelf(new THREE.Vector3(0, 1, 0));
 };
 
-function VectorDistance(a,b) {
+function vectorDistance(a,b) {
   return a.clone().subSelf(b).length();
 }
-function VectorDistanceSq(a,b) {
+function vectorDistanceSq(a,b) {
   return a.clone().subSelf(b).lengthSq();
 }
 
 
-function WasLucky(maxchance) {
+function wasLucky(maxchance) {
   return getRandomInt(1, maxchance) == 1;
 }
 
-function WasLucky100(chance) {
+function wasLucky100(chance) {
   return chance >= mt_rand(1, 100);
 }
 

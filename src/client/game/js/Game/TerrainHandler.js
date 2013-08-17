@@ -391,7 +391,7 @@ var TerrainHandler = Class.extend({
 
       // Bring it on!
       socketHandler.socket.emit('readyToReceiveUnits', true, function (reply) {
-        if ( ISDEF(reply.errmsg) ) {
+        if ( !_.isUndefined(reply.errmsg) ) {
           hudHandler.messageAlert(reply.errmsg);
           return;
         }

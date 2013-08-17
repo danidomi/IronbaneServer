@@ -41,7 +41,7 @@ var Wander = State.extend({
             if ( npc.health <= 0 || npc.template.disabled ) return;
 
 
-            if ( VectorDistance(npc.position, this.targetPosition) < 1.0 ) {
+            if ( vectorDistance(npc.position, this.targetPosition) < 1.0 ) {
             	// TIme to change to a new node!
                  //var distance = DistanceSq(npc.position, npc.targetPosition);
                  //this.targetPosition = npc.position.clone().addSelf(new THREE.Vector3(getRandomInt(-10, 10), getRandomInt(-5, 5), getRandomInt(-10, 10)));

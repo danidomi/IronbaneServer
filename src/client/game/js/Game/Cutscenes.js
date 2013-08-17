@@ -45,9 +45,9 @@ var filmWorld = function(options) {
 
     onAwake();
 
-    var tweenPos = new TWEEN.Tween( RawVector3(startPos) )
+    var tweenPos = new TWEEN.Tween( rawVector3(startPos) )
       .delay(startDelay)
-      .to( RawVector3(targetPosition), transitionTime )
+      .to( rawVector3(targetPosition), transitionTime )
       .easing( easing )
       .onUpdate( function () {
         ironbane.camera.position.set(this.x, this.y, this.z);
@@ -69,9 +69,9 @@ var filmWorld = function(options) {
 
     if ( goBack ) {
 
-        var tweenPosBack = new TWEEN.Tween( RawVector3(targetPosition) )
+        var tweenPosBack = new TWEEN.Tween( rawVector3(targetPosition) )
           .delay(holdTime)
-          .to( RawVector3(startPos), transitionTime )
+          .to( rawVector3(startPos), transitionTime )
           .easing( easing )
           .onStart(function() {
             onHold();
@@ -121,18 +121,18 @@ var filmWorld = function(options) {
     var endLookAt = lookTarget;
 
 
-    var tweenLookAt = new TWEEN.Tween( RawVector3(startLookAt) )
+    var tweenLookAt = new TWEEN.Tween( rawVector3(startLookAt) )
     .delay(startDelay)
-    .to( RawVector3(endLookAt), transitionTime )
+    .to( rawVector3(endLookAt), transitionTime )
     .easing( easing )
     .onUpdate( function () {
         ironbane.camera.lookAt(new THREE.Vector3(this.x, this.y, this.z));
     });
 
     if ( goBack ) {
-        var tweenLookAtBack = new TWEEN.Tween( RawVector3(endLookAt) )
+        var tweenLookAtBack = new TWEEN.Tween( rawVector3(endLookAt) )
         .delay(holdTime)
-        .to( RawVector3(startLookAt), transitionTime )
+        .to( rawVector3(startLookAt), transitionTime )
         .easing( easing )
         .onUpdate( function () {
             ironbane.camera.lookAt(new THREE.Vector3(this.x, this.y, this.z));

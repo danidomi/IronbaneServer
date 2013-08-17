@@ -119,7 +119,7 @@ var astar = {
     return [];
   },
   heuristic: function(pos1, pos2) {
-    //return VectorDistanceSq(pos1, pos2);
+    //return vectorDistanceSq(pos1, pos2);
     return DistanceSq(pos1, pos2);
   },
   //    manhattan: function(pos0, pos1) {

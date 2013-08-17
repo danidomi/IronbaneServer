@@ -189,7 +189,7 @@ $(document).keydown(function(event){
       hudHandler.messageAlert("Back to the Main Menu?", "question", function() {
         socketHandler.readyToReceiveUnits = false;
         socketHandler.socket.emit('backToMainMenu', {}, function(reply) {
-          if (ISDEF(reply.errmsg)) {
+          if (!_.isUndefined(reply.errmsg)) {
             hudHandler.messageAlert(reply.errmsg);
             return;
           }
@@ -412,7 +412,7 @@ var mouseIntervalFunction = function(event){
           // Send a request to destroy this object
           socketHandler.socket.emit('ppAddNode', position.round(2), function(reply) {
 
-            if ( ISDEF(reply.errmsg) ) {
+            if ( !_.isUndefined(reply.errmsg) ) {
               hudHandler.messageAlert(reply.errmsg);
               return;
             }
@@ -428,7 +428,7 @@ var mouseIntervalFunction = function(event){
                           twoway:true
                           }, function(reply) {
 
-                          if ( ISDEF(reply.errmsg) ) {
+                          if ( !_.isUndefined(reply.errmsg) ) {
                             hudHandler.messageAlert(reply.errmsg);
                             return;
                           }
@@ -463,7 +463,7 @@ var mouseIntervalFunction = function(event){
                 twoway:levelEditor.editorGUI.ppTwoWay
                 }, function(reply) {
 
-                if ( ISDEF(reply.errmsg) ) {
+                if ( !_.isUndefined(reply.errmsg) ) {
                   hudHandler.messageAlert(reply.errmsg);
                   return;
                 }
@@ -500,7 +500,7 @@ var mouseIntervalFunction = function(event){
             id:waypoint.nodeData.id
             }, function(reply) {
 
-            if ( ISDEF(reply.errmsg) ) {
+            if ( !_.isUndefined(reply.errmsg) ) {
               hudHandler.messageAlert(reply.errmsg);
               return;
             }

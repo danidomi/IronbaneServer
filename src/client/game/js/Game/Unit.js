@@ -44,7 +44,7 @@ var Unit = PhysicsObject.extend({
     this.name = name || 'Unnamed';
     this.id = id;
 
-    if ( ISDEF(this.overrideName) ) this.name = this.overrideName;
+    if ( !_.isUndefined(this.overrideName) ) this.name = this.overrideName;
 
     // Used to get the image/mesh
     this.param = param;
@@ -74,9 +74,9 @@ var Unit = PhysicsObject.extend({
     this.weaponOrigin = null;
 
 
-    this.drawNameMesh = ISDEF(this.drawNameMesh) ? this.drawNameMesh : false;
+    this.drawNameMesh = !_.isUndefined(this.drawNameMesh) ? this.drawNameMesh : false;
 
-    this.enableShadow = ISDEF(this.enableShadow) ? this.enableShadow : true;
+    this.enableShadow = !_.isUndefined(this.enableShadow) ? this.enableShadow : true;
 
 
     this.terrainAngle = 0;
@@ -443,7 +443,7 @@ var Unit = PhysicsObject.extend({
 
       var cp = WorldToCellCoordinates(this.position.x, this.position.z, cellSize);
 
-      var cellStandingOn = ISDEF(terrainHandler.cells[cp.x+"-"+cp.z]) ? terrainHandler.cells[cp.x+"-"+cp.z] : null;
+      var cellStandingOn = !_.isUndefined(terrainHandler.cells[cp.x+"-"+cp.z]) ? terrainHandler.cells[cp.x+"-"+cp.z] : null;
 
       if ( this.enableGravity ) {
 

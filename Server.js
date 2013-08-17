@@ -155,7 +155,7 @@ var Server = Class.extend({
             for(var cx in worldHandler.world[z]) {
                 for(var cz in worldHandler.world[z][cx]) {
 
-                    if ( ISDEF(worldHandler.world[z][cx][cz]["units"]) ) {
+                    if ( !_.isUndefined(worldHandler.world[z][cx][cz]["units"]) ) {
 
                         var units = worldHandler.world[z][cx][cz]["units"];
 
@@ -178,7 +178,7 @@ var Server = Class.extend({
             for(var cx in worldHandler.world[z]) {
                 for(var cz in worldHandler.world[z][cx]) {
 
-                    if ( ISDEF(worldHandler.world[z][cx][cz]["units"]) ) {
+                    if ( !_.isUndefined(worldHandler.world[z][cx][cz]["units"]) ) {
 
                         var units = worldHandler.world[z][cx][cz]["units"];
 

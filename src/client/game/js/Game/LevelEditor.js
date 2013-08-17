@@ -39,19 +39,19 @@ var PathPlacerModeEnum = {
 
 var EditorGUI = function() {
 
-  this.globalEnable = ISDEF(localStorage.globalEnable) ? (localStorage.globalEnable === 'true') : false;
+  this.globalEnable = !_.isUndefined(localStorage.globalEnable) ? (localStorage.globalEnable === 'true') : false;
   this.globalEnable = false;
 
   this.tbEnableTransparency = false;
 
-  this.chFlyMode = ISDEF(localStorage.chFlyMode) ? (localStorage.chFlyMode === 'true') : false;
-  this.chClimb = ISDEF(localStorage.chClimb) ? (localStorage.chClimb === 'true') : false;
-  this.chSpeed = ISDEF(localStorage.chSpeed) ? (localStorage.chSpeed === 'true') : false;
-  this.chGodMode = ISDEF(localStorage.chGodMode) ? (localStorage.chGodMode === 'true') : false;
-  this.chInvisibleByMonsters = ISDEF(localStorage.chInvisibleByMonsters) ? (localStorage.chInvisibleByMonsters === 'true') : false;
-  this.ch999Damage = ISDEF(localStorage.ch999Damage) ? (localStorage.ch999Damage === 'true') : false;
-  this.chForceDay = ISDEF(localStorage.chForceDay) ? (localStorage.chForceDay === 'true') : false;
-  this.chForceNight = ISDEF(localStorage.chForceNight) ? (localStorage.chForceNight === 'true') : false;
+  this.chFlyMode = !_.isUndefined(localStorage.chFlyMode) ? (localStorage.chFlyMode === 'true') : false;
+  this.chClimb = !_.isUndefined(localStorage.chClimb) ? (localStorage.chClimb === 'true') : false;
+  this.chSpeed = !_.isUndefined(localStorage.chSpeed) ? (localStorage.chSpeed === 'true') : false;
+  this.chGodMode = !_.isUndefined(localStorage.chGodMode) ? (localStorage.chGodMode === 'true') : false;
+  this.chInvisibleByMonsters = !_.isUndefined(localStorage.chInvisibleByMonsters) ? (localStorage.chInvisibleByMonsters === 'true') : false;
+  this.ch999Damage = !_.isUndefined(localStorage.ch999Damage) ? (localStorage.ch999Damage === 'true') : false;
+  this.chForceDay = !_.isUndefined(localStorage.chForceDay) ? (localStorage.chForceDay === 'true') : false;
+  this.chForceNight = !_.isUndefined(localStorage.chForceNight) ? (localStorage.chForceNight === 'true') : false;
   this.chSunOffset = 0;
   this.chFOV = 75;
 
@@ -69,7 +69,7 @@ var EditorGUI = function() {
     });
   };
 
-  this.opShowDebug = ISDEF(localStorage.opShowDebug) ? (localStorage.opShowDebug === 'true') : true;
+  this.opShowDebug = !_.isUndefined(localStorage.opShowDebug) ? (localStorage.opShowDebug === 'true') : true;
 
   this.opRestartServer = function() {
     socketHandler.socket.emit('shutdown');
@@ -107,8 +107,8 @@ var EditorGUI = function() {
 
 
 
-  this.camDistance = ISDEF(localStorage.camDistance) ? parseFloat(localStorage.camDistance) : 20.0;
-  this.camHeight = ISDEF(localStorage.camHeight) ? parseFloat(localStorage.camHeight) : 20.0;
+  this.camDistance = !_.isUndefined(localStorage.camDistance) ? parseFloat(localStorage.camDistance) : 20.0;
+  this.camHeight = !_.isUndefined(localStorage.camHeight) ? parseFloat(localStorage.camHeight) : 20.0;
 
   this.enableWorldPainter = false;
 
@@ -335,7 +335,7 @@ var EditorGUI = function() {
       targetName: levelEditor.editorGUI.tpTargetPlayerName,
       zone: levelEditor.editorGUI.tpZone
     }, function(reply) {
-      if ( ISDEF(reply.errmsg) ) {
+      if ( !_.isUndefined(reply.errmsg) ) {
         hudHandler.messageAlert(reply.errmsg);
         return;
       }
@@ -698,7 +698,7 @@ var LevelEditor = Class.extend({
       $('#tiletype'+uid).css('background-image', 'url('+tilesPath+'medium.php?i='+uid+')');
       //            }
       //            else {
-      //                if ( !ISDEF(preGameObjects[uid]) ) continue;
+      //                if ( _.isUndefined(preGameObjects[uid]) ) continue;
       //                var gObject = preGameObjects[uid];
       //
       //                switch (gObject.type) {
@@ -1309,7 +1309,7 @@ var LevelEditor = Class.extend({
     //   //            debug.setWatch("currentMouseToWorldData.normal", convertVector3(currentMouseToWorldData.face.normal).toString());
     //   //            debug.setWatch("currentMouseToWorldData.rotation", convertVector3(currentMouseToWorldData.object.rotation).toString());
     //   //
-    //   //            if ( ISDEF(currentMouseToWorldData.object.unit) ) {
+    //   //            if ( !_.isUndefined(currentMouseToWorldData.object.unit) ) {
     //   //                debug.setWatch("currentMouseToWorldData.unit.name", currentMouseToWorldData.object.unit.name);
     //   //            }
 
