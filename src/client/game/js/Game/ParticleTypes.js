@@ -231,7 +231,7 @@ var ParticleTypeEnum = {
         // particleRotationSpeed: function(p) {
         //     return p.lifeTimer*5 * (p.rotation > 0 ? 1 : -1);
         // },
-        // particleStartRotation: function(p) { return (getRandomInt(-359,359)).ToRadians() },
+        // particleStartRotation: function(p) { return (getRandomInt(-359,359)).toRadians() },
         onTick: function(dTime, particle, emitter) {
 
             if ( !particle.changedUVs ) {
@@ -348,7 +348,7 @@ var ParticleTypeEnum = {
         particleRotationSpeed: function(p) {
             return getRandomFloat(-5.0, 5.0);
         },
-        particleStartRotation: function(p) { return (getRandomInt(-359,359)).ToRadians() },
+        particleStartRotation: function(p) { return (getRandomInt(-359,359)).toRadians() },
         lifeTime: -1,
         particleLifeTime: 1.0,
         particleStartScale: new THREE.Vector2(1.5,1.5),
@@ -366,7 +366,7 @@ var ParticleTypeEnum = {
         particleRotationSpeed: function(p) {
             return getRandomFloat(-1.0, 1.0);
         },
-        particleStartRotation: function(p) { return (getRandomInt(-359,359)).ToRadians() },
+        particleStartRotation: function(p) { return (getRandomInt(-359,359)).toRadians() },
         particleStartScale: new THREE.Vector2(2.5,2.5),
         particleLifeTime: 12.0
     },
@@ -382,7 +382,7 @@ var ParticleTypeEnum = {
         particleRotationSpeed: function(p) {
             return getRandomFloat(-5.0, 5.0);
         },
-        particleStartRotation: function(p) { return (getRandomInt(-359,359)).ToRadians() },
+        particleStartRotation: function(p) { return (getRandomInt(-359,359)).toRadians() },
         lifeTime: -1,
         particleLifeTime: 2.0,
         particleStartScale: new THREE.Vector2(2.0,2.0),
@@ -400,7 +400,7 @@ var ParticleTypeEnum = {
         particleRotationSpeed: function(p) {
             return getRandomFloat(-5.0, 5.0);
         },
-        particleStartRotation: function(p) { return (getRandomInt(-359,359)).ToRadians() },
+        particleStartRotation: function(p) { return (getRandomInt(-359,359)).toRadians() },
         lifeTime: -1,
         particleLifeTime: 1.0,
         particleStartScale: new THREE.Vector2(2.0,2.0),
@@ -418,7 +418,7 @@ var ParticleTypeEnum = {
         particleRotationSpeed: function(p) {
             return getRandomFloat(-5.0, 5.0);
         },
-        particleStartRotation: function(p) { return (getRandomInt(-359,359)).ToRadians() },
+        particleStartRotation: function(p) { return (getRandomInt(-359,359)).toRadians() },
         lifeTime: 1.0,
         particleLifeTime: 0.1,
         particleStartScale: new THREE.Vector2(2.0,2.0),
@@ -443,7 +443,7 @@ var ParticleTypeEnum = {
         particleRotationSpeed: function(p) {
             return p.lifeTimer*5 * (p.rotation > 0 ? 1 : -1);
         },
-        particleStartRotation: function(p) { return (getRandomInt(-359,359)).ToRadians() },
+        particleStartRotation: function(p) { return (getRandomInt(-359,359)).toRadians() },
         particleDelay: 0.01,
         particleEnableGravity: true,
         lifeTime: -1,
@@ -463,7 +463,7 @@ var ParticleTypeEnum = {
         particleRotationSpeed: function(p) {
             return getRandomFloat(-5.0, 5.0);
         },
-        particleStartRotation: function(p) { return (getRandomInt(-359,359)).ToRadians() },
+        particleStartRotation: function(p) { return (getRandomInt(-359,359)).toRadians() },
         lifeTime: -1,
         particleLifeTime: 2.0,
         particleStartScale: new THREE.Vector2(1.0,1.0),
@@ -487,7 +487,7 @@ var ParticleTypeEnum = {
         particleRotationSpeed: function(p) {
             return p.lifeTimer*5 * (p.rotation > 0 ? 1 : -1);
         },
-        particleStartRotation: function(p) { return (getRandomInt(-359,359)).ToRadians() },
+        particleStartRotation: function(p) { return (getRandomInt(-359,359)).toRadians() },
         particleDelay: 0.01,
         particleEnableGravity: true,
         lifeTime: -1,
@@ -621,7 +621,7 @@ var ParticleTypeEnum = {
         particleStartScale: function() {
             return new THREE.Vector2(getRandomFloat(2.5, 3.0), getRandomFloat(2.5, 3.0));
         },
-        // particleStartRotation: function(p) { return (getRandomInt(-10,10)).ToRadians() },
+        // particleStartRotation: function(p) { return (getRandomInt(-10,10)).toRadians() },
         particleDelay: 0.08,
         particleLifeTime: 0.5,
         particleScaleVelocity : function(p){

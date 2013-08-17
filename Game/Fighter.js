@@ -85,8 +85,8 @@ var Fighter = Actor.extend({
       weaponID = weaponID || this.weapon.id;
 
       this.emitNearby("addProjectile", {
-        s:this.position.clone().Round(2),
-        t:targetPosition.clone().addSelf(offset).Round(2),
+        s:this.position.clone().round(2),
+        t:targetPosition.clone().addSelf(offset).round(2),
         o:this.id,
         w:weaponID,
         sw:swingWeapon
@@ -345,7 +345,7 @@ var Fighter = Actor.extend({
         // Send the client that it's okay to revert back
         this.emitNearby("respawn", {
             id: this.id,
-            p: this.position.clone().Round(2),
+            p: this.position.clone().round(2),
             z: this.zone,
             h: this.health
         }, 0, true);

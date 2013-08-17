@@ -233,7 +233,7 @@ var ParticleEmitter = Class.extend({
 
             if (particle.velocity.length() > 0.01) {
                 particle.heading = particle.velocity.clone().normalize();
-                particle.side = particle.heading.clone().Perp();
+                particle.side = particle.heading.clone().perp();
             }
 
 

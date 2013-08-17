@@ -635,7 +635,7 @@ var Unit = PhysicsObject.extend({
 
                 var vec = new THREE.Vector3(0, 1, 0);
 
-                this.terrainAngle = Math.acos(raycastNormal.dot(vec)).ToDegrees();
+                this.terrainAngle = Math.acos(raycastNormal.dot(vec)).toDegrees();
 
                 //debug.setWatch("SET this.terrainAngle", this.terrainAngle);
 

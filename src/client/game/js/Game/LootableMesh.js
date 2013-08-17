@@ -39,7 +39,7 @@ var LootableMesh = Mesh.extend({
 
     this._super(geometry);
 
-    this.localRotation.copy(this.rotation.clone().ToRadians());
+    this.localRotation.copy(this.rotation.clone().toRadians());
 
     // this.updateRotation();
 

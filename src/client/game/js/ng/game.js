@@ -198,7 +198,7 @@ IronbaneApp
             $window.particleHandler.tick(dTime);
 
             for (var x = 0; x < game.unitList.length; x++) {
-                game.unitList[x].Tick(dTime);
+                game.unitList[x].tick(dTime);
             }
 
             $window.cinema.tick(dTime);

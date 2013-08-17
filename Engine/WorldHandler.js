@@ -672,7 +672,7 @@ var WorldHandler = Class.extend({
       for(var z=cellZ-1;z<=cellZ+1;z++){
         if ( worldHandler.checkWorldStructure(zone, x, z) ) {
           for(var u=0;u<worldHandler.world[zone][x][z].units.length;u++) {
-            worldHandler.world[zone][x][z].units[u].UpdateOtherUnitsList();
+            worldHandler.world[zone][x][z].units[u].updateOtherUnitsList();
           }
         }
       }

@@ -40,7 +40,7 @@ IronbaneApp
         socket.on('disconnect', function() {
             //socketHandler.socket.disconnect();
             for (var u = 0; u < ironbane.unitList.length; u++) {
-                ironbane.unitList[u].Destroy();
+                ironbane.unitList[u].destroy();
             }
             ironbane.unitList = [];
             terrainHandler.destroy();
@@ -266,7 +266,7 @@ IronbaneApp
             // Remove the unit from the list
             for (var i = 0; i < ironbane.unitList.length; i++) {
                 if (ironbane.unitList[i].id === data.id) {
-                    ironbane.unitList[i].Destroy();
+                    ironbane.unitList[i].destroy();
                     ironbane.unitList.splice(i, 1);
                     break;
                 }
@@ -292,7 +292,7 @@ IronbaneApp
 
                 cellPos = WorldToCellCoordinates(data.pos.x, data.pos.z, cellSize);
                 _.each(terrainHandler.getCellByGridPosition(cellPos.x, cellPos.z).objectData, function(obj) {
-                    if (obj.metadata && ConvertVector3(obj).equals(ConvertVector3(data.pos).Round())) {
+                    if (obj.metadata && ConvertVector3(obj).equals(ConvertVector3(data.pos).round())) {
                         _.extend(obj.metadata, data.metadata);
                     }
                 });
@@ -316,7 +316,7 @@ IronbaneApp
 
                 _.each(terrainHandler.cells, function(cell) {
                     _.each(cell.objects, function(obj) {
-                        if (obj.position.clone().Round(2).equals(data.pos)) {
+                        if (obj.position.clone().round(2).equals(data.pos)) {
                             var rotation = obj.rotation.clone();
                             var param = obj.param;
                             var metadata = obj.metadata;
@@ -337,17 +337,17 @@ IronbaneApp
         });
 
         socket.on('deleteModel', function(pos) {
-            pos = ConvertVector3(pos).Round(2);
+            pos = ConvertVector3(pos).round(2);
             hudHandler.addChatMessage("Removing model...");
 
             // Check
             _.each(terrainHandler.cells, function(cell) {
                 _.each(cell.objects, function(obj) {
-                    if (obj.position.clone().Round(2).equals(pos)) {
+                    if (obj.position.clone().round(2).equals(pos)) {
                         cell.objects = _.without(cell.objects, obj);
                         var cellPos = WorldToCellCoordinates(obj.position.x, obj.position.z, cellSize);
                         var objInList = _.find(terrainHandler.getCellByGridPosition(cellPos.x, cellPos.z).objectData, function(otherObj) {
-                            return obj.position.clone().Round(2).equals(ConvertVector3(otherObj));
+                            return obj.position.clone().round(2).equals(ConvertVector3(otherObj));
                         });
 
                         if (objInList) {
@@ -372,7 +372,7 @@ IronbaneApp
             });
 
             if (!le("globalEnable")) {
-                terrainHandler.getCellByWorldPosition(pos).Reload();
+                terrainHandler.getCellByWorldPosition(pos).reload();
             }
 
             terrainHandler.rebuildOctree();

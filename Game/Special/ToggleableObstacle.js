@@ -67,7 +67,7 @@ var ToggleableObstacle = Unit.extend({
             
     // Toggle all levers that point to us! This will keep everything synchronised
     for(var l=0;l<this.leverList.length;l++) {
-      this.leverList[l].Toggle(this.on);
+      this.leverList[l].toggle(this.on);
     }
   },
   tick: function(dTime) {
@@ -84,13 +84,13 @@ var ToggleableObstacle = Unit.extend({
       for(var u=0;u<units.length;u++) {
         if ( !(units[u] instanceof Player) ) continue;
 
-        if ( units[u].InRangeOfUnit(this, 2) ) {
+        if ( units[u].inRangeOfUnit(this, 2) ) {
           
           
           
           // Check the equipped weapon of this unit, and see if it's a key?
           
-          var item = units[u].GetEquippedWeapon();
+          var item = units[u].getEquippedWeapon();
           if ( item ) {
             var template = dataHandler.items[item.template];
             if ( template.type === "tool" && template.subtype === "key" ) {      

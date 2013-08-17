@@ -165,8 +165,8 @@ var PhysicsObject = Class.extend({
 
                     var rotationMatrix = new THREE.Matrix4();
                     rotationMatrix.extractRotation(this.unitStandingOn.object3D.matrix).transpose();
-//                    var rot = new THREE.Vector3((this.unitStandingOn.rotation.x).ToRadians(),
-//                    (this.unitStandingOn.rotation.y).ToRadians(), (this.unitStandingOn.rotation.z).ToRadians()).multiplyScalar(-1);
+//                    var rot = new THREE.Vector3((this.unitStandingOn.rotation.x).toRadians(),
+//                    (this.unitStandingOn.rotation.y).toRadians(), (this.unitStandingOn.rotation.z).toRadians()).multiplyScalar(-1);
 //                    rotationMatrix.setRotationFromEuler(rot);
 
                     rotationMatrix.multiplyVector3(this.localPosition);
@@ -259,8 +259,8 @@ var PhysicsObject = Class.extend({
 
         if ( this.unitStandingOn ) {
 //            var rotationMatrix = new THREE.Matrix4();
-//            var rot = new THREE.Vector3((this.unitStandingOn.rotation.x).ToRadians(),
-//            (this.unitStandingOn.rotation.y).ToRadians(), (this.unitStandingOn.rotation.z).ToRadians()).multiplyScalar(-1);
+//            var rot = new THREE.Vector3((this.unitStandingOn.rotation.x).toRadians(),
+//            (this.unitStandingOn.rotation.y).toRadians(), (this.unitStandingOn.rotation.z).toRadians()).multiplyScalar(-1);
 //            rotationMatrix.setRotationFromEuler(rot);
 //            rotationMatrix.multiplyVector3(vel);
 
@@ -280,7 +280,7 @@ var PhysicsObject = Class.extend({
         if ( this.velocity.length() > 0.01 ) {
             if ( !(this instanceof Fighter) ) {
                 this.heading = this.velocity.clone().normalize();
-                this.side = this.heading.clone().Perp();
+                this.side = this.heading.clone().perp();
             }
         }
 

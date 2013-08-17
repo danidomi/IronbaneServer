@@ -57,8 +57,8 @@ var MeshHandler = Class.extend({
 
     var rotationMatrix = new THREE.Matrix4();
     rotationMatrix.setRotationFromEuler(
-      new THREE.Vector3((rotation.x).ToRadians(),
-        (rotation.y).ToRadians(), (rotation.z).ToRadians()));
+      new THREE.Vector3((rotation.x).toRadians(),
+        (rotation.y).toRadians(), (rotation.z).toRadians()));
 
     for(var v=0;v<geometry.vertices.length;v++) {
       geometry.vertices[v] = rotationMatrix.multiplyVector3(geometry.vertices[v]);

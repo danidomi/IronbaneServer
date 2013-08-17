@@ -84,7 +84,7 @@ var SocketHandler = Class.extend({
                 socketHandler.socket.disconnect();
 
 
-                for (var u = 0; u < ironbane.unitList.length; u++) ironbane.unitList[u].Destroy();
+                for (var u = 0; u < ironbane.unitList.length; u++) ironbane.unitList[u].destroy();
 
                 ironbane.unitList = [];
 
@@ -611,7 +611,7 @@ var SocketHandler = Class.extend({
             // Remove the unit from the list
             for (var i = 0; i < ironbane.unitList.length; i++) {
                 if (ironbane.unitList[i].id == data.id) {
-                    ironbane.unitList[i].Destroy();
+                    ironbane.unitList[i].destroy();
                     ironbane.unitList.splice(i, 1);
                     break;
                 }
@@ -650,7 +650,7 @@ var SocketHandler = Class.extend({
                 _.each(terrainHandler.getCellByGridPosition(cellPos.x, cellPos.z).objectData, function(obj) {
 
                     if (obj.metadata &&
-                        ConvertVector3(obj).equals(ConvertVector3(data.pos).Round())) {
+                        ConvertVector3(obj).equals(ConvertVector3(data.pos).round())) {
                         _.extend(obj.metadata, data.metadata);
                     }
 
@@ -681,7 +681,7 @@ var SocketHandler = Class.extend({
 
                 _.each(terrainHandler.cells, function(cell) {
                     _.each(cell.objects, function(obj) {
-                        if (obj.position.clone().Round(2).equals(data.pos)) {
+                        if (obj.position.clone().round(2).equals(data.pos)) {
 
                             var rotation = obj.rotation.clone();
                             var param = obj.param;
@@ -707,7 +707,7 @@ var SocketHandler = Class.extend({
 
         this.socket.on('deleteModel', function(pos) {
 
-            pos = ConvertVector3(pos).Round(2);
+            pos = ConvertVector3(pos).round(2);
             //if ( !socketHandler.loggedIn ) return;
             //bm('remove unit: '+data.id);
 
@@ -717,14 +717,14 @@ var SocketHandler = Class.extend({
             // Check
             _.each(terrainHandler.cells, function(cell) {
                 _.each(cell.objects, function(obj) {
-                    if (obj.position.clone().Round(2).equals(pos)) {
+                    if (obj.position.clone().round(2).equals(pos)) {
 
                         cell.objects = _.without(cell.objects, obj);
 
                         var cellPos = WorldToCellCoordinates(obj.position.x, obj.position.z, cellSize);
 
                         var objInList = _.find(terrainHandler.getCellByGridPosition(cellPos.x, cellPos.z).objectData, function(otherObj) {
-                            return obj.position.clone().Round(2).equals(ConvertVector3(otherObj));
+                            return obj.position.clone().round(2).equals(ConvertVector3(otherObj));
                         });
 
                         if (objInList) {
@@ -748,7 +748,7 @@ var SocketHandler = Class.extend({
             });
 
             if (!le("globalEnable")) {
-                terrainHandler.getCellByWorldPosition(pos).Reload();
+                terrainHandler.getCellByWorldPosition(pos).reload();
             }
 
 

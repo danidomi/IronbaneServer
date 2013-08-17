@@ -62,11 +62,11 @@ var TeleportEntrance = Unit.extend({
                 for(var u=0;u<units.length;u++) {
                     if ( !(units[u] instanceof Player) ) continue;
 
-                    if ( units[u].InRangeOfUnit(this, 1) ) {
+                    if ( units[u].inRangeOfUnit(this, 1) ) {
 
                         log("Teleport!");
 
-                        units[u].TeleportToUnit(this.targetExit);
+                        units[u].teleportToUnit(this.targetExit);
 
                         this.useTimeout = 2.0;
                         break;

@@ -1121,7 +1121,7 @@ var LevelEditor = Class.extend({
 
 
     guiControls['enablePathPlacer'].onFinishChange(function(value) {
-      for(var c in terrainHandler.cells) terrainHandler.cells[c].ReloadWaypointsOnly();
+      for(var c in terrainHandler.cells) terrainHandler.cells[c].reloadWaypointsOnly();
     });
 
 
@@ -1221,7 +1221,7 @@ var LevelEditor = Class.extend({
       ba("Bad unit for PlaceModel!");
     }
 
-    if ( !le("globalEnable") ) terrainHandler.getCellByWorldPosition(position).Reload();
+    if ( !le("globalEnable") ) terrainHandler.getCellByWorldPosition(position).reload();
 
     terrainHandler.rebuildOctree();
 
@@ -1305,9 +1305,9 @@ var LevelEditor = Class.extend({
 
     //this.setTileHeight(1, 1, this.heightTest);
     // if ( currentMouseToWorldData ) {
-    //   //            debug.setWatch("currentMouseToWorldData.point", ConvertVector3(currentMouseToWorldData.point).ToString());
-    //   //            debug.setWatch("currentMouseToWorldData.normal", ConvertVector3(currentMouseToWorldData.face.normal).ToString());
-    //   //            debug.setWatch("currentMouseToWorldData.rotation", ConvertVector3(currentMouseToWorldData.object.rotation).ToString());
+    //   //            debug.setWatch("currentMouseToWorldData.point", ConvertVector3(currentMouseToWorldData.point).toString());
+    //   //            debug.setWatch("currentMouseToWorldData.normal", ConvertVector3(currentMouseToWorldData.face.normal).toString());
+    //   //            debug.setWatch("currentMouseToWorldData.rotation", ConvertVector3(currentMouseToWorldData.object.rotation).toString());
     //   //
     //   //            if ( ISDEF(currentMouseToWorldData.object.unit) ) {
     //   //                debug.setWatch("currentMouseToWorldData.unit.name", currentMouseToWorldData.object.unit.name);
@@ -1318,7 +1318,7 @@ var LevelEditor = Class.extend({
     //   var rotationMatrix = (new THREE.Matrix4()).extractRotation(currentMouseToWorldData.object.matrix);
     //   //matrixRotationWorld
     //   normal = rotationMatrix.multiplyVector3(normal);
-    // //debug.setWatch("altered normal", normal.round(2).ToString());
+    // //debug.setWatch("altered normal", normal.round(2).toString());
 
 
     // }
@@ -1326,7 +1326,7 @@ var LevelEditor = Class.extend({
     if ( levelEditor.selectedNode && ironbane.player ) {
       if ( DistanceSq(levelEditor.selectedNode['pos'], ironbane.player.position) > 15*15 ) {
         levelEditor.selectedNode = null;
-        for(var c in terrainHandler.cells) terrainHandler.cells[c].ReloadWaypointsOnly();
+        for(var c in terrainHandler.cells) terrainHandler.cells[c].reloadWaypointsOnly();
       }
 
     }

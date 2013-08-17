@@ -202,7 +202,7 @@ var Skybox = PhysicsObject.extend({
 
     if ( this.sunMesh ) {
       var rotationMatrix = new THREE.Matrix4();
-      rotationMatrix.setRotationFromEuler(new THREE.Vector3((param).ToRadians(), (-30).ToRadians(), 0));
+      rotationMatrix.setRotationFromEuler(new THREE.Vector3((param).toRadians(), (-30).toRadians(), 0));
 
 
       if ( (showEditor && levelEditor.editorGUI.chForceDay)

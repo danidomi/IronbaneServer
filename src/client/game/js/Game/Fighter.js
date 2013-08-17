@@ -412,7 +412,7 @@ this.walkSoundTimer = 0.0;
       var radians = (this.rotation.y + 90) * (Math.PI/180);
       this.heading.x = Math.sin(radians);
       this.heading.z = Math.cos(radians);
-      this.side = this.heading.clone().Perp();
+      this.side = this.heading.clone().perp();
     }
 
 
@@ -681,8 +681,8 @@ this.walkSoundTimer = 0.0;
       if ( swingRotation <= 0 ) swingRotation = 0;
       //debug.setWatch("swingRotation", swingRotation);
 
-      this.weaponPivot.rotation.x = ((swingRotation*swingXamount)+rotateX).ToRadians();
-      this.weaponPivot.rotation.y = ((swingRotation*swingYamount)+rotateY).ToRadians();
+      this.weaponPivot.rotation.x = ((swingRotation*swingXamount)+rotateX).toRadians();
+      this.weaponPivot.rotation.y = ((swingRotation*swingYamount)+rotateY).toRadians();
 
       var offsetMultiplier = 1.0;
 
@@ -691,14 +691,14 @@ this.walkSoundTimer = 0.0;
       var zPosition = ((front ? 0.02 : -0.02)*this.size*offsetMultiplier)+offset.z;
 
       if ( direct ) {
-        this.weaponPivot.rotation.z = ((swingRotation*swingZamount)+rotateZ+targetWalkAngleZ).ToRadians();
+        this.weaponPivot.rotation.z = ((swingRotation*swingZamount)+rotateZ+targetWalkAngleZ).toRadians();
 
         this.weaponPivot.position.x = holdingDistance+targetWalkOffsetX+offset.x;
         this.weaponPivot.position.y = holdingHeight+offset.y;
         this.weaponPivot.position.z = zPosition+offset.z;
       }
       else {
-        this.weaponPivot.rotation.z = (this.weaponPivot.rotation.z.lerp(((swingRotation*swingZamount)+rotateZ+targetWalkAngleZ).ToRadians(), dTime*speed));
+        this.weaponPivot.rotation.z = (this.weaponPivot.rotation.z.lerp(((swingRotation*swingZamount)+rotateZ+targetWalkAngleZ).toRadians(), dTime*speed));
 
         this.weaponPivot.position.x = this.weaponPivot.position.x.lerp(holdingDistance+targetWalkOffsetX+offset.x, dTime*speed);
         this.weaponPivot.position.y = this.weaponPivot.position.y.lerp(holdingHeight+offset.y, dTime*speed);

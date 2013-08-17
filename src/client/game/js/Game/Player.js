@@ -573,7 +573,7 @@ var Player = Fighter.extend({
     }
 
     // Apply slope speed
-    // var factor = Math.cos((this.slopeAngle).clamp(0,90).ToRadians());
+    // var factor = Math.cos((this.slopeAngle).clamp(0,90).toRadians());
 
     // frictionLength *= factor;
 
@@ -853,7 +853,7 @@ var Player = Fighter.extend({
     }
 
     var data = {
-      p: this.localPosition.clone().Round(2),
+      p: this.localPosition.clone().round(2),
       r: this.targetRotation.y.round(2),
       //s: this.speed.round(2),
       los: npcLOS
@@ -893,8 +893,8 @@ var Player = Fighter.extend({
         var newDelay = template.delay;
         // Send the projectile
         socketHandler.socket.emit('addProjectile', {
-          s: player.position.clone().Round(2),
-          t: position.clone().Round(2),
+          s: player.position.clone().round(2),
+          t: position.clone().round(2),
           w: weapon.id,
           o: player.id,
           sw: true

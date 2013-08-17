@@ -81,7 +81,7 @@ var Lever = Unit.extend({
                 for(var u=0;u<units.length;u++) {
                     if ( !(units[u] instanceof Player) ) continue;
 
-                    if ( units[u].InRangeOfUnit(this, 1) ) {
+                    if ( units[u].inRangeOfUnit(this, 1) ) {
 
                         if ( this.targetUnit ) {
                             this.targetUnit.toggle(!this.on);

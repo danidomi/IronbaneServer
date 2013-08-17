@@ -480,7 +480,7 @@ var Unit = Class.extend({
       for(var z=cz-1;z<=cz+1;z++){
         if ( worldHandler.checkWorldStructure(zone, x, z) ) {
           for(var u=0;u<worldHandler.world[zone][x][z].units.length;u++) {
-            worldHandler.world[zone][x][z].units[u].UpdateOtherUnitsList();
+            worldHandler.world[zone][x][z].units[u].updateOtherUnitsList();
           }
         }
       }
@@ -588,6 +588,6 @@ var Unit = Class.extend({
     }, 0, true);
   },
   debugLocationString: function() {
-    return "zone "+this.zone+", pos "+this.position.round().ToString();
+    return "zone "+this.zone+", pos "+this.position.round().toString();
   }
 });

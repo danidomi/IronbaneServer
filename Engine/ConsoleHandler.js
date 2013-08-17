@@ -321,7 +321,7 @@ var ConsoleHandler = Class.extend({
     realparams.shift();
 
     if (command in this.commands) {
-      this.commands[command].Exec(realparams);
+      this.commands[command].exec(realparams);
     } else {
       console.log("That command does not exist!");
     }

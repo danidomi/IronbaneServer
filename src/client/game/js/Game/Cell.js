@@ -192,7 +192,7 @@ var Cell = Class.extend({
     reloadObjectsOnly: function() {
 
         for(var o=0;o<this.objects.length;o++) {
-            this.objects[o].Destroy();
+            this.objects[o].destroy();
             // Remove from unitList
 
             ironbane.unitList = _.without(ironbane.unitList, this.objects[o]);

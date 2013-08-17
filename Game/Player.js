@@ -239,7 +239,7 @@ var Player = Fighter.extend({
       for (var z = cz - 1; z <= cz + 1; z++) {
         if (worldHandler.checkWorldStructure(zone, x, z)) {
           for (u = 0; u < worldHandler.world[zone][x][z].units.length; u++) {
-            worldHandler.world[zone][x][z].units[u].UpdateOtherUnitsList();
+            worldHandler.world[zone][x][z].units[u].updateOtherUnitsList();
           }
         }
       }

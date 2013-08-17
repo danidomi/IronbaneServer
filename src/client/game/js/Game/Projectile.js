@@ -236,7 +236,7 @@ var Projectile = Unit.extend({
 
             var angle = this.calculateFiringAngle(targetPosition, false);
             this.heading = launchVelocity.clone().normalize();
-            this.side = this.heading.clone().Perp();
+            this.side = this.heading.clone().perp();
             var matrix = new THREE.Matrix4().makeRotationAxis( this.side, angle );
             matrix.multiplyVector3( launchVelocity );
         }
@@ -245,7 +245,7 @@ var Projectile = Unit.extend({
 
         this.changedRotation = new THREE.Vector3();
 
-        this.rotY = (Math.atan2(this.velocity.z, this.velocity.x)).ToDegrees();
+        this.rotY = (Math.atan2(this.velocity.z, this.velocity.x)).toDegrees();
         if ( this.rotY < 0 ) this.rotY += 360;
         this.rotY = 360 - this.rotY ;
         this.targetRotY = this.rotY;
@@ -590,7 +590,7 @@ var Projectile = Unit.extend({
             }
         }
 
-         this.rotY = (Math.atan2(this.heading.z, this.heading.x)).ToDegrees();
+         this.rotY = (Math.atan2(this.heading.z, this.heading.x)).toDegrees();
                     if ( this.rotY < 0 ) this.rotY += 360;
                     this.rotY = 360 - this.rotY ;
 
@@ -697,7 +697,7 @@ var Projectile = Unit.extend({
 
         }
 
-        //bm('x: '+(x).Round(2)+', y: '+(y).Round(2)+', result: '+result.round(2).ToDegrees());
+        //bm('x: '+(x).round(2)+', y: '+(y).round(2)+', result: '+result.round(2).toDegrees());
 
         return result;
     }

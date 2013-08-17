@@ -47,7 +47,7 @@ var MovingUnit = Unit.extend({
 
             this.heading = this.velocity.clone().normalize();
 
-            this.side = this.heading.clone().Perp();
+            this.side = this.heading.clone().perp();
 
         }
 

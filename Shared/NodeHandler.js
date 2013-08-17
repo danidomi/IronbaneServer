@@ -72,7 +72,7 @@ var NodeHandler = Class.extend({
             }
             graphData['nodes'].push(newNode);
 
-            terrainHandler.getCellByWorldPosition(position).ReloadWaypointsOnly();
+            terrainHandler.getCellByWorldPosition(position).reloadWaypointsOnly();
         }
 
     },

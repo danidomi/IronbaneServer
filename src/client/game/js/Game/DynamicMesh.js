@@ -68,7 +68,7 @@ var DynamicMesh = Mesh.extend({
         if ( !this.mesh ) return;
 
         var rotationMatrix = new THREE.Matrix4();
-        var rot = new THREE.Vector3((this.rotation.x).ToRadians(), (this.rotation.y).ToRadians(), (this.rotation.z).ToRadians());
+        var rot = new THREE.Vector3((this.rotation.x).toRadians(), (this.rotation.y).toRadians(), (this.rotation.z).toRadians());
         // sw("rot", rot.toString());
         rotationMatrix.setRotationFromEuler(rot);
 

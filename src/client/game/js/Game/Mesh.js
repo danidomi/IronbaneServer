@@ -221,7 +221,7 @@ var Mesh = Unit.extend({
     // Rotate geometry
 
     var rotationMatrix = new THREE.Matrix4();
-    rotationMatrix.setRotationFromEuler(new THREE.Vector3((this.rotation.x).ToRadians(), (this.rotation.y).ToRadians(), (this.rotation.z).ToRadians()));
+    rotationMatrix.setRotationFromEuler(new THREE.Vector3((this.rotation.x).toRadians(), (this.rotation.y).toRadians(), (this.rotation.z).toRadians()));
 
     for(var v=0;v<geometry.vertices.length;v++) {
       geometry.vertices[v] = rotationMatrix.multiplyVector3(geometry.vertices[v]);
@@ -383,9 +383,9 @@ var Mesh = Unit.extend({
     var rotationMatrix = new THREE.Matrix4();
     rotationMatrix.setRotationFromEuler(
       new THREE.Vector3(
-        (this.rotation.x).ToRadians(),
-        (this.rotation.y).ToRadians(),
-        (this.rotation.z).ToRadians()));
+        (this.rotation.x).toRadians(),
+        (this.rotation.y).toRadians(),
+        (this.rotation.z).toRadians()));
 
     for (var i = 0; i < this.mesh.geometry.vertices.length; i++) {
       this.mesh.geometry.vertices[i].copy(this.startVertices[i]);
@@ -408,9 +408,9 @@ var Mesh = Unit.extend({
   },
   updateRotation: function() {
     if( this.mesh ) {
-      this.mesh.rotation.x = (this.rotation.x).ToRadians();
-      this.mesh.rotation.y = (this.rotation.y).ToRadians();
-      this.mesh.rotation.z = (this.rotation.z).ToRadians();
+      this.mesh.rotation.x = (this.rotation.x).toRadians();
+      this.mesh.rotation.y = (this.rotation.y).toRadians();
+      this.mesh.rotation.z = (this.rotation.z).toRadians();
 
 
 

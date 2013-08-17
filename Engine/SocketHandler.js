@@ -858,7 +858,7 @@ var SocketHandler = Class.extend({
                 }
 
                 if (bag.template.type === UnitTypeEnum.VENDOR) {
-                    var offeredPrice = (item.value / 2).Round();
+                    var offeredPrice = (item.value / 2).round();
                     offeredPrice = Math.max(offeredPrice, 0);
 
                     if (!data.acceptOffer) {
@@ -1640,7 +1640,7 @@ var SocketHandler = Class.extend({
 
                 if ( !socket.unit || socket.unit.editor === false ) return;
 
-                position = ConvertVector3(position).Round(2);
+                position = ConvertVector3(position).round(2);
 
                 var zone = socket.unit.zone;
 
@@ -1820,7 +1820,7 @@ var SocketHandler = Class.extend({
 
                     socket.unit.unitsInLineOfSight = data.los;
 
-                    socket.unit.side = socket.unit.heading.clone().Perp();
+                    socket.unit.side = socket.unit.heading.clone().perp();
 
 
                     socket.unit.rotation.y = parseInt(data.r, 10);

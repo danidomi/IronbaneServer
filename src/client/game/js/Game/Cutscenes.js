@@ -32,7 +32,7 @@ var filmWorld = function(options) {
 
 
     var transitionTime = options.transitionTime ? options.transitionTime : 5000;
-    var easing = options.easing ? options.easing : TWEEN.Easing.quadratic.InOut;
+    var easing = options.easing ? options.easing : TWEEN.Easing.quadratic.inOut;
     var goBack = options.goBack || false;
     var holdTime = options.holdTime || 2000;
 

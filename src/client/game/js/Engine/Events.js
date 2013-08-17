@@ -205,7 +205,7 @@ $(document).keydown(function(event){
             socketHandler.inGame = false;
 
             for (var u = 0; u < ironbane.unitList.length; u++) {
-              ironbane.unitList[u].Destroy();
+              ironbane.unitList[u].destroy();
             }
 
             ironbane.unitList = [];
@@ -533,7 +533,7 @@ var mouseIntervalFunction = function(event){
         else {
 
           socketHandler.socket.emit('addModel', {
-            position:levelEditor.previewMesh.position.clone().Round(2),
+            position:levelEditor.previewMesh.position.clone().round(2),
             type: 5,
             rX:levelEditor.editorGUI.mpRotX,
             rY:levelEditor.editorGUI.mpRotY,
@@ -568,7 +568,7 @@ var mouseIntervalFunction = function(event){
                   obj.metadata["t"+materialIndex] = tileToPaint;
 
                   socketHandler.socket.emit('paintModel', {
-                    pos: obj.position.clone().Round(2),
+                    pos: obj.position.clone().round(2),
                     id: obj.meshData.id,
                     metadata: le("mpClearMode") ? {} : obj.metadata,
                     global : le("mpSetForAllModels") ? true : false
