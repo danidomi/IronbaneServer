@@ -405,10 +405,10 @@ var SocketHandler = Class.extend({
                     return;
                 }
 
-                data.s = ConvertVector3(data.s);
+                data.s = convertVector3(data.s);
                 data.s = data.s.round(2);
 
-                data.t = ConvertVector3(data.t);
+                data.t = convertVector3(data.t);
                 data.t = data.t.round(2);
 
                 data.sw = data.sw ? true : false;
@@ -1354,7 +1354,7 @@ var SocketHandler = Class.extend({
                 var targetUnit = worldHandler.findPlayerByName(data.targetName);
 
                 var zone = parseInt(data.zone, 10);
-                var pos = targetUnit ? targetUnit.position : ConvertVector3(data.pos);
+                var pos = targetUnit ? targetUnit.position : convertVector3(data.pos);
 
 
                 if ( unit ) {
@@ -1423,7 +1423,7 @@ var SocketHandler = Class.extend({
                 // Later report them!
                 if ( !socket.unit || socket.unit.editor === false ) return;
 
-                data.position = ConvertVector3(data.position);
+                data.position = convertVector3(data.position);
                 data.position = data.position.round(2);
 
                 var zone = socket.unit.zone;
@@ -1490,7 +1490,7 @@ var SocketHandler = Class.extend({
 
 
 
-                var pos = ConvertVector3(data.pos);
+                var pos = convertVector3(data.pos);
                 pos = pos.round(2);
 
                 var zone = socket.unit.zone;
@@ -1550,7 +1550,7 @@ var SocketHandler = Class.extend({
 
 
 
-                data = ConvertVector3(data);
+                data = convertVector3(data);
                 data = data.round(2);
 
 
@@ -1568,7 +1568,7 @@ var SocketHandler = Class.extend({
                 for(var o=0;o<worldHandler.world[zone][cellPos.x][cellPos.z].objects.length;o++) {
                     var obj = worldHandler.world[zone][cellPos.x][cellPos.z].objects[o];
 
-                    obj = ConvertVector3(obj);
+                    obj = convertVector3(obj);
                     obj = obj.round(2);
 
                     if ( data.x === obj.x && data.y === obj.y && data.z === obj.z ) {
@@ -1602,7 +1602,7 @@ var SocketHandler = Class.extend({
                 // Later report them!
                 if ( !socket.unit || socket.unit.editor === false ) return;
 
-                data.position = ConvertVector3(data.position);
+                data.position = convertVector3(data.position);
                 data.position = data.position.round(2);
 
                 var zone = socket.unit.zone;
@@ -1640,7 +1640,7 @@ var SocketHandler = Class.extend({
 
                 if ( !socket.unit || socket.unit.editor === false ) return;
 
-                position = ConvertVector3(position).round(2);
+                position = convertVector3(position).round(2);
 
                 var zone = socket.unit.zone;
 
@@ -1651,7 +1651,7 @@ var SocketHandler = Class.extend({
                         if ( cz.graph === undefined ) return;
                         if ( cz.graph.nodes === undefined ) return;
                         _.each(cz.graph.nodes, function(node) {
-                            if ( VectorDistanceSq(ConvertVector3(node.pos), position) < 1 ) {
+                            if ( VectorDistanceSq(convertVector3(node.pos), position) < 1 ) {
                                 existingNode = true;
                             }
                         });
@@ -1742,7 +1742,7 @@ var SocketHandler = Class.extend({
                 // Later report them!
                 if ( !socket.unit || socket.unit.editor === false ) return;
 
-                data.position = ConvertVector3(data.position);
+                data.position = convertVector3(data.position);
                 data.position = data.position.round(2);
 
                 var zone = socket.unit.zone;
@@ -1796,7 +1796,7 @@ var SocketHandler = Class.extend({
                     }
 
 
-                    var p = ConvertVector3(data.p);
+                    var p = convertVector3(data.p);
 
                     var radians = (socket.unit.rotation.y + 90) * (Math.PI/180);
 

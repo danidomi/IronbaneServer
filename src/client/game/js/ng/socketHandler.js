@@ -18,7 +18,7 @@ IronbaneApp
     .factory('socketHandler', ['$log', 'socket', function($log, socket) {
         // this factory function should be a singleton, the returned object however wouldn't be
         socket.on('chatMessage', function(data) {
-            hudHandler.addChatMessage(data);
+            hudHandler.AddChatMessage(data);
         });
 
         socket.on('bigMessage', function(data) {
@@ -26,7 +26,7 @@ IronbaneApp
         });
 
         socket.on('cutscene', function(id) {
-            cinema.playCutscene(id);
+            cinema.PlayCutscene(id);
         });
 
         socket.on('say', function(data) {
@@ -40,28 +40,28 @@ IronbaneApp
         socket.on('disconnect', function() {
             //socketHandler.socket.disconnect();
             for (var u = 0; u < ironbane.unitList.length; u++) {
-                ironbane.unitList[u].destroy();
+                ironbane.unitList[u].Destroy();
             }
             ironbane.unitList = [];
-            terrainHandler.destroy();
+            terrainHandler.Destroy();
             ironbane.player = null;
             //socketHandler.loggedIn = false;
 
             if (!noDisconnectTrigger) {
                 //socketHandler.serverOnline = false;
-                hudHandler.messageAlert('It appears the server crashed! Either that, or there is something wrong with your internet connection. I\'m terribly sorry about that.<br><br>In case the server crashed, an auto-restart will most-likely occur. Please refresh the page in a few seconds.', 'nobutton');
+                hudHandler.MessageAlert('It appears the server crashed! Either that, or there is something wrong with your internet connection. I\'m terribly sorry about that.<br><br>In case the server crashed, an auto-restart will most-likely occur. Please refresh the page in a few seconds.', 'nobutton');
             }
         });
 
         socket.on('doJump', function(data) {
             var unit = FindUnit(data.id);
-            unit.jump();
+            unit.Jump();
         });
 
         socket.on('toggle', function(data) {
             var unit = FindUnit(data.id);
             if (unit && unit instanceof ToggleableObstacle) {
-                unit.toggle(data['on']);
+                unit.Toggle(data['on']);
             }
         });
 
@@ -70,17 +70,17 @@ IronbaneApp
 
             if (angular.isDefined(data.fu)) {
                 unit = FindUnit(data.fu);
-                particleHandler.add(ParticleTypeEnum[data.p], {
+                particleHandler.Add(ParticleTypeEnum[data.p], {
                     followUnit: unit
                 });
             } else if (angular.isDefined(data.pfu)) {
                 unit = FindUnit(data.pfu);
-                particleHandler.add(ParticleTypeEnum[data.p], {
+                particleHandler.Add(ParticleTypeEnum[data.p], {
                     particleFollowUnit: unit
                 });
             } else if (angular.isDefined(data.pos)) {
-                particleHandler.add(ParticleTypeEnum[data.p], {
-                    position: ConvertVector3(data.pos)
+                particleHandler.Add(ParticleTypeEnum[data.p], {
+                    position: convertVector3(data.pos)
                 });
             }
         });
@@ -97,13 +97,13 @@ IronbaneApp
             }
 
             var weapon = angular.isDefined(data.w) ? items[data.w] : null;
-            var target = ConvertVector3(data.t);
+            var target = convertVector3(data.t);
 
             if (data.sw) {
-                unit.swingWeapon(target, weapon);
+                unit.SwingWeapon(target, weapon);
             }
 
-            var particle = new Projectile(ConvertVector3(data.s), target, unit, data.w);
+            var particle = new Projectile(convertVector3(data.s), target, unit, data.w);
             particle.velocity.addSelf(unit.fakeVelocity);
 
             ironbane.unitList.push(particle);
@@ -116,26 +116,26 @@ IronbaneApp
             unit.appearance.body = data.body;
             unit.appearance.feet = data.feet;
 
-            unit.updateClothes();
+            unit.UpdateClothes();
         });
 
         socket.on('updateWeapon', function(data) {
             var unit = FindUnit(data.id);
-            unit.updateWeapon(data.weapon);
+            unit.UpdateWeapon(data.weapon);
         });
 
         socket.on('receiveItem', function(data) {
             // todo: reference this...
             socketHandler.playerData.items.push(data);
 
-            hudHandler.reloadInventory();
+            hudHandler.ReloadInventory();
         });
 
         socket.on('lootFromBag', function(data) {
             // occurs when someone nearby loots from a bag
             // refresh the bag
             //$log.log('lootFromBag REPLY:', data);
-            hudHandler.reloadInventory();
+            hudHandler.ReloadInventory();
             if (ironbane.player.canLoot) {
                 ironbane.player.lootItems = data.loot;
             }
@@ -146,7 +146,7 @@ IronbaneApp
 
             if (unit) {
                 unit.health = data.h;
-                unit.localPosition.copy(ConvertVector3(data.p));
+                unit.localPosition.copy(convertVector3(data.p));
 
                 if (unit === ironbane.player) {
                     terrainHandler.transitionState = transitionStateEnum.START;
@@ -161,20 +161,20 @@ IronbaneApp
                         }, 100);
 
                         socketHandler.readyToReceiveUnits = false;
-                        terrainHandler.changeZone(data.z);
+                        terrainHandler.ChangeZone(data.z);
                         ironbane.player.unitStandingOn = null;
 
-                        hudHandler.showHUD();
-                        hudHandler.makeHealthBar(true);
+                        hudHandler.ShowHUD();
+                        hudHandler.MakeHealthBar(true);
 
-                        hudHandler.reloadInventory();
+                        hudHandler.ReloadInventory();
                     });
                 }
 
                 unit.canMove = true;
                 unit.dead = false;
 
-                unit.respawn();
+                unit.Respawn();
             }
         });
 
@@ -184,28 +184,28 @@ IronbaneApp
             if (unit) {
                 if (data.s === 'h') {
                     //unit.health = data['h'];
-                    unit.setHealth(data.h, data.np);
+                    unit.SetHealth(data.h, data.np);
                     if (unit === ironbane.player) {
-                        hudHandler.makeHealthBar(true);
+                        hudHandler.MakeHealthBar(true);
                     }
                 }
                 if (data.s === 'a') {
                     //unit.armor = data['a'];
-                    unit.setArmor(data.a, data.np);
+                    unit.SetArmor(data.a, data.np);
                     if (unit === ironbane.player) {
-                        hudHandler.makeArmorBar(true);
+                        hudHandler.MakeArmorBar(true);
                     }
                 }
                 if (data.s === 'hm') {
                     unit.healthMax = data.hm;
                     if (unit === ironbane.player) {
-                        hudHandler.makeHealthBar(true);
+                        hudHandler.MakeHealthBar(true);
                     }
                 }
                 if (data.s === 'am') {
                     unit.armorMax = data.am;
                     if (unit === ironbane.player) {
-                        hudHandler.makeArmorBar(true);
+                        hudHandler.MakeArmorBar(true);
                     }
                 }
             }
@@ -227,7 +227,7 @@ IronbaneApp
 
                 socketHandler.readyToReceiveUnits = false;
 
-                terrainHandler.changeZone(data.zone);
+                terrainHandler.ChangeZone(data.zone);
 
                 ironbane.player.localPosition.copy(data.pos);
                 ironbane.player.unitStandingOn = null;
@@ -238,9 +238,9 @@ IronbaneApp
             var victim = FindUnit(data.victim);
             var attacker = FindUnit(data.attacker);
 
-            victim.setHealth(data.h);
-            victim.setArmor(data.a);
-            victim.getMeleeHit(attacker);
+            victim.SetHealth(data.h);
+            victim.SetArmor(data.a);
+            victim.GetMeleeHit(attacker);
         });
 
         socket.on('setTileHeight', function(array) {
@@ -250,7 +250,7 @@ IronbaneApp
 
             for (var d = 0; d < array.length; d++) {
                 var data = array[d];
-                levelEditor.setTileHeight(data.tx, data.tz, data.height, false, false, true);
+                levelEditor.SetTileHeight(data.tx, data.tz, data.height, false, false, true);
             }
         });
 
@@ -259,14 +259,14 @@ IronbaneApp
                 return;
             }
 
-            levelEditor.setTileImage(data.tx, data.tz, data.image, false, true);
+            levelEditor.SetTileImage(data.tx, data.tz, data.image, false, true);
         });
 
         socket.on('removeUnit', function(data) {
             // Remove the unit from the list
             for (var i = 0; i < ironbane.unitList.length; i++) {
                 if (ironbane.unitList[i].id === data.id) {
-                    ironbane.unitList[i].destroy();
+                    ironbane.unitList[i].Destroy();
                     ironbane.unitList.splice(i, 1);
                     break;
                 }
@@ -274,9 +274,9 @@ IronbaneApp
         });
 
         socket.on('addModel', function(data) {
-            hudHandler.addChatMessage('Adding model...');
+            hudHandler.AddChatMessage('Adding model...');
 
-            levelEditor.placeModel(ConvertVector3(data.position),
+            levelEditor.PlaceModel(convertVector3(data.position),
                 data.rX,
                 data.rY,
                 data.rZ,
@@ -291,19 +291,19 @@ IronbaneApp
                 _.extend(preMeshes[data.id], data.metadata);
 
                 cellPos = WorldToCellCoordinates(data.pos.x, data.pos.z, cellSize);
-                _.each(terrainHandler.getCellByGridPosition(cellPos.x, cellPos.z).objectData, function(obj) {
-                    if (obj.metadata && ConvertVector3(obj).equals(ConvertVector3(data.pos).round())) {
+                _.each(terrainHandler.GetCellByGridPosition(cellPos.x, cellPos.z).objectData, function(obj) {
+                    if (obj.metadata && convertVector3(obj).equals(convertVector3(data.pos).Round())) {
                         _.extend(obj.metadata, data.metadata);
                     }
                 });
 
                 _.each(terrainHandler.cells, function(cell) {
-                    cell.reloadObjectsOnly();
+                    cell.ReloadObjectsOnly();
                 });
             } else {
                 cellPos = WorldToCellCoordinates(data.pos.x, data.pos.z, cellSize);
 
-                _.each(terrainHandler.getCellByGridPosition(cellPos.x, cellPos.z).objectData, function(obj) {
+                _.each(terrainHandler.GetCellByGridPosition(cellPos.x, cellPos.z).objectData, function(obj) {
                     if (_.isEmpty(data.metadata)) {
                         delete obj.metadata;
                     }
@@ -316,17 +316,17 @@ IronbaneApp
 
                 _.each(terrainHandler.cells, function(cell) {
                     _.each(cell.objects, function(obj) {
-                        if (obj.position.clone().round(2).equals(data.pos)) {
+                        if (obj.position.clone().Round(2).equals(data.pos)) {
                             var rotation = obj.rotation.clone();
                             var param = obj.param;
                             var metadata = obj.metadata;
 
                             cell.objects = _.without(cell.objects, obj);
 
-                            obj.destroy();
+                            obj.Destroy();
 
                             setTimeout(function() {
-                                var unit = new Mesh(ConvertVector3(data.pos), rotation, 0, param, data.metadata);
+                                var unit = new Mesh(convertVector3(data.pos), rotation, 0, param, data.metadata);
                                 ironbane.unitList.push(unit);
                                 cell.objects.push(unit);
                             }, 1);
@@ -337,33 +337,33 @@ IronbaneApp
         });
 
         socket.on('deleteModel', function(pos) {
-            pos = ConvertVector3(pos).round(2);
-            hudHandler.addChatMessage("Removing model...");
+            pos = convertVector3(pos).Round(2);
+            hudHandler.AddChatMessage("Removing model...");
 
             // Check
             _.each(terrainHandler.cells, function(cell) {
                 _.each(cell.objects, function(obj) {
-                    if (obj.position.clone().round(2).equals(pos)) {
+                    if (obj.position.clone().Round(2).equals(pos)) {
                         cell.objects = _.without(cell.objects, obj);
                         var cellPos = WorldToCellCoordinates(obj.position.x, obj.position.z, cellSize);
-                        var objInList = _.find(terrainHandler.getCellByGridPosition(cellPos.x, cellPos.z).objectData, function(otherObj) {
-                            return obj.position.clone().round(2).equals(ConvertVector3(otherObj));
+                        var objInList = _.find(terrainHandler.GetCellByGridPosition(cellPos.x, cellPos.z).objectData, function(otherObj) {
+                            return obj.position.clone().Round(2).equals(convertVector3(otherObj));
                         });
 
                         if (objInList) {
-                            var temp = terrainHandler.getCellByGridPosition(cellPos.x, cellPos.z).objectData;
+                            var temp = terrainHandler.GetCellByGridPosition(cellPos.x, cellPos.z).objectData;
                             temp =
                                 _.without(temp, objInList);
                         }
 
-                        obj.destroy();
+                        obj.Destroy();
                     }
                 });
 
                 if (!le("globalEnable")) {
                     var newList = [];
                     _.each(cell.objectData, function(obj) {
-                        if (!ConvertVector3(obj).equals(pos)) {
+                        if (!convertVector3(obj).equals(pos)) {
                             newList.push(obj);
                         }
                     });
@@ -372,10 +372,10 @@ IronbaneApp
             });
 
             if (!le("globalEnable")) {
-                terrainHandler.getCellByWorldPosition(pos).reload();
+                terrainHandler.GetCellByWorldPosition(pos).Reload();
             }
 
-            terrainHandler.rebuildOctree();
+            terrainHandler.RebuildOctree();
         });
 
         // Pathfinding
@@ -384,7 +384,7 @@ IronbaneApp
                 return;
             }
 
-            nodeHandler.addNode(0, data.id, ConvertVector3(data.pos));
+            nodeHandler.AddNode(0, data.id, convertVector3(data.pos));
         });
 
         socket.on('ppAddEdge', function(data) {
@@ -392,7 +392,7 @@ IronbaneApp
                 return;
             }
 
-            nodeHandler.addEdge(0, data.from, data.to, data.twoway);
+            nodeHandler.AddEdge(0, data.from, data.to, data.twoway);
         });
 
         socket.on('ppDeleteNode', function(data) {
@@ -400,7 +400,7 @@ IronbaneApp
                 return;
             }
 
-            nodeHandler.deleteNode(0, data.id);
+            nodeHandler.DeleteNode(0, data.id);
         });
 
         socket.on('snapshot', function(snapshot) {
@@ -477,7 +477,7 @@ IronbaneApp
 
                 self.loggedIn = true;
                 // Get a spawn from the server
-                self.spawnLocation = ConvertVector3(reply.position);
+                self.spawnLocation = convertVector3(reply.position);
                 self.spawnRotation = reply.rotY;
 
                 self.playerData = reply;
@@ -486,16 +486,16 @@ IronbaneApp
                     ironbane.showingGame = false;
                 }, 100);
 
-                terrainHandler.changeZone(reply.zone);
+                terrainHandler.ChangeZone(reply.zone);
 
                 self.inGame = true;
 
                 if (reply.editor) {
                     showEditor = true;
-                    levelEditor.start();
+                    levelEditor.Start();
                 }
 
-                hudHandler.makeSlotItems(false);
+                hudHandler.MakeSlotItems(false);
             });
         };
 

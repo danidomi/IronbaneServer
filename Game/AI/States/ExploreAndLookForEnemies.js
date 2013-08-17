@@ -63,7 +63,7 @@ var ExploreAndLookForEnemies = State.extend({
                 }
                 else {
                     var randomNode = chooseRandom(npc.connectedNodeList);
-                    this.targetPosition = ConvertVector3(randomNode.pos).addSelf(new THREE.Vector3(getRandomFloat(-1, 1), 0, getRandomFloat(-1, 1)));
+                    this.targetPosition = convertVector3(randomNode.pos).addSelf(new THREE.Vector3(getRandomFloat(-1, 1), 0, getRandomFloat(-1, 1)));
                    // log("[ExploreAndLookForEnemies] Traveling to node "+randomNode.id+"...");
                 }
                 // npc.maxSpeed = getRandomFloat(2.0, 4.0);

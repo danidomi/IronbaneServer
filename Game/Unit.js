@@ -575,7 +575,7 @@ var Unit = Class.extend({
     }
     else {
       // Go for the first node in the list
-      this.targetNodePosition = ConvertVector3(paths[0].pos);
+      this.targetNodePosition = convertVector3(paths[0].pos);
                // log("[CalculatePath] Path found, going for the first in the list! new targetNodePosition: "+this.targetNodePosition.toString());
                // log("[CalculatePath] First node ID: "+paths[0].id);
     }

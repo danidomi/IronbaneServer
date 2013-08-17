@@ -307,7 +307,7 @@ var Cell = Class.extend({
                 for(var n=0;n<graph.nodes.length;n++) {
                     var node = graph.nodes[n];
 
-                    var pos = ConvertVector3(node.pos);
+                    var pos = convertVector3(node.pos);
 
                     var texture = "misc/waypoint";
                     if ( levelEditor.selectedNode && levelEditor.selectedNode.id == parseInt(node.id, 10) ) {
@@ -343,7 +343,7 @@ var Cell = Class.extend({
                                     for( var sn=0;sn<subnodes.length;sn++ ) {
 
                                         if ( edge == subnodes[sn].id ) {
-                                            var subpos = ConvertVector3(subnodes[sn].pos);
+                                            var subpos = convertVector3(subnodes[sn].pos);
                                             var vec = subpos.subSelf(pos);
                                             if ( !vec.isZero() ) {
                                                 var aH = new THREE.ArrowHelper(vec, pos.clone().addSelf(new THREE.Vector3(0, 0.5, 0)), vec.length()-1, 0x00FFFF);

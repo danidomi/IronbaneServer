@@ -641,7 +641,7 @@ var Player = Fighter.extend({
     // Move the reddish aim mesh
     if ( currentMouseToWorldData ) {
 
-      var point = ConvertVector3(currentMouseToWorldData.point);
+      var point = convertVector3(currentMouseToWorldData.point);
 
 
       // Check the aim range
@@ -872,7 +872,7 @@ var Player = Fighter.extend({
       return;
     }
 
-    var rotTest = player.heading.dot(ConvertVector3(position).subSelf(player.position).normalize());
+    var rotTest = player.heading.dot(convertVector3(position).subSelf(player.position).normalize());
     if (rotTest < -0.5) {
       return;
     }

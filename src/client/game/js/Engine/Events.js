@@ -332,7 +332,7 @@ var mouseIntervalFunction = function(event){
 
   // relativeMouse = mouse.clone().subSelf(lastMouse);
 
-  // sw("relativeMouse", ConvertVector3(relativeMouse));
+  // sw("relativeMouse", convertVector3(relativeMouse));
 
   document.getSelection().removeAllRanges();
 

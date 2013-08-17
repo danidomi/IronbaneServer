@@ -549,7 +549,7 @@ var WorldHandler = Class.extend({
         var obj = worldHandler.world[zone][cellX][cellZ].changeBuffer[d];
 
 
-        var pos = ConvertVector3(obj.pos);
+        var pos = convertVector3(obj.pos);
         pos = pos.round(2);
 
 
@@ -602,7 +602,7 @@ var WorldHandler = Class.extend({
         var data = worldHandler.world[zone][cellX][cellZ].deleteBuffer[d];
 
 
-        data = ConvertVector3(data);
+        data = convertVector3(data);
         data = data.round(2);
 
 
@@ -613,7 +613,7 @@ var WorldHandler = Class.extend({
           var obj = worldHandler.world[zone][cellX][cellZ].objects[o];
 
 
-          obj = ConvertVector3(obj);
+          obj = convertVector3(obj);
           obj = obj.round(2);
 
           if ( data.x === obj.x && data.y === obj.y && data.z === obj.z ) {

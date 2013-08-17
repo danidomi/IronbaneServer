@@ -647,7 +647,7 @@ function chooseSequenced(a) {
   return value;
 }
 
-function ConvertVector3(vec) {
+function convertVector3(vec) {
   return new THREE.Vector3(vec.x, vec.y, vec.z);
 }
 function RawVector3(vec) {

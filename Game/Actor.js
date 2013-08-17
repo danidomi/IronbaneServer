@@ -118,7 +118,7 @@ var Actor = MovingUnit.extend({
           var msg = "Pathfinding node error! Please" +
           " investigate the connection<br>between node <b>"+node.id +
           "</b> and node <b>"+node.edges[x]+"</b>!<br>Location: " +
-          ConvertVector3(node.pos).toString() + " in zone "+me.zone;
+          convertVector3(node.pos).toString() + " in zone "+me.zone;
 
           chatHandler.announceMods(msg, "red");
 

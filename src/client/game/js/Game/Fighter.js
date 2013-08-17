@@ -455,7 +455,7 @@ this.walkSoundTimer = 0.0;
 
       var pointDirection = null;
       if ( this instanceof Player && currentMouseToWorldData) {
-        pointDirection = ConvertVector3(currentMouseToWorldData.point).subSelf(this.position).normalize();
+        pointDirection = convertVector3(currentMouseToWorldData.point).subSelf(this.position).normalize();
       }
 
       switch(weaponSpriteIndex) {

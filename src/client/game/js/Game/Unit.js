@@ -23,6 +23,7 @@
 
 var rotation_speed = 100;
 
+
 var unitFriction = 3;
 var unitMaxSpeed = 5;
 var unitMaxSpeedBackwards = 3;
@@ -698,7 +699,7 @@ var Unit = PhysicsObject.extend({
               if ( (intersects.length > 0 ) ) {
                 raycastNormal = intersects[0].face.normal;
                 raycastGroundPosition = intersects[0].point;
-                //this.position = ConvertVector3(intersects[0].point);
+                //this.position = convertVector3(intersects[0].point);
                 this.localPosition.y = intersects[0].point.y;
               //bm("underneath!");
               }

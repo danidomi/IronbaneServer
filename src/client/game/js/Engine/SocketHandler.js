@@ -155,7 +155,7 @@ var SocketHandler = Class.extend({
             socketHandler.loggedIn = true;
 
             // Get a spawn from the server
-            socketHandler.spawnLocation = ConvertVector3(reply.position);
+            socketHandler.spawnLocation = convertVector3(reply.position);
             socketHandler.spawnRotation = reply.rotY;
 
             socketHandler.playerData = reply;
@@ -201,42 +201,42 @@ var SocketHandler = Class.extend({
 
             switch (template.type) {
                 case UnitTypeEnum.MOVINGOBSTACLE:
-                    unit = new MovingObstacle(ConvertVector3(data.position), new THREE.Vector3(data.rotX, data.rotY, data.rotZ), data.id, data.param, data.metadata);
+                    unit = new MovingObstacle(convertVector3(data.position), new THREE.Vector3(data.rotX, data.rotY, data.rotZ), data.id, data.param, data.metadata);
                     break;
                 case UnitTypeEnum.TRAIN:
-                    unit = new Train(ConvertVector3(data.position), new THREE.Vector3(data.rotX, data.rotY, data.rotZ), data.id, data.param, data.metadata);
+                    unit = new Train(convertVector3(data.position), new THREE.Vector3(data.rotX, data.rotY, data.rotZ), data.id, data.param, data.metadata);
                     break;
                 case UnitTypeEnum.TOGGLEABLEOBSTACLE:
-                    unit = new ToggleableObstacle(ConvertVector3(data.position), new THREE.Vector3(data.rotX, data.rotY, data.rotZ), data.id, data.param, data.metadata);
+                    unit = new ToggleableObstacle(convertVector3(data.position), new THREE.Vector3(data.rotX, data.rotY, data.rotZ), data.id, data.param, data.metadata);
                     break;
                 case UnitTypeEnum.LEVER:
-                    unit = new Lever(ConvertVector3(data.position), data.id, data.metadata);
+                    unit = new Lever(convertVector3(data.position), data.id, data.metadata);
                     break;
                 case UnitTypeEnum.TELEPORTENTRANCE:
-                    unit = new TeleportEntrance(ConvertVector3(data.position), data.id, data.metadata);
+                    unit = new TeleportEntrance(convertVector3(data.position), data.id, data.metadata);
                     break;
                 case UnitTypeEnum.TELEPORTEXIT:
-                    unit = new TeleportExit(ConvertVector3(data.position), data.id, data.metadata);
+                    unit = new TeleportExit(convertVector3(data.position), data.id, data.metadata);
                     break;
                 case UnitTypeEnum.MUSICPLAYER:
-                    unit = new MusicPlayer(ConvertVector3(data.position), data.id, data.metadata);
+                    unit = new MusicPlayer(convertVector3(data.position), data.id, data.metadata);
                     break;
                 case UnitTypeEnum.HEARTPIECE:
-                    unit = new HeartPiece(ConvertVector3(data.position), data.id);
+                    unit = new HeartPiece(convertVector3(data.position), data.id);
                     break;
                 case UnitTypeEnum.SIGN:
-                    unit = new Sign(ConvertVector3(data.position), new THREE.Vector3(data.rotX, data.rotY, data.rotZ), data.id, data.param, data.metadata);
+                    unit = new Sign(convertVector3(data.position), new THREE.Vector3(data.rotX, data.rotY, data.rotZ), data.id, data.param, data.metadata);
                     break;
                 case UnitTypeEnum.LOOTABLE:
                     if ( data.param < 10 ) {
-                      unit = new LootBag(ConvertVector3(data.position), data.id, data.param);
+                      unit = new LootBag(convertVector3(data.position), data.id, data.param);
                     } else {
-                      unit = new LootableMesh(ConvertVector3(data.position), new THREE.Vector3(data.rotX, data.rotY, data.rotZ), data.id, data.param, data.metadata);
+                      unit = new LootableMesh(convertVector3(data.position), new THREE.Vector3(data.rotX, data.rotY, data.rotZ), data.id, data.param, data.metadata);
                     }
                     break;
                 default:
                     // return;
-                    unit = new Fighter(ConvertVector3(data.position), new THREE.Vector3(0, data.rotY, 0), data.id, unitname, data.param, data['size'], data['health'], data['armor'], data['healthMax'], data['armorMax']);
+                    unit = new Fighter(convertVector3(data.position), new THREE.Vector3(0, data.rotY, 0), data.id, unitname, data.param, data['size'], data['health'], data['armor'], data['healthMax'], data['armorMax']);
                     break;
             }
 
@@ -339,7 +339,7 @@ var SocketHandler = Class.extend({
                 });
             } else if (ISDEF(data['pos'])) {
                 particleHandler.add(ParticleTypeEnum[data['p']], {
-                    position: ConvertVector3(data['pos'])
+                    position: convertVector3(data['pos'])
                 });
             }
 
@@ -363,13 +363,13 @@ var SocketHandler = Class.extend({
 
             var weapon = ISDEF(data.w) ? items[data.w] : null;
 
-            var target = ConvertVector3(data['t']);
+            var target = convertVector3(data['t']);
 
             if (data.sw) {
                 unit.swingWeapon(target, weapon);
             }
 
-            var particle = new Projectile(ConvertVector3(data['s']), target, unit, data['w']);
+            var particle = new Projectile(convertVector3(data['s']), target, unit, data['w']);
 
             particle.velocity.addSelf(unit.fakeVelocity);
 
@@ -427,7 +427,7 @@ var SocketHandler = Class.extend({
             if (unit) {
 
                 unit.health = data['h'];
-                unit.localPosition.copy(ConvertVector3(data['p']));
+                unit.localPosition.copy(convertVector3(data['p']));
 
                 if (unit === ironbane.player) {
 
@@ -489,7 +489,7 @@ var SocketHandler = Class.extend({
         //         attacker.swingWeapon(null, weapon);
         //     }
         //     else {
-        //         var attackPosition = ConvertVector3(data['p']);
+        //         var attackPosition = convertVector3(data['p']);
 
         //         if ( attacker ) {
         //             attacker.swingWeapon(attackPosition, weapon);
@@ -626,7 +626,7 @@ var SocketHandler = Class.extend({
 
             hudHandler.addChatMessage('Adding model...');
 
-            levelEditor.placeModel(ConvertVector3(data.position),
+            levelEditor.placeModel(convertVector3(data.position),
                 data.rX,
                 data.rY,
                 data.rZ,
@@ -650,7 +650,7 @@ var SocketHandler = Class.extend({
                 _.each(terrainHandler.getCellByGridPosition(cellPos.x, cellPos.z).objectData, function(obj) {
 
                     if (obj.metadata &&
-                        ConvertVector3(obj).equals(ConvertVector3(data.pos).round())) {
+                        convertVector3(obj).equals(convertVector3(data.pos).round())) {
                         _.extend(obj.metadata, data.metadata);
                     }
 
@@ -692,7 +692,7 @@ var SocketHandler = Class.extend({
                             obj.destroy();
 
                             setTimeout(function() {
-                                var unit = new Mesh(ConvertVector3(data.pos),
+                                var unit = new Mesh(convertVector3(data.pos),
                                     rotation, 0, param, data.metadata);
                                 ironbane.unitList.push(unit);
                                 cell.objects.push(unit);
@@ -707,7 +707,7 @@ var SocketHandler = Class.extend({
 
         this.socket.on('deleteModel', function(pos) {
 
-            pos = ConvertVector3(pos).round(2);
+            pos = convertVector3(pos).round(2);
             //if ( !socketHandler.loggedIn ) return;
             //bm('remove unit: '+data.id);
 
@@ -724,7 +724,7 @@ var SocketHandler = Class.extend({
                         var cellPos = WorldToCellCoordinates(obj.position.x, obj.position.z, cellSize);
 
                         var objInList = _.find(terrainHandler.getCellByGridPosition(cellPos.x, cellPos.z).objectData, function(otherObj) {
-                            return obj.position.clone().round(2).equals(ConvertVector3(otherObj));
+                            return obj.position.clone().round(2).equals(convertVector3(otherObj));
                         });
 
                         if (objInList) {
@@ -740,7 +740,7 @@ var SocketHandler = Class.extend({
                 if (!le("globalEnable")) {
                     var newList = [];
                     _.each(cell.objectData, function(obj) {
-                        if (!ConvertVector3(obj).equals(pos)) newList.push(obj);
+                        if (!convertVector3(obj).equals(pos)) newList.push(obj);
                     });
                     cell.objectData = newList;
 
@@ -761,7 +761,7 @@ var SocketHandler = Class.extend({
         this.socket.on('ppAddNode', function(data) {
             if (!showEditor) return;
 
-            nodeHandler.addNode(0, data.id, ConvertVector3(data['pos']));
+            nodeHandler.addNode(0, data.id, convertVector3(data['pos']));
         });
 
         this.socket.on('ppAddEdge', function(data) {

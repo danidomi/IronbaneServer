@@ -53,7 +53,7 @@ var Wander = State.extend({
                 }
                 else {
                     var randomNode = chooseRandom(npc.connectedNodeList);
-                    this.targetPosition = ConvertVector3(randomNode.pos);
+                    this.targetPosition = convertVector3(randomNode.pos);
                     log("[Wander] Traveling to node "+randomNode.id+"...");
                 }
 

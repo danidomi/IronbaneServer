@@ -538,7 +538,7 @@ var LevelEditor = Class.extend({
     }
 
 
-    this.previewBuildMesh.position.y = ConvertVector3(currentMouseToWorldData.face.centroid).y;
+    this.previewBuildMesh.position.y = convertVector3(currentMouseToWorldData.face.centroid).y;
 
 
     ironbane.scene.add(this.previewBuildMesh);
@@ -1305,9 +1305,9 @@ var LevelEditor = Class.extend({
 
     //this.setTileHeight(1, 1, this.heightTest);
     // if ( currentMouseToWorldData ) {
-    //   //            debug.setWatch("currentMouseToWorldData.point", ConvertVector3(currentMouseToWorldData.point).toString());
-    //   //            debug.setWatch("currentMouseToWorldData.normal", ConvertVector3(currentMouseToWorldData.face.normal).toString());
-    //   //            debug.setWatch("currentMouseToWorldData.rotation", ConvertVector3(currentMouseToWorldData.object.rotation).toString());
+    //   //            debug.setWatch("currentMouseToWorldData.point", convertVector3(currentMouseToWorldData.point).toString());
+    //   //            debug.setWatch("currentMouseToWorldData.normal", convertVector3(currentMouseToWorldData.face.normal).toString());
+    //   //            debug.setWatch("currentMouseToWorldData.rotation", convertVector3(currentMouseToWorldData.object.rotation).toString());
     //   //
     //   //            if ( ISDEF(currentMouseToWorldData.object.unit) ) {
     //   //                debug.setWatch("currentMouseToWorldData.unit.name", currentMouseToWorldData.object.unit.name);
