@@ -615,7 +615,7 @@ var Projectile = Unit.extend({
             if ( this.type.meshType ) {
 
               //if ( this.type.meshType == ProjectileMeshTypeEnum.ARROW ) {
-                this.mesh.lookAt(this.position.clone().addSelf(this.heading), 0, 0, 0);
+                this.mesh.lookAtSpecial(this.position.clone().addSelf(this.heading), 0, 0, 0);
               //}
 
                 if ( !this.impactDone ) {

@@ -833,7 +833,7 @@ var Unit = PhysicsObject.extend({
       this.nameMesh.position.z = renderPosition.z;
       this.nameMesh.position.y = renderPosition.y + (1.5*this.size);
 
-      this.nameMesh.lookAt(ironbane.camera.position);
+      this.nameMesh.lookAtSpecial(ironbane.camera.position);
     }
     if ( this.debugMesh ) {
       this.debugMesh.position.x = renderPosition.x;
@@ -852,7 +852,7 @@ var Unit = PhysicsObject.extend({
       }
 
       if ( raycastNormal ) {
-        this.shadowMesh.lookAt(raycastNormal.clone().addSelf(this.shadowMesh.position));
+        this.shadowMesh.lookAtSpecial(raycastNormal.clone().addSelf(this.shadowMesh.position));
       }
 
       this.shadowMesh.rotation.z = this.rotation.y * (Math.PI/180);

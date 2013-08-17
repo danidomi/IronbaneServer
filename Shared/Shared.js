@@ -151,11 +151,11 @@ var SignTypeEnum = {
 
 
 var WeaponRanges = {
-  sword:2,
-  dagger:5,
-  axe:4,
-  bow:15,
-  staff:15
+  SWORD:2,
+  DAGGER:5,
+  AXE:4,
+  BOW:15,
+  STAFF:15
 };
 
 var ColorEnum = {
@@ -167,28 +167,28 @@ var ColorEnum = {
 };
 
 var MovingObstacleMovementTypeEnum = {
-  SineWaveX: 1,
-  SineWaveY: 2,
-  SineWaveZ: 3,
-  SineWaveXY: 4,
-  SineWaveXZ: 5,
-  SineWaveYZ: 6,
-  SineWaveXYZ: 7,
-  SineWaveXYZ2: 8,
-  RotationX: 21,
-  RotationY: 22,
-  RotationZ: 23,
-  RotationXY: 24,
-  RotationXZ: 25,
-  RotationYZ: 26,
-  RotationXYZ: 27,
-  RotationXYZ2: 28
+  SINEWAVEX: 1,
+  SINEWAVEY: 2,
+  SINEWAVEZ: 3,
+  SINEWAVEXY: 4,
+  SINEWAVEXZ: 5,
+  SINEWAVEYZ: 6,
+  SINEWAVEXYZ: 7,
+  SINEWAVEXYZ2: 8,
+  ROTATIONX: 21,
+  ROTATIONY: 22,
+  ROTATIONZ: 23,
+  ROTATIONXY: 24,
+  ROTATIONXZ: 25,
+  ROTATIONYZ: 26,
+  ROTATIONXYZ: 27,
+  ROTATIONXYZ2: 28
 };
 
 var ToggleableObstacleMovementTypeEnum = {
-  DoorX : 1,
-  DoorY : 2,
-  DoorZ : 3
+  DOORX : 1,
+  DOORY : 2,
+  DOORZ : 3
 };
 
 var UserManagementTypeEnum = {

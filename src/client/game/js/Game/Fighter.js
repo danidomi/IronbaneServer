@@ -368,7 +368,7 @@ this.walkSoundTimer = 0.0;
 
 
     if ( this.mesh ) {
-      this.mesh.lookAt(ironbane.camera.position, 0, 0, 0, true);
+      this.mesh.lookAtSpecial(ironbane.camera.position, 0, 0, 0, true);
 
 
 
@@ -418,7 +418,7 @@ this.walkSoundTimer = 0.0;
 
     if ( this.weaponMesh ) {
 
-      var firstPerson = (this instanceof Player) && this.cameraStatus == CameraStatusEnum.firstPerson;
+      var firstPerson = (this instanceof Player) && this.cameraStatus == CameraStatusEnum.FIRSTPERSON;
 
       var offset = new THREE.Vector3(0.0, firstPerson ? 0.25 : 0, firstPerson ? -0.5 : 0);
       var front = true;
@@ -716,7 +716,7 @@ this.walkSoundTimer = 0.0;
       this.weaponMesh.scale.x = scaleX;
       this.weaponMesh.scale.y = scaleY;
 
-      this.weaponOrigin.lookAt(ironbane.camera.position, 0, 0, 0, true);
+      this.weaponOrigin.lookAtSpecial(ironbane.camera.position, 0, 0, 0, true);
 
     }
 

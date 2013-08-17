@@ -123,7 +123,7 @@ var Billboard = Unit.extend({
         this._super(dTime);
 
         if ( this.mesh ) {
-            this.mesh.lookAt(ironbane.camera.position, 0, 0, 0, true);
+            this.mesh.lookAtSpecial(ironbane.camera.position, 0, 0, 0, true);
         }
     }
 });

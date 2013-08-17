@@ -16,9 +16,9 @@
 */
 
 var CameraStatusEnum = {
-    ThirdPerson: "ThirdPerson",
-    ThirdPersonToFirstPersonTransition: "ThirdPersonToFirstPersonTransition",
-    FirstPerson: "FirstPerson"
+    THIRDPERSON: "ThirdPerson",
+    THIRDPERSONTOFIRSTPERSONTRANSITION: "ThirdPersonToFirstPersonTransition",
+    FIRSTPERSON: "FirstPerson"
 };
 
 var Player = Fighter.extend({
@@ -39,7 +39,7 @@ var Player = Fighter.extend({
         this.canLoot = false;
         this.lootItems = [];
         this.lootUnit = null;
-        this.cameraStatus = CameraStatusEnum.thirdPerson;
+        this.cameraStatus = CameraStatusEnum.THIRDPERSON;
 
         (function(unit) {
             setTimeout(function() {
@@ -321,8 +321,8 @@ var Player = Fighter.extend({
             needFirstPersonMode = true;
 
             switch(this.cameraStatus) {
-              case CameraStatusEnum.thirdPerson:
-                this.cameraStatus = CameraStatusEnum.thirdPersonToFirstPersonTransition;
+              case CameraStatusEnum.THIRDPERSON:
+                this.cameraStatus = CameraStatusEnum.THIRDPERSONTOFIRSTPERSONTRANSITION;
                 break;
             }
 
@@ -339,9 +339,9 @@ var Player = Fighter.extend({
       }
       if ( !needFirstPersonMode ) {
         switch(this.cameraStatus) {
-          case CameraStatusEnum.firstPerson:
-          case CameraStatusEnum.thirdPersonToFirstPersonTransition:
-            this.cameraStatus = CameraStatusEnum.thirdPerson;
+          case CameraStatusEnum.FIRSTPERSON:
+          case CameraStatusEnum.THIRDPERSONTOFIRSTPERSONTRANSITION:
+            this.cameraStatus = CameraStatusEnum.THIRDPERSON;
             break;
         }
       }
@@ -367,18 +367,18 @@ var Player = Fighter.extend({
       firstPersonTarget.y += 1;
 
       switch(this.cameraStatus) {
-        case CameraStatusEnum.firstPerson:
+        case CameraStatusEnum.FIRSTPERSON:
           ironbane.camera.position.copy(firstPersonTarget);
 
           break;
-        case CameraStatusEnum.thirdPersonToFirstPersonTransition:
+        case CameraStatusEnum.THIRDPERSONTOFIRSTPERSONTRANSITION:
           ironbane.camera.position.lerpSelf(firstPersonTarget, dTime*10);
 
           if ( (ironbane.camera.position.clone().subSelf(firstPersonTarget)).length() < 0.01 ) {
-            this.cameraStatus = CameraStatusEnum.firstPerson;
+            this.cameraStatus = CameraStatusEnum.FIRSTPERSON;
           }
           break;
-        case CameraStatusEnum.thirdPerson:
+        case CameraStatusEnum.THIRDPERSON:
           //ironbane.camera.position.copy(target);
           ironbane.camera.position.lerpSelf(target, dTime*3);
           break;
@@ -387,7 +387,7 @@ var Player = Fighter.extend({
       //debug.setWatch("this.cameraStatus", this.cameraStatus);
 
       var lookAtTarget = null;
-      if ( this.cameraStatus != CameraStatusEnum.thirdPerson ) {
+      if ( this.cameraStatus != CameraStatusEnum.THIRDPERSON ) {
         lookAtTarget = this.position.clone().addSelf(new THREE.Vector3(Math.sin(radians), 1, Math.cos(radians)));
       }
       else {
@@ -770,7 +770,7 @@ var Player = Fighter.extend({
       //this.aimMesh.position = point.addSelf(currentMouseToWorldData.face.normal.clone().normalize().multiplyScalar(0.05));
       this.aimMeshPosition.lerpSelf(point.addSelf(currentMouseToWorldData.face.normal.clone().normalize().multiplyScalar(0.05)), dTime*20);
       this.aimMesh.position.copy(this.aimMeshPosition);
-      this.aimMesh.lookAt(currentMouseToWorldData.face.normal.clone().addSelf(this.aimMesh.position));
+      this.aimMesh.lookAtSpecial(currentMouseToWorldData.face.normal.clone().addSelf(this.aimMesh.position));
     }
 
 

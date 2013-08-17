@@ -225,7 +225,7 @@ var Skybox = PhysicsObject.extend({
       this.sunMesh.position.copy(p.clone().addSelf(this.sunVector.clone().multiplyScalar(sunDistance)));
 
 
-      this.sunMesh.lookAt(p);
+      this.sunMesh.lookAtSpecial(p);
 
       var al = this.sunMesh.position.y/sunDistance;
 

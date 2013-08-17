@@ -194,7 +194,7 @@ if ( !SERVER ) {
   console.info = console.info || function(){};
 
   $(document).ready(function(){
-    THREE.Object3D.prototype.lookAt = function (position, lockX, lockY, lockZ, billboardStyle) {
+    THREE.Object3D.prototype.lookAtSpecial = function (position, lockX, lockY, lockZ, billboardStyle) {
 
       var target = position.clone();
 

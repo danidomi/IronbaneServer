@@ -153,7 +153,7 @@ var ChatBubble = PhysicsObject.extend({
         if ( this.textMesh ) {
             this.textMesh.position.copy(this.localPosition);
 
-            this.textMesh.lookAt(ironbane.camera.position);
+            this.textMesh.lookAtSpecial(ironbane.camera.position);
 
         }
 

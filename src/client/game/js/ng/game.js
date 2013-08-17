@@ -189,7 +189,7 @@ IronbaneApp
                     if ($window.terrainHandler.status === $window.terrainHandlerStatusEnum.LOADED &&
                         !$window.terrainHandler.isLoadingCells()) {
 
-                        game.player = new $window.player($window.socketHandler.spawnLocation, new $window.THREE.Vector3(0, $window.socketHandler.spawnRotation, 0), $window.socketHandler.playerData.id, $window.socketHandler.playerData.name);
+                        game.player = new $window.Player($window.socketHandler.spawnLocation, new $window.THREE.Vector3(0, $window.socketHandler.spawnRotation, 0), $window.socketHandler.playerData.id, $window.socketHandler.playerData.name);
                         game.unitList.push(game.player);
                     }
                 }

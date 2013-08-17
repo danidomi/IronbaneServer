@@ -963,7 +963,7 @@ var LevelEditor = Class.extend({
       ironbane.player.enableGravity = !value;
       ironbane.player.velocity.set(0,0,0);
 
-      ironbane.player.cameraStatus = CameraStatusEnum.thirdPerson;
+      ironbane.player.cameraStatus = CameraStatusEnum.THIRDPERSON;
       ironbane.player.unitStandingOn = null;
 
       localStorage.chFlyMode = value;
