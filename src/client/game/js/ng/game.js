@@ -78,7 +78,7 @@ IronbaneApp
         Game.prototype.start = function() {
             var game = this;
 
-            if (!$window.detector.webgl) {
+            if (!$window.Detector.webgl) {
                 $window.hudHandler.resizeFrame();
                 return;
             }
