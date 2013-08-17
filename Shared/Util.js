@@ -756,86 +756,26 @@ var dateChunks = new Array(
   );
 
 function timeSince(since) {
-
-
-
   var count;
-
-
-
   for (i = 0, j = dateChunks.length; i < j; i++) {
-
     var seconds = dateChunks[i][0];
-
     var name = dateChunks[i][1];
-
     if ((count = Math.floor(since / seconds)) != 0) {
-
       break;
-
     }
-
   }
-
-
-
   var print = (count == 1) ? '1 ' + name : count + " " + name + "s";
-
-  //    if ( name == "min" ) print = count + " " + name;
-  //    if ( name == "" ) print = count;
-
   return print;
-
 }
-
 
 //there is no fixed order for attributes of an object. also this function could return a function...
 function firstOfObject(o) {
   for(var k in o) return o[k];
 }
 
-/*
-function reverseArray(array) {
-
-  var length = array.length;
-
-  if ( length == 0 ) return array;
-
-  var left = null;
-  var right = null;
-  for (left = 0; left < length / 2; left += 1)
-  {
-      right = length - 1 - left;
-      var temporary = array[left];
-      array[left] = array[right];
-      array[right] = temporary;
-  }
-  return array;
-}
-*/
-
 String.prototype.capitaliseFirstLetter = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
-//Copyright 2009 Nicholas C. Zakas. All rights reserved.
-//MIT Licensed
-function timedChunk(items, process, context, callback){
-    var todo = items.concat();   //create a clone of the original
 
-    setTimeout(function(){
-
-        var start = +new Date();
-
-        do {
-             process.call(context, todo.shift());
-        } while (todo.length > 0 && (+new Date() - start < 15));
-
-        if (todo.length > 0){
-            setTimeout(arguments.callee, 25*10);
-        } else {
-            callback(items);
-        }
-    }, 25);
-}
 
