@@ -270,13 +270,13 @@ module.exports = function(grunt) {
                 options: {
                     database: 'ironbane_dev'
                 }
-            },
-            prod: {
-                src: ['install/**/*.sql'],
-                options: {
-                    database: 'ironbane'
-                }
             }
+            // prod: {
+            //     src: ['install/**/*.sql'],
+            //     options: {
+            //         database: 'ironbane'
+            //     }
+            // }
         }
     });
 
